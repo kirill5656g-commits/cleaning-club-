@@ -1,0 +1,497 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body,div,span,p,textarea,input,button,select{font-family:var(--font-sans)}
+.app{background:#080F1E;border-radius:16px;overflow:hidden}
+.topbar{background:#0D2047;padding:14px 20px;border-bottom:1px solid #1E3A6E;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar-logo{width:34px;height:34px;border-radius:8px;background:#1565C0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:500;color:#fff;flex:1}
+.topbar-badge{background:#854F0B;color:#FAC775;font-size:11px;font-weight:500;padding:4px 12px;border-radius:100px;border:1px solid #BA7517}
+.topbar-year{font-size:12px;color:#5C7FA8}
+.mode-bar{display:flex;gap:6px;padding:10px 20px;background:#0A1422;border-bottom:1px solid #1E3A6E;flex-wrap:wrap;align-items:center}
+.mode-btn{padding:6px 14px;border-radius:8px;border:1px solid #1E3A6E;background:#0D2047;color:#5C7FA8;font-size:12px;font-weight:500;cursor:pointer;transition:.15s}
+.mode-btn.on{background:#1565C0;border-color:#1565C0;color:#fff}
+.mode-btn:hover:not(.on){color:#90CAF9;border-color:#2C5282}
+.mode-hint{font-size:11px;color:#5C7FA8;margin-left:auto}
+.content{padding:16px 20px 24px}
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.block{background:#0D2047;border-radius:12px;border:1px solid #1E3A6E;overflow:hidden}
+.block.wide{grid-column:1/-1}
+.block-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #1E3A6E;cursor:pointer;user-select:none}
+.block-hdr:hover{background:#0A1A35}
+.block-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.block-name{font-size:13px;font-weight:500;color:#fff;flex:1}
+.block-prog{font-size:11px;color:#5C7FA8;margin-left:auto}
+.block-chv{font-size:11px;color:#5C7FA8;transition:transform .2s;margin-left:6px}
+.block.expanded .block-chv{transform:rotate(180deg)}
+.block-body{display:none;padding:14px}
+.block.expanded .block-body{display:block}
+.field-row{margin-bottom:12px}
+.field-label{font-size:11px;color:#5C7FA8;letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+.field-label .example-btn{font-size:10px;color:#1E88E5;cursor:pointer;text-transform:none;letter-spacing:0;padding:2px 7px;border:1px solid #1565C020;border-radius:4px;background:#1565C010}
+.field-label .example-btn:hover{background:#1565C025}
+textarea{width:100%;background:#0A1628;border:1px solid #1E3A6E;border-radius:8px;padding:9px 11px;font-size:12.5px;color:#C8D8F0;line-height:1.6;resize:vertical;min-height:64px;outline:none;transition:.15s}
+textarea:focus{border-color:#1565C0}
+textarea::placeholder{color:#2C4A6E}
+input[type=number],input[type=text]{width:100%;background:#0A1628;border:1px solid #1E3A6E;border-radius:8px;padding:8px 11px;font-size:12.5px;color:#C8D8F0;outline:none;transition:.15s}
+input:focus{border-color:#1565C0}
+input::placeholder{color:#2C4A6E}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.quarter-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.qcard{background:#0A1628;border-radius:8px;padding:10px;border:1px solid #1E3A6E}
+.qcard-label{font-size:10px;color:#5C7FA8;margin-bottom:5px}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.kpi-card{background:#0A1628;border-radius:8px;padding:10px 12px;border:1px solid #1E3A6E;text-align:center}
+.kpi-val{font-size:18px;font-weight:500;color:#64B5F6;margin-bottom:2px}
+.kpi-label{font-size:10px;color:#5C7FA8}
+.kpi-input{width:100%;background:transparent;border:none;font-size:18px;font-weight:500;color:#64B5F6;text-align:center;outline:none;padding:0}
+.kpi-input::placeholder{color:#1E3A6E;font-size:14px}
+.progress-bar{height:4px;background:#1E3A6E;border-radius:2px;margin-top:8px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;background:#1565C0;transition:width .4s}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{display:flex;align-items:center;gap:5px;background:#0A1628;border:1px solid #1E3A6E;border-radius:6px;padding:4px 9px;font-size:11px;color:#90A8C8}
+.tag-del{cursor:pointer;color:#3A5270;font-size:13px;line-height:1}
+.tag-del:hover{color:#EF5350}
+.tag-add{display:flex;gap:6px;margin-top:6px}
+.tag-add input{flex:1;min-width:0}
+.tag-add button{padding:7px 12px;background:#1565C0;border:none;border-radius:8px;color:#fff;font-size:12px;cursor:pointer;white-space:nowrap;font-family:var(--font-sans)}
+.tag-add button:hover{background:#1E88E5}
+.divider{height:1px;background:#1E3A6E;margin:12px 0}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:4px}
+.sum-card{background:#0A1628;border-radius:8px;padding:10px 12px;border:1px solid #1E3A6E}
+.sum-card.filled{border-color:#1565C080}
+.sum-icon{font-size:16px;margin-bottom:4px}
+.sum-name{font-size:11px;color:#5C7FA8;margin-bottom:2px}
+.sum-status{font-size:12px;font-weight:500}
+.save-row{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.save-btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font-sans)}
+.save-btn.primary{background:#1565C0;color:#fff}
+.save-btn.primary:hover{background:#1E88E5}
+.save-btn.secondary{background:#0D2047;color:#64B5F6;border:1px solid #1565C040}
+.save-btn.secondary:hover{background:#0A1A35}
+.save-msg{font-size:11px;color:#4CAF50;padding:9px 14px;background:#071A0E;border:1px solid #1B5E20;border-radius:8px;display:none;align-items:center;gap:6px}
+.save-msg.show{display:flex}
+</style>
+
+<h2 class="sr-only">Стратегическая карта клинингового бизнеса — интерактивный шаблон на 12 месяцев</h2>
+
+<div class="app">
+<div class="topbar">
+  <div class="topbar-logo"><i class="ti ti-map-2" style="font-size:17px;color:#90CAF9" aria-hidden="true"></i></div>
+  <div>
+    <div class="topbar-title">Стратегическая карта клинингового бизнеса</div>
+    <div class="topbar-year">Горизонт планирования: 12 месяцев · 6 блоков</div>
+  </div>
+  <span class="topbar-badge">499 ₽</span>
+</div>
+
+<div class="mode-bar">
+  <button class="mode-btn on" onclick="setMode('edit',this)"><i class="ti ti-edit" style="font-size:13px;margin-right:5px" aria-hidden="true"></i>Заполнить</button>
+  <button class="mode-btn" onclick="setMode('example',this)"><i class="ti ti-bulb" style="font-size:13px;margin-right:5px" aria-hidden="true"></i>Пример заполнения</button>
+  <button class="mode-btn" onclick="setMode('summary',this)"><i class="ti ti-layout-dashboard" style="font-size:13px;margin-right:5px" aria-hidden="true"></i>Итоговая карта</button>
+  <span class="mode-hint" id="fill-hint">Заполнено: <strong id="fill-count" style="color:#64B5F6">0</strong> из 6 блоков</span>
+</div>
+
+<div class="content" id="main-content">
+  <div class="map-grid" id="map-grid">
+
+    <!-- BLOCK 1: Позиционирование -->
+    <div class="block" id="b1">
+      <div class="block-hdr" onclick="toggleBlock('b1')">
+        <div class="block-icon" style="background:#0D3470"><i class="ti ti-target" style="font-size:15px;color:#64B5F6" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Позиционирование</div>
+        </div>
+        <span class="block-prog" id="b1-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="field-row">
+          <div class="field-label">Для кого вы работаете <span class="example-btn" onclick="fillExample('b1-target','Занятые семьи с детьми в Краснодаре, доход выше среднего, ценят время и порядок, возраст 28–45 лет')">Пример</span></div>
+          <textarea id="b1-target" placeholder="Опишите вашего идеального клиента: кто, где, сколько зарабатывает, что ценит..." oninput="updateProg('b1')"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Ваше главное отличие от конкурентов <span class="example-btn" onclick="fillExample('b1-diff','Единственная компания в городе с письменной гарантией переделки 24 часа и чек-листом 87 точек — клиент видит результат до нашего ухода')">Пример</span></div>
+          <textarea id="b1-diff" placeholder="Что вы делаете, чего не делают другие? Конкретно, без 'качество и профессионализм'..." oninput="updateProg('b1')"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Формула позиционирования</div>
+          <textarea id="b1-formula" placeholder="Мы помогаем [КТО] [СДЕЛАТЬ ЧТО] без [БОЛЬ], потому что [ДОКАЗАТЕЛЬСТВО]..." oninput="updateProg('b1')"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 2: Услуги -->
+    <div class="block" id="b2">
+      <div class="block-hdr" onclick="toggleBlock('b2')">
+        <div class="block-icon" style="background:#0A2E1A"><i class="ti ti-tools" style="font-size:15px;color:#66BB6A" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Услуги и цены</div>
+        </div>
+        <span class="block-prog" id="b2-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="field-row">
+          <div class="field-label">Основные услуги <span class="example-btn" onclick="setTags('services',['Поддерживающая уборка','Генеральная уборка','После ремонта','Химчистка мебели','Мойка окон','Озонирование'])">Пример</span></div>
+          <div class="tag-row" id="services-tags"></div>
+          <div class="tag-add"><input type="text" id="services-inp" placeholder="Название услуги..." onkeydown="if(event.key==='Enter')addTag('services')"><button onclick="addTag('services')">+ Добавить</button></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-row">
+          <div class="field-label">Ценовые сегменты <span class="example-btn" onclick="fillExample('b2-prices','Эконом: 2 000–3 000 ₽ (квартиры-студии)\nСтандарт: 3 500–6 000 ₽ (1–3 комнаты)\nПремиум: 6 500–12 000 ₽ (большие объекты, B2B)\nAbonnement: 2 200 ₽/визит при регулярке 2×/месяц')">Пример</span></div>
+          <textarea id="b2-prices" placeholder="Опишите вилку цен по сегментам и форматам..." oninput="updateProg('b2')"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Флагманская услуга (даёт 50%+ выручки)</div>
+          <input type="text" id="b2-flagship" placeholder="Например: Генеральная уборка 70–100 кв.м." oninput="updateProg('b2')">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 3: Каналы продаж -->
+    <div class="block" id="b3">
+      <div class="block-hdr" onclick="toggleBlock('b3')">
+        <div class="block-icon" style="background:#1A0E2E"><i class="ti ti-speakerphone" style="font-size:15px;color:#CE93D8" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Каналы продаж</div>
+        </div>
+        <span class="block-prog" id="b3-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="field-row">
+          <div class="field-label">Работающие каналы сейчас <span class="example-btn" onclick="setTags('channels',['Авито (30 заявок/мес)','Сарафан (15 заявок)','Instagram (8 заявок)','Партнёры — агентства недвижимости'])">Пример</span></div>
+          <div class="tag-row" id="channels-tags"></div>
+          <div class="tag-add"><input type="text" id="channels-inp" placeholder="Канал и примерный % заявок..." onkeydown="if(event.key==='Enter')addTag('channels')"><button onclick="addTag('channels')">+ Добавить</button></div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-row">
+          <div class="field-label">Каналы для запуска в этом году <span class="example-btn" onclick="setTags('new-channels',['Telegram-канал','Яндекс Директ','2ГИС','B2B — управляющие компании'])">Пример</span></div>
+          <div class="tag-row" id="new-channels-tags"></div>
+          <div class="tag-add"><input type="text" id="new-channels-inp" placeholder="Новый канал..." onkeydown="if(event.key==='Enter')addTag('new-channels')"><button onclick="addTag('new-channels')">+ Добавить</button></div>
+        </div>
+        <div class="field-row" style="margin-top:10px">
+          <div class="field-label">Целевая стоимость привлечения клиента (CPL) <span class="example-btn" onclick="fillExample('b3-cpl','Авито: до 600 ₽\nСарафан: 0 ₽\nТаргет: до 1 200 ₽\nB2B-партнёры: до 800 ₽')">Пример</span></div>
+          <textarea id="b3-cpl" placeholder="По каждому каналу: канал → максимальная CPL..." oninput="updateProg('b3')" style="min-height:52px"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 4: Команда -->
+    <div class="block" id="b4">
+      <div class="block-hdr" onclick="toggleBlock('b4')">
+        <div class="block-icon" style="background:#1A1200"><i class="ti ti-users" style="font-size:15px;color:#FFB74D" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Команда</div>
+        </div>
+        <span class="block-prog" id="b4-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="two-col">
+          <div class="field-row">
+            <div class="field-label">Сейчас в команде</div>
+            <input type="number" id="b4-now" placeholder="Кол-во мастеров" min="0" oninput="updateProg('b4')">
+          </div>
+          <div class="field-row">
+            <div class="field-label">Цель через 12 мес.</div>
+            <input type="number" id="b4-target" placeholder="Цель" min="0" oninput="updateProg('b4')">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Кого нанять и когда <span class="example-btn" onclick="fillExample('b4-hire','Q1: +1 мастер для роста объёма\nQ2: администратор/менеджер заявок\nQ3: +2 мастера под B2B\nQ4: старший мастер — контроль качества')">Пример</span></div>
+          <textarea id="b4-hire" placeholder="По кварталам: кого берёте и зачем..." oninput="updateProg('b4')"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Система мотивации <span class="example-btn" onclick="fillExample('b4-motiv','Оклад 25к + % от объекта (15–20%)\nБонус за отзыв 5★: +200 ₽\nЗакреплённые клиенты: +500 ₽/мес за каждого постоянного')">Пример</span></div>
+          <textarea id="b4-motiv" placeholder="Как платите мастерам, за что бонусы..." oninput="updateProg('b4')" style="min-height:52px"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 5: Финансовые цели -->
+    <div class="block wide" id="b5">
+      <div class="block-hdr" onclick="toggleBlock('b5')">
+        <div class="block-icon" style="background:#0A1E0A"><i class="ti ti-coin" style="font-size:15px;color:#4CAF50" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Финансовые цели на 12 месяцев</div>
+        </div>
+        <span class="block-prog" id="b5-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-label">Выручка/мес сейчас</div>
+            <input class="kpi-input" type="text" id="b5-rev-now" placeholder="0 ₽" oninput="updateProg('b5');updateKpiBar()" style="width:100%">
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Цель выручки/мес</div>
+            <input class="kpi-input" type="text" id="b5-rev-target" placeholder="0 ₽" oninput="updateProg('b5');updateKpiBar()" style="width:100%">
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Цель чистой прибыли/мес</div>
+            <input class="kpi-input" type="text" id="b5-profit" placeholder="0 ₽" oninput="updateProg('b5')" style="width:100%">
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Средний чек сейчас</div>
+            <input class="kpi-input" type="text" id="b5-check-now" placeholder="0 ₽" oninput="updateProg('b5')" style="width:100%">
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Цель среднего чека</div>
+            <input class="kpi-input" type="text" id="b5-check-target" placeholder="0 ₽" oninput="updateProg('b5')" style="width:100%">
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Заказов/мес сейчас</div>
+            <input class="kpi-input" type="text" id="b5-orders" placeholder="0" oninput="updateProg('b5')" style="width:100%">
+          </div>
+        </div>
+        <div id="kpi-progress-wrap" style="margin-top:12px;display:none">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#5C7FA8;margin-bottom:5px">
+            <span>Прогресс к цели выручки</span>
+            <span id="kpi-pct-label">0%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="kpi-bar" style="width:0%"></div></div>
+        </div>
+        <div class="quarter-cards">
+          <div class="qcard">
+            <div class="qcard-label">Q1 — цель выручки</div>
+            <input type="text" id="b5-q1" placeholder="Например: 120 000 ₽" style="background:transparent;border:none;color:#90CAF9;font-size:12px;padding:3px 0;width:100%;outline:none">
+          </div>
+          <div class="qcard">
+            <div class="qcard-label">Q2 — цель выручки</div>
+            <input type="text" id="b5-q2" placeholder="Например: 180 000 ₽" style="background:transparent;border:none;color:#90CAF9;font-size:12px;padding:3px 0;width:100%;outline:none">
+          </div>
+          <div class="qcard">
+            <div class="qcard-label">Q3 — цель выручки</div>
+            <input type="text" id="b5-q3" placeholder="Например: 240 000 ₽" style="background:transparent;border:none;color:#90CAF9;font-size:12px;padding:3px 0;width:100%;outline:none">
+          </div>
+          <div class="qcard">
+            <div class="qcard-label">Q4 — цель выручки</div>
+            <input type="text" id="b5-q4" placeholder="Например: 320 000 ₽" style="background:transparent;border:none;color:#90CAF9;font-size:12px;padding:3px 0;width:100%;outline:none">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 6: Маркетинг -->
+    <div class="block wide" id="b6">
+      <div class="block-hdr" onclick="toggleBlock('b6')">
+        <div class="block-icon" style="background:#1A0D1A"><i class="ti ti-brand-instagram" style="font-size:15px;color:#CE93D8" aria-hidden="true"></i></div>
+        <div>
+          <div class="block-name">Маркетинг и контент</div>
+        </div>
+        <span class="block-prog" id="b6-prog">не заполнен</span>
+        <i class="ti ti-chevron-down block-chv" aria-hidden="true"></i>
+      </div>
+      <div class="block-body">
+        <div class="two-col">
+          <div class="field-row">
+            <div class="field-label">Рекламный бюджет/мес <span class="example-btn" onclick="fillExample('b6-budget','Авито продвижение: 3 000 ₽\nInstagram/VK таргет: 5 000 ₽\nЯндекс Директ (с Q2): 8 000 ₽\nИтого: 16 000 ₽/мес (8% от выручки)')">Пример</span></div>
+            <textarea id="b6-budget" placeholder="По каналам: канал → бюджет/мес..." oninput="updateProg('b6')" style="min-height:80px"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Контент-стратегия <span class="example-btn" onclick="fillExample('b6-content','Instagram: 3 поста/нед — до/после, советы, закулисье\nTelegram-канал: ежедневно — короткий лайфхак\nАвито: обновлять объявления 2×/нед\nОтзывы: запрашивать через 3 часа после уборки')">Пример</span></div>
+            <textarea id="b6-content" placeholder="Какие платформы, как часто, какой тип контента..." oninput="updateProg('b6')" style="min-height:80px"></textarea>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Главные маркетинговые задачи года <span class="example-btn" onclick="setTags('mkt-tasks',['Собрать 200+ отзывов на Авито','Запустить реферальную программу','Выйти на B2B — 3 договора','Набрать 1 000 подписчиков TG','Снять 20 видео до/после'])">Пример</span></div>
+          <div class="tag-row" id="mkt-tasks-tags"></div>
+          <div class="tag-add"><input type="text" id="mkt-tasks-inp" placeholder="Маркетинговая задача..." onkeydown="if(event.key==='Enter')addTag('mkt-tasks')"><button onclick="addTag('mkt-tasks')">+ Добавить</button></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="save-row">
+    <button class="save-btn primary" onclick="saveAll()"><i class="ti ti-device-floppy" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>Сохранить карту</button>
+    <button class="save-btn secondary" onclick="fillAllExamples()"><i class="ti ti-wand" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>Заполнить примером (клининг)</button>
+    <button class="save-btn secondary" onclick="clearAll()"><i class="ti ti-trash" style="font-size:14px;margin-right:6px" aria-hidden="true"></i>Очистить</button>
+    <div class="save-msg" id="save-msg"><i class="ti ti-check" style="font-size:14px;color:#4CAF50" aria-hidden="true"></i>Карта сохранена в браузере</div>
+  </div>
+</div>
+</div>
+
+<script>
+const TAGS = {};
+
+function toggleBlock(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('expanded');
+}
+
+function addTag(key){
+  const inp = document.getElementById(key+'-inp');
+  const val = inp.value.trim();
+  if(!val) return;
+  if(!TAGS[key]) TAGS[key] = [];
+  TAGS[key].push(val);
+  inp.value = '';
+  renderTags(key);
+  updateProg('b2'); updateProg('b3'); updateProg('b6');
+}
+
+function removeTag(key, idx){
+  TAGS[key].splice(idx,1);
+  renderTags(key);
+  updateProg('b2'); updateProg('b3'); updateProg('b6');
+}
+
+function renderTags(key){
+  const row = document.getElementById(key+'-tags');
+  if(!row) return;
+  const arr = TAGS[key]||[];
+  row.innerHTML = arr.map((t,i)=>`<span class="tag">${t}<span class="tag-del" onclick="removeTag('${key}',${i})">×</span></span>`).join('');
+}
+
+function setTags(key, arr){
+  TAGS[key] = [...arr];
+  renderTags(key);
+  updateProg('b2'); updateProg('b3'); updateProg('b6');
+}
+
+function fillExample(id, val){
+  document.getElementById(id).value = val;
+  updateProg('b1'); updateProg('b2'); updateProg('b3');
+  updateProg('b4'); updateProg('b5'); updateProg('b6');
+}
+
+function getVal(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
+
+function updateProg(bid){
+  const checks = {
+    b1: [getVal('b1-target'), getVal('b1-diff'), getVal('b1-formula')],
+    b2: [getVal('b2-prices'), getVal('b2-flagship'), (TAGS['services']||[]).length>0?'x':''],
+    b3: [(TAGS['channels']||[]).length>0?'x':'', getVal('b3-cpl'), (TAGS['new-channels']||[]).length>0?'x':''],
+    b4: [getVal('b4-now'), getVal('b4-hire'), getVal('b4-motiv')],
+    b5: [getVal('b5-rev-now'), getVal('b5-rev-target'), getVal('b5-profit')],
+    b6: [getVal('b6-budget'), getVal('b6-content'), (TAGS['mkt-tasks']||[]).length>0?'x':''],
+  };
+  const arr = checks[bid]||[];
+  const filled = arr.filter(Boolean).length;
+  const total = arr.length;
+  const pct = Math.round(filled/total*100);
+  const el = document.getElementById(bid+'-prog');
+  if(el){
+    if(pct===100){ el.textContent='Заполнен'; el.style.color='#4CAF50'; }
+    else if(pct>0){ el.textContent=pct+'%'; el.style.color='#FFB74D'; }
+    else{ el.textContent='не заполнен'; el.style.color='#5C7FA8'; }
+  }
+  let total_filled=0;
+  ['b1','b2','b3','b4','b5','b6'].forEach(b=>{
+    const c=checks[b]||[];
+    if(c.filter(Boolean).length===c.length) total_filled++;
+  });
+  const fc=document.getElementById('fill-count');
+  if(fc) fc.textContent=total_filled;
+}
+
+function updateKpiBar(){
+  const now = parseFloat((getVal('b5-rev-now')||'0').replace(/\D/g,''))||0;
+  const target = parseFloat((getVal('b5-rev-target')||'0').replace(/\D/g,''))||0;
+  const wrap = document.getElementById('kpi-progress-wrap');
+  const bar = document.getElementById('kpi-bar');
+  const lbl = document.getElementById('kpi-pct-label');
+  if(now>0&&target>0){
+    wrap.style.display='block';
+    const pct = Math.min(Math.round(now/target*100),100);
+    bar.style.width=pct+'%';
+    lbl.textContent=pct+'%';
+  } else {
+    wrap.style.display='none';
+  }
+}
+
+function setMode(mode, btn){
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  if(mode==='example'){ fillAllExamples(); }
+  if(mode==='summary'){ showSummary(); }
+  if(mode==='edit'){ showEdit(); }
+}
+
+function showEdit(){
+  document.getElementById('main-content').innerHTML = document.getElementById('main-content').innerHTML;
+}
+
+function showSummary(){
+  const blocks=[
+    {id:'b1',name:'Позиционирование',icon:'ti-target',fields:[{label:'Целевая аудитория',val:getVal('b1-target')},{label:'Ключевое отличие',val:getVal('b1-diff')},{label:'Формула',val:getVal('b1-formula')}]},
+    {id:'b2',name:'Услуги',icon:'ti-tools',fields:[{label:'Услуги',val:(TAGS['services']||[]).join(', ')},{label:'Флагман',val:getVal('b2-flagship')},{label:'Цены',val:getVal('b2-prices')}]},
+    {id:'b3',name:'Каналы продаж',icon:'ti-speakerphone',fields:[{label:'Текущие каналы',val:(TAGS['channels']||[]).join(', ')},{label:'Новые каналы',val:(TAGS['new-channels']||[]).join(', ')},{label:'CPL',val:getVal('b3-cpl')}]},
+    {id:'b4',name:'Команда',icon:'ti-users',fields:[{label:'Сейчас мастеров',val:getVal('b4-now')},{label:'Цель мастеров',val:getVal('b4-target')},{label:'Найм',val:getVal('b4-hire')}]},
+    {id:'b5',name:'Финансы',icon:'ti-coin',fields:[{label:'Выручка сейчас',val:getVal('b5-rev-now')},{label:'Цель выручки',val:getVal('b5-rev-target')},{label:'Цель прибыли',val:getVal('b5-profit')}]},
+    {id:'b6',name:'Маркетинг',icon:'ti-brand-instagram',fields:[{label:'Бюджет',val:getVal('b6-budget')},{label:'Задачи',val:(TAGS['mkt-tasks']||[]).join(', ')}]},
+  ];
+  const mc=document.getElementById('main-content');
+  mc.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">${blocks.map(b=>{
+    const hasContent=b.fields.some(f=>f.val&&f.val.trim());
+    return `<div style="background:#0D2047;border-radius:12px;border:1px solid ${hasContent?'#1565C080':'#1E3A6E'};padding:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:26px;height:26px;border-radius:6px;background:#1565C0;display:flex;align-items:center;justify-content:center"><i class="ti ${b.icon}" style="font-size:13px;color:#90CAF9" aria-hidden="true"></i></div>
+        <span style="font-size:13px;font-weight:500;color:#fff">${b.name}</span>
+        <span style="margin-left:auto;font-size:11px;color:${hasContent?'#4CAF50':'#5C7FA8'}">${hasContent?'Заполнен':'Пусто'}</span>
+      </div>
+      ${b.fields.filter(f=>f.val&&f.val.trim()).map(f=>`<div style="margin-bottom:8px"><div style="font-size:10px;color:#5C7FA8;margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px">${f.label}</div><div style="font-size:12px;color:#C8D8F0;line-height:1.5">${f.val.substring(0,120)}${f.val.length>120?'…':''}</div></div>`).join('')}
+      ${!hasContent?'<div style="font-size:12px;color:#2C4A6E;padding:6px 0">Блок не заполнен</div>':''}
+    </div>`;
+  }).join('')}</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button onclick="document.querySelector('.mode-btn').click()" style="padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:#1565C0;color:#fff;font-family:var(--font-sans)"><i class="ti ti-edit" style="font-size:13px;margin-right:5px" aria-hidden="true"></i>Вернуться к редактированию</button>
+  </div>`;
+}
+
+function saveAll(){
+  const data={
+    tags:TAGS,
+    fields:['b1-target','b1-diff','b1-formula','b2-prices','b2-flagship','b3-cpl','b4-now','b4-target','b4-hire','b4-motiv','b5-rev-now','b5-rev-target','b5-profit','b5-check-now','b5-check-target','b5-orders','b5-q1','b5-q2','b5-q3','b5-q4','b6-budget','b6-content'].reduce((acc,id)=>{const el=document.getElementById(id);if(el)acc[id]=el.value;return acc;},{})
+  };
+  try{ localStorage.setItem('cleaning_strategy',JSON.stringify(data)); } catch(e){}
+  const msg=document.getElementById('save-msg');
+  msg.classList.add('show');
+  setTimeout(()=>msg.classList.remove('show'),3000);
+}
+
+function clearAll(){
+  ['b1-target','b1-diff','b1-formula','b2-prices','b2-flagship','b3-cpl','b4-now','b4-target','b4-hire','b4-motiv','b5-rev-now','b5-rev-target','b5-profit','b5-check-now','b5-check-target','b5-orders','b5-q1','b5-q2','b5-q3','b5-q4','b6-budget','b6-content'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  Object.keys(TAGS).forEach(k=>{TAGS[k]=[];renderTags(k);});
+  ['b1','b2','b3','b4','b5','b6'].forEach(b=>updateProg(b));
+}
+
+function fillAllExamples(){
+  fillExample('b1-target','Занятые семьи с детьми в Краснодаре, доход выше среднего, ценят время и чистоту, возраст 28–45 лет. Вторая ЦА: управляющие объектами посуточной аренды.');
+  fillExample('b1-diff','Единственная компания в городе с гарантией переделки 24 часа и чек-листом 87 точек. Клиент видит фотоотчёт до нашего ухода.');
+  fillExample('b1-formula','Мы помогаем занятым семьям в Краснодаре поддерживать идеальный порядок без стресса и сюрпризов, потому что работаем по 87-точечному стандарту с гарантией переделки.');
+  setTags('services',['Поддерживающая уборка','Генеральная уборка','После ремонта','Химчистка мебели','Мойка окон','Озонирование','B2B обслуживание']);
+  fillExample('b2-prices','Эконом-студия: 2 000–2 800 ₽\nСтандарт 1–3 комнаты: 3 500–6 000 ₽\nПремиум от 80 кв.м: 6 500–12 000 ₽\nРегулярка 2×/мес: −15% от разового');
+  document.getElementById('b2-flagship').value='Генеральная уборка 60–90 кв.м. — 4 800–6 200 ₽';
+  setTags('channels',['Авито — 35 заявок/мес','Сарафан — 15 заявок','Instagram — 10 заявок','Яндекс Карты — 8 заявок']);
+  setTags('new-channels',['Telegram-канал','B2B управляющие компании','Яндекс Директ (Q2)','2ГИС продвижение']);
+  fillExample('b3-cpl','Авито: до 500 ₽\nТаргет: до 1 200 ₽\nB2B партнёры: до 800 ₽\nСарафан: 0 ₽');
+  document.getElementById('b4-now').value='2';
+  document.getElementById('b4-target').value='5';
+  fillExample('b4-hire','Q1: +1 мастер (рост объёма)\nQ2: администратор заявок\nQ3: +1 мастер B2B\nQ4: старший мастер — контроль');
+  fillExample('b4-motiv','Фикс 25 000 ₽ + 17% от объекта\nБонус за 5★ отзыв: +300 ₽\nЗакреплённый клиент на регулярке: +500 ₽/мес');
+  document.getElementById('b5-rev-now').value='95 000 ₽';
+  document.getElementById('b5-rev-target').value='250 000 ₽';
+  document.getElementById('b5-profit').value='80 000 ₽';
+  document.getElementById('b5-check-now').value='3 800 ₽';
+  document.getElementById('b5-check-target').value='5 200 ₽';
+  document.getElementById('b5-orders').value='25';
+  document.getElementById('b5-q1').value='120 000 ₽';
+  document.getElementById('b5-q2').value='170 000 ₽';
+  document.getElementById('b5-q3').value='210 000 ₽';
+  document.getElementById('b5-q4').value='250 000 ₽';
+  fillExample('b6-budget','Авито: 3 000 ₽/мес\nInstagram таргет: 5 000 ₽/мес\nЯндекс Директ (с Q2): 8 000 ₽/мес\nИтого: до 16 000 ₽ (~8% выручки)');
+  fillExample('b6-content','Instagram: 4 поста/нед — до/после, советы, отзывы клиентов\nTelegram: ежедневно — короткие лайфхаки по уборке\nАвито: обновлять объявления 3×/нед\nОтзывы: запрашивать через 3 часа после уборки по скрипту');
+  setTags('mkt-tasks',['200+ отзывов на Авито к декабрю','Реферальная программа Q1','3 B2B-договора к Q3','1 000 подп. Telegram','Лид-магниты — 5 материалов']);
+  ['b1','b2','b3','b4','b5','b6'].forEach(b=>updateProg(b));
+  updateKpiBar();
+}
+
+['b1','b2','b3','b4','b5','b6'].forEach(b=>updateProg(b));
+</script>
