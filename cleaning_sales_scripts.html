@@ -1,0 +1,406 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{background:#0A1628;border-radius:16px;overflow:hidden;font-family:var(--font-sans)}
+.hdr{background:#0D2047;padding:18px 22px 14px;border-bottom:1px solid #1E3A6E}
+.hdr-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.hdr-icon{width:38px;height:38px;border-radius:9px;background:#1565C0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr-title{font-size:16px;font-weight:500;color:#fff;line-height:1.2}
+.hdr-sub{font-size:12px;color:#5C7FA8;margin-left:50px}
+.price-badge{margin-left:auto;background:#1B5E20;color:#A5D6A7;font-size:11px;font-weight:500;padding:4px 12px;border-radius:100px;flex-shrink:0;border:1px solid #2E7D32}
+
+.cats{display:flex;gap:6px;flex-wrap:wrap;padding:14px 22px 0;background:#080F1E}
+.cat-btn{padding:7px 14px;border-radius:100px;border:1px solid #1E3A6E;background:#0D2047;color:#5C7FA8;font-size:12px;font-weight:500;cursor:pointer;transition:.15s}
+.cat-btn.on{background:#1565C0;border-color:#1565C0;color:#fff}
+.cat-btn:hover:not(.on){color:#90CAF9;border-color:#2C5282}
+
+.scripts-list{padding:14px 22px 22px;background:#080F1E;display:flex;flex-direction:column;gap:10px}
+
+.scard{background:#0D2047;border-radius:12px;border:1px solid #1E3A6E;overflow:hidden;cursor:pointer;transition:.15s}
+.scard:hover{border-color:#2C5282}
+.scard.open{border-color:#1565C0}
+.scard-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px}
+.scard-num{width:26px;height:26px;border-radius:6px;background:#1565C0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;flex-shrink:0}
+.scard-obj{flex:1;min-width:0}
+.scard-trigger{font-size:13px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scard-type{font-size:11px;color:#5C7FA8;margin-top:2px}
+.scard-arr{font-size:14px;color:#5C7FA8;transition:transform .2s;flex-shrink:0}
+.scard.open .scard-arr{transform:rotate(180deg)}
+
+.scard-body{display:none;border-top:1px solid #1E3A6E;padding:16px}
+.scard.open .scard-body{display:block}
+
+.script-formula{background:#0A1628;border-radius:8px;padding:10px 14px;margin-bottom:14px;border-left:3px solid #1565C0;border-radius:0}
+.formula-label{font-size:10px;color:#5C7FA8;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.formula-text{font-size:12px;color:#90CAF9;line-height:1.6}
+
+.dialog{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.msg{max-width:88%;padding:9px 13px;border-radius:10px;font-size:12.5px;line-height:1.6}
+.msg-client{background:#1A2A40;color:#B0C8E8;align-self:flex-start;border-bottom-left-radius:3px}
+.msg-us{background:#1565C0;color:#E3F2FD;align-self:flex-end;border-bottom-right-radius:3px}
+.msg-label{font-size:10px;margin-bottom:3px;font-weight:500}
+.msg-label.cl{color:#5C7FA8}
+.msg-label.us{color:#90CAF9;text-align:right}
+.msg-wrap{display:flex;flex-direction:column}
+.msg-wrap.right{align-items:flex-end}
+
+.script-result{background:#071A0E;border:1px solid #1B5E20;border-radius:8px;padding:10px 14px;margin-bottom:14px}
+.result-label{font-size:10px;color:#388E3C;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.result-text{font-size:12px;color:#81C784;line-height:1.6}
+
+.tips-row{display:flex;gap:8px;flex-wrap:wrap}
+.tip-pill{background:#0A1628;border:1px solid #1E3A6E;border-radius:6px;padding:6px 10px;font-size:11px;color:#5C7FA8;line-height:1.5}
+.tip-pill strong{color:#90CAF9;display:block;font-size:10px;margin-bottom:2px}
+
+.counter-bar{display:flex;gap:8px;padding:10px 22px;background:#080F1E;border-top:1px solid #1E3A6E;flex-wrap:wrap}
+.cstat{background:#0D2047;border-radius:8px;padding:7px 12px;flex:1;min-width:80px;text-align:center}
+.cstat-n{font-size:17px;font-weight:500;color:#64B5F6}
+.cstat-l{font-size:10px;color:#5C7FA8;margin-top:1px}
+</style>
+
+<h2 class="sr-only">Скрипты продаж клинингового бизнеса — 15 готовых скриптов с диалогами</h2>
+
+<div class="wrap">
+<div class="hdr">
+  <div class="hdr-row">
+    <div class="hdr-icon"><i class="ti ti-messages" style="font-size:18px;color:#90CAF9" aria-hidden="true"></i></div>
+    <div class="hdr-title">Скрипты продаж клинингового бизнеса</div>
+    <span class="price-badge">199 ₽</span>
+  </div>
+  <div class="hdr-sub">15 готовых скриптов · Диалоги · Возражения · Допродажи · Удержание</div>
+</div>
+
+<div class="cats" id="cats">
+  <button class="cat-btn on" onclick="filter('all',this)">Все 15</button>
+  <button class="cat-btn" onclick="filter('obj',this)">Возражения</button>
+  <button class="cat-btn" onclick="filter('upsell',this)">Допродажи</button>
+  <button class="cat-btn" onclick="filter('keep',this)">Удержание</button>
+  <button class="cat-btn" onclick="filter('msg',this)">Мессенджеры</button>
+  <button class="cat-btn" onclick="filter('call',this)">Звонки</button>
+</div>
+
+<div class="scripts-list" id="list"></div>
+
+<div class="counter-bar">
+  <div class="cstat"><div class="cstat-n">15</div><div class="cstat-l">скриптов</div></div>
+  <div class="cstat"><div class="cstat-n">7</div><div class="cstat-l">возражений</div></div>
+  <div class="cstat"><div class="cstat-n">5</div><div class="cstat-l">мессенджеры</div></div>
+  <div class="cstat"><div class="cstat-n">3</div><div class="cstat-l">звонки</div></div>
+</div>
+</div>
+
+<script>
+const SCRIPTS = [
+  {
+    id:1, cat:'obj', type:'Возражение · Цена',
+    trigger:'«У вас дорого»',
+    formula:'Признать → Уточнить сравнение → Показать разницу → Убрать риск',
+    dialog:[
+      {who:'cl', text:'У вас дорого, я нашла компанию за 2 500, у вас 3 800.'},
+      {who:'us', text:'Да, мы не самые дешёвые, и это осознанно. Подскажите — у той компании есть чек-лист приёмки и гарантия переделки бесплатно, если что-то не устроит?'},
+      {who:'cl', text:'Не знаю, наверное нет...'},
+      {who:'us', text:'Вот в чём разница. Мы работаем по 87 точкам контроля, фотофиксируем результат и если хоть что-то не так — переделываем за наш счёт. Цена "дешевле" часто оборачивается повторной уборкой. У нас фиксированная цена и ноль сюрпризов.'},
+    ],
+    result:'Клиент понимает: платит не за «уборку», а за гарантию результата. Конверсия +40% против простого снижения цены.',
+    tips:[
+      {label:'Не делать', text:'Сразу давать скидку'},
+      {label:'Ключевая фраза', text:'«Фиксированная цена и ноль сюрпризов»'},
+      {label:'Финал', text:'Предложи записать на конкретную дату'},
+    ]
+  },
+  {
+    id:2, cat:'obj', type:'Возражение · Откладывание',
+    trigger:'«Я подумаю»',
+    formula:'Согласиться → Выявить настоящее возражение → Закрыть его',
+    dialog:[
+      {who:'cl', text:'Спасибо, я подумаю и напишу.'},
+      {who:'us', text:'Конечно, решение за вами. Чтобы я мог дать точный ответ — что именно вас останавливает? Цена, время, или что-то ещё?'},
+      {who:'cl', text:'Ну, не уверена, что стоит того.'},
+      {who:'us', text:'Понимаю. Давайте так: я запишу вас на ближайшую свободную дату, вы ни к чему не обязаны. Если передумаете — просто напишите за сутки, без штрафов. Когда вам удобнее — в пятницу или в субботу?'},
+    ],
+    result:'«Подумаю» почти всегда = незакрытое возражение. Задаём прямой вопрос и переводим в конкретику даты.',
+    tips:[
+      {label:'Приём', text:'Выбор без выбора: пятница или суббота?'},
+      {label:'Не делать', text:'Ждать — сами не напишут'},
+      {label:'Дожим', text:'Напомнить через 24 часа'},
+    ]
+  },
+  {
+    id:3, cat:'obj', type:'Возражение · Конкуренты',
+    trigger:'«У конкурентов дешевле»',
+    formula:'Не спорить → Уточнить условия → Показать скрытую стоимость',
+    dialog:[
+      {who:'cl', text:'Мне предложили генеральную за 4 000, у вас 5 500.'},
+      {who:'us', text:'Хорошее предложение. Уточните — в эту цену входит мойка окон изнутри, чистка духовки и санация санузла? У нас это включено по умолчанию.'},
+      {who:'cl', text:'Не спрашивала...'},
+      {who:'us', text:'Часто в базовую цену это не входит, и по итогу доплачивают 1 000–2 000 сверху. У нас финальная цена 5 500 — без доплат и сюрпризов. Давайте я пришлю полный состав работ, сравните?'},
+    ],
+    result:'Переключаем сравнение с цены на состав. Клиент видит: «дешевле» может оказаться дороже.',
+    tips:[
+      {label:'Приём', text:'Сравнение состава, не цены'},
+      {label:'Козырь', text:'Отправить детальный список работ'},
+      {label:'Финал', text:'Предложи прозрачную смету'},
+    ]
+  },
+  {
+    id:4, cat:'obj', type:'Возражение · Скидка',
+    trigger:'«А скидку дадите?»',
+    formula:'Не отказывать грубо → Переформатировать → Дать ценность вместо скидки',
+    dialog:[
+      {who:'cl', text:'Можете сделать скидку? Ну хоть 10%?'},
+      {who:'us', text:'Скидку на текущий заказ не дам — это честно. Но вот что могу: если после первой уборки оформите регулярку раз в две недели — даю фиксированную цену на 6 месяцев без повышения, плюс приоритетный выезд. Для многих это выгоднее разовой скидки.'},
+      {who:'cl', text:'Интересно, а сколько стоит регулярка?'},
+      {who:'us', text:'Для квартиры вашего размера — 2 800 каждые две недели. Первую уборку сделаем по стандартной цене, посмотрите на качество, потом решите.'},
+    ],
+    result:'Отказ от скидки + предложение большей ценности. Переводим разовую продажу в LTV-клиента.',
+    tips:[
+      {label:'Правило', text:'Скидка обесценивает услугу'},
+      {label:'Замена', text:'Фиксированная цена на 6 мес.'},
+      {label:'Цель', text:'Перевести в постоянного клиента'},
+    ]
+  },
+  {
+    id:5, cat:'obj', type:'Возражение · Недоверие',
+    trigger:'«А вдруг сделают плохо?»',
+    formula:'Снять риск → Показать гарантию → Предложить проверку',
+    dialog:[
+      {who:'cl', text:'Я боюсь, что придут и сделают всё кое-как.'},
+      {who:'us', text:'Понимаю — такое бывает. Именно поэтому мы работаем по чек-листу из 87 пунктов и фотографируем каждую зону до и после. Вы видите результат ещё до того, как мы ушли.'},
+      {who:'cl', text:'Ну и что, если всё равно плохо?'},
+      {who:'us', text:'Тогда мы возвращаемся и переделываем бесплатно в течение 24 часов. Без споров. Это наша письменная гарантия. Ни разу не случалось, чтобы клиент остался недоволен после переделки.'},
+    ],
+    result:'Конкретная гарантия переделки снимает 80% страхов. Важно назвать срок — 24 часа.',
+    tips:[
+      {label:'Козырь', text:'Гарантия переделки 24 часа'},
+      {label:'Доказательство', text:'Показать фото до/после'},
+      {label:'Усилить', text:'Отзывы с именами клиентов'},
+    ]
+  },
+  {
+    id:6, cat:'obj', type:'Возражение · Занятость',
+    trigger:'«Не хочу чтобы приходили когда меня нет»',
+    formula:'Принять опасение → Объяснить систему безопасности → Закрыть',
+    dialog:[
+      {who:'cl', text:'Мне неудобно, когда чужие люди в квартире без меня.'},
+      {who:'us', text:'Это абсолютно нормальная позиция. У нас есть два варианта: приезжаем только когда вы дома, или — если удобнее — работаем по системе «ключи с описью»: вы передаёте ключ, мы подписываем акт приёма и сдаём ключ обратно с фотоотчётом.'},
+      {who:'cl', text:'Ладно, расскажите про первый вариант.'},
+      {who:'us', text:'Отлично. Тогда выбираем время когда вам удобно быть дома. Мастер приедет точно в назначенное время — у нас нет окон «с 10 до 14». Точное время, всегда.'},
+    ],
+    result:'Убираем барьер присутствия. Точное время — сильный аргумент против конкурентов с расплывчатыми окнами.',
+    tips:[
+      {label:'Сильный аргумент', text:'Точное время, не окно'},
+      {label:'Альтернатива', text:'Система ключей с актом'},
+      {label:'Доверие', text:'Мастера с паспортными данными'},
+    ]
+  },
+  {
+    id:7, cat:'obj', type:'Возражение · Повторный отказ',
+    trigger:'«Нет, всё равно не буду»',
+    formula:'Не давить → Оставить дверь открытой → Взять контакт',
+    dialog:[
+      {who:'cl', text:'Нет, я решила, что не буду заказывать.'},
+      {who:'us', text:'Хорошо, понимаю. Последний вопрос — могу я прислать вам наш чек-лист для самостоятельной уборки? Это бесплатно и реально помогает. Просто чтобы остаться на связи.'},
+      {who:'cl', text:'Ну ладно, присылайте.'},
+      {who:'us', text:'Отлично. Пришлю сейчас. Если понадобится профессиональная уборка — вы знаете куда обратиться. Хорошего дня!'},
+    ],
+    result:'Не теряем контакт. Через 2–4 недели 30% таких клиентов возвращаются сами после попытки убраться самостоятельно.',
+    tips:[
+      {label:'Приём', text:'Бесплатный лид-магнит на выходе'},
+      {label:'Правило', text:'Никогда не жечь мосты'},
+      {label:'Возврат', text:'Напомнить через 3 недели'},
+    ]
+  },
+  {
+    id:8, cat:'upsell', type:'Допродажа · После уборки',
+    trigger:'Предложение регулярки после первого заказа',
+    formula:'WOW-момент → Пока впечатление свежее → Конкретное предложение',
+    dialog:[
+      {who:'us', text:'Наталья, как вам результат? Всё понравилось?'},
+      {who:'cl', text:'Да, очень чисто, спасибо!'},
+      {who:'us', text:'Рада слышать! Хочу предложить: если закрепим мастера Марину за вашей квартирой и сделаем поддерживающую уборку раз в 2 недели — цена будет 2 600 вместо 3 200. Марина уже знает вашу квартиру, ей не нужно время на ориентацию.'},
+      {who:'cl', text:'Интересно, а можно попробовать?'},
+      {who:'us', text:'Конечно — давайте запишем следующую дату прямо сейчас. Если что-то не понравится — отменяем без штрафов.'},
+    ],
+    result:'Лучший момент для допродажи — сразу после WOW. Конверсия в первые 30 минут в 4 раза выше, чем через день.',
+    tips:[
+      {label:'Тайминг', text:'Звонить через 2–4 часа после уборки'},
+      {label:'Приём', text:'Персональный мастер = доверие'},
+      {label:'Скидка', text:'Показывай в рублях, не в %'},
+    ]
+  },
+  {
+    id:9, cat:'upsell', type:'Допродажа · Химчистка',
+    trigger:'Диван / ковёр / кресла во время уборки',
+    formula:'Заметить проблему → Назвать риск → Предложить решение',
+    dialog:[
+      {who:'us', text:'Иван, пока убираем — заметила пятна на диване. Выглядит как жирное, с таким лучше работать профессиональной химией, пока не въелось глубже. Хотите, сделаем химчистку сегодня же?'},
+      {who:'cl', text:'А сколько это стоит?'},
+      {who:'us', text:'Трёхместный диван — 1 800 рублей, займёт ещё час. Сохнет 3–4 часа, к вечеру готово. Если не сделать сейчас — пятна могут стать постоянными.'},
+      {who:'cl', text:'Ладно, делайте.'},
+    ],
+    result:'Допродажа на месте конвертирует в 60–70% случаев. Клиент уже доверяет — барьер минимальный.',
+    tips:[
+      {label:'Триггер', text:'Называем конкретную проблему'},
+      {label:'Срочность', text:'«Пока не въелось» — работает'},
+      {label:'Уточнить', text:'Цену называть сразу и точно'},
+    ]
+  },
+  {
+    id:10, cat:'upsell', type:'Допродажа · Озонирование',
+    trigger:'Запах, домашние животные, после болезни',
+    formula:'Проблема очевидна → Быстрое решение → Цена + время',
+    dialog:[
+      {who:'us', text:'Замечаю запах от питомца — это нормально, но обычная уборка его не уберёт полностью. Мы можем сделать озонирование — 45 минут, и квартира пахнет нейтрально. Стоит 1 200 рублей.'},
+      {who:'cl', text:'А это безопасно для кошки?'},
+      {who:'us', text:'Да, через час после процедуры можно заходить. Озон распадается до обычного кислорода — никакой химии не остаётся. Хотите добавить к сегодняшней уборке?'},
+    ],
+    result:'Озонирование — высокомаржинальная услуга с минимальными затратами времени. Идеально для допродажи.',
+    tips:[
+      {label:'Маржа', text:'Высокая при низкой себестоимости'},
+      {label:'Триггер', text:'Животные / болезнь / ремонт'},
+      {label:'Снять страх', text:'Безопасность для людей и питомцев'},
+    ]
+  },
+  {
+    id:11, cat:'upsell', type:'Допродажа · Окна',
+    trigger:'После или во время генеральной уборки',
+    formula:'Визуальный контраст → Логика завершённости → Цена за окно',
+    dialog:[
+      {who:'us', text:'Всё готово! Квартира блестит. Единственное — окна снаружи мы не мыли, и на их фоне остальное выглядит контрастнее. Хотите доделать? 350 рублей за створку, займёт 20 минут.'},
+      {who:'cl', text:'А сколько у меня створок?'},
+      {who:'us', text:'Шесть — то есть 2 100 рублей за все. Можно только самые заметные — выходящие на улицу, это четыре, 1 400 рублей.'},
+    ],
+    result:'«Логика завершённости» — мощный триггер. Клиент уже заплатил, ещё чуть-чуть воспринимается легко.',
+    tips:[
+      {label:'Психология', text:'Эффект незавершённости'},
+      {label:'Гибкость', text:'Предложи частичный вариант'},
+      {label:'Тайминг', text:'В конце уборки, не в начале'},
+    ]
+  },
+  {
+    id:12, cat:'keep', type:'Удержание · Пропавший клиент',
+    trigger:'Клиент не заказывал 3–4 недели',
+    formula:'Напомнить без давления → Дать повод → Конкретное предложение',
+    dialog:[
+      {who:'us', text:'Привет, Анна! Не видели вас давно — всё хорошо? Мы освободили окно на следующую пятницу, вспомнили про вас первой.'},
+      {who:'cl', text:'Да, всё ок, просто немного поджимает бюджет.'},
+      {who:'us', text:'Понимаю. У нас есть вариант «лёгкой поддерживающей» — 2 часа, только кухня, санузел и пол. Стоит 1 800. Чтобы не запускать совсем, пока ситуация не изменится.'},
+    ],
+    result:'«Мини-формат» снижает барьер для клиентов с ограниченным бюджетом и сохраняет отношения.',
+    tips:[
+      {label:'Тон', text:'Тепло, без упрёков и давления'},
+      {label:'Приём', text:'«Вспомнили про вас первой»'},
+      {label:'Выход', text:'Мини-формат как промежуточный вариант'},
+    ]
+  },
+  {
+    id:13, cat:'keep', type:'Удержание · После жалобы',
+    trigger:'Клиент недоволен качеством',
+    formula:'Принять без оправданий → Исправить быстро → Дать компенсацию',
+    dialog:[
+      {who:'cl', text:'Мне не понравилось — за холодильником не убрали и в ванной осталась известь.'},
+      {who:'us', text:'Анна, простите, это наша ошибка. Мы приедем завтра до 12 и исправим — бесплатно, это само собой. Плюс следующая уборка со скидкой 20% — как извинение с нашей стороны.'},
+      {who:'cl', text:'Ну ладно, жду завтра.'},
+      {who:'us', text:'Будем в 10:00. Спасибо, что сказали — это помогает нам становиться лучше.'},
+    ],
+    result:'Грамотно отработанная жалоба создаёт более лояльного клиента, чем если бы ошибки не было. Скорость реакции = ключевой фактор.',
+    tips:[
+      {label:'Правило', text:'Ни одного оправдания'},
+      {label:'Скорость', text:'Ответ в течение 1 часа'},
+      {label:'Результат', text:'Лояльность после жалобы выше'},
+    ]
+  },
+  {
+    id:14, cat:'msg', type:'Мессенджер · Первый контакт',
+    trigger:'Входящее сообщение «Сколько стоит уборка?»',
+    formula:'Не называть цену сразу → Уточнить → Дать вилку + следующий шаг',
+    dialog:[
+      {who:'cl', text:'Привет, сколько стоит генеральная уборка?'},
+      {who:'us', text:'Привет! Стоимость зависит от площади и состояния — для квартиры в нормальном состоянии обычно от 3 500 до 6 000 ₽. Скажите: сколько комнат и примерная площадь? Дам точную цену за 5 минут.'},
+      {who:'cl', text:'3 комнаты, 70 кв.м.'},
+      {who:'us', text:'70 кв.м, 3 комнаты — 4 800 ₽. Включены кухня, санузел, все комнаты, мойка окон изнутри. Ближайшая дата — четверг или пятница. Когда удобнее?'},
+    ],
+    result:'Вилка цен + уточняющий вопрос удерживает диалог. Прямая цена без контекста — конец разговора.',
+    tips:[
+      {label:'Правило', text:'Цену — только после уточнения'},
+      {label:'Темп', text:'Ответить в течение 5 минут'},
+      {label:'Финал', text:'Закрывать на дату, не на «подумайте»'},
+    ]
+  },
+  {
+    id:15, cat:'call', type:'Звонок · Входящий лид',
+    trigger:'Клиент звонит по рекламе первый раз',
+    formula:'Приветствие → Квалификация → Цена → Запись',
+    dialog:[
+      {who:'cl', text:'Алло, это клининг? Мне нужна уборка после ремонта.'},
+      {who:'us', text:'Да, здравствуйте! Меня зовут Марина, я помогу подобрать вариант. Подскажите: какая площадь квартиры и в каком городе?'},
+      {who:'cl', text:'85 кв.м., Краснодар.'},
+      {who:'us', text:'Отлично. После ремонта на 85 кв.м. — от 7 500 до 9 000 ₽, зависит от степени загрязнения. Это две бригады на полный день, вывоз строительного мусора входит. Когда планируете? Есть окна на этой и следующей неделе.'},
+      {who:'cl', text:'На следующей, в среду.'},
+      {who:'us', text:'Среда свободна. Запишу вас на 10 утра — вам перезвонить за день накануне для подтверждения?'},
+    ],
+    result:'Структура звонка: имя → квалификация → цена с вилкой → конкретная дата → подтверждение. Без этой структуры 50% звонков не конвертируются.',
+    tips:[
+      {label:'Правило', text:'Называть своё имя сразу'},
+      {label:'Квалификация', text:'Площадь + город = точная цена'},
+      {label:'Закрытие', text:'Дата + звонок-напоминание'},
+    ]
+  },
+];
+
+let openId = null;
+
+function render(items){
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+  items.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'scard' + (openId === s.id ? ' open' : '');
+    card.innerHTML = `
+      <div class="scard-hdr" onclick="toggle(${s.id})">
+        <div class="scard-num">${s.id}</div>
+        <div class="scard-obj">
+          <div class="scard-trigger">${s.trigger}</div>
+          <div class="scard-type">${s.type}</div>
+        </div>
+        <div class="scard-arr"><i class="ti ti-chevron-down" aria-hidden="true"></i></div>
+      </div>
+      <div class="scard-body">
+        <div class="script-formula">
+          <div class="formula-label">Формула</div>
+          <div class="formula-text">${s.formula}</div>
+        </div>
+        <div class="dialog">${s.dialog.map(m=>`
+          <div class="msg-wrap ${m.who==='us'?'right':''}">
+            <div class="msg-label ${m.who==='cl'?'cl':'us'}">${m.who==='cl'?'Клиент':'Вы'}</div>
+            <div class="msg msg-${m.who}">${m.text}</div>
+          </div>`).join('')}
+        </div>
+        <div class="script-result">
+          <div class="result-label">Почему работает</div>
+          <div class="result-text">${s.result}</div>
+        </div>
+        <div class="tips-row">${s.tips.map(t=>`<div class="tip-pill"><strong>${t.label}</strong>${t.text}</div>`).join('')}</div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggle(id){
+  openId = openId === id ? null : id;
+  const cat = document.querySelector('.cat-btn.on');
+  const current = cat ? cat.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+  const filtered = current === 'all' ? SCRIPTS : SCRIPTS.filter(s => s.cat === current);
+  render(filtered);
+}
+
+function filter(cat, btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  openId = null;
+  const items = cat === 'all' ? SCRIPTS : SCRIPTS.filter(s => s.cat === cat);
+  render(items);
+}
+
+render(SCRIPTS);
+</script>
