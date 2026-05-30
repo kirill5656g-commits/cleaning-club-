@@ -1,0 +1,296 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{background:#0A1628;border-radius:16px;overflow:hidden}
+.hdr{background:#0D2047;padding:20px 24px 16px;border-bottom:1px solid #1E3A6E}
+.hdr-top{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.logo{width:36px;height:36px;border-radius:8px;background:#1565C0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr h1{font-size:17px;font-weight:500;color:#fff;line-height:1.2}
+.hdr p{font-size:12px;color:#5C7FA8;margin-left:48px}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:3px 10px;border-radius:100px;background:#1565C0;color:#90CAF9;letter-spacing:.5px}
+.tabs{display:flex;background:#080F1E;padding:0 24px}
+.tab{padding:12px 16px;font-size:13px;font-weight:500;color:#5C7FA8;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;white-space:nowrap}
+.tab.on{color:#64B5F6;border-color:#1565C0}
+.panel{display:none;padding:20px 24px}
+.panel.on{display:block}
+.section-label{font-size:11px;font-weight:500;color:#5C7FA8;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;margin-top:20px}
+.section-label:first-child{margin-top:0}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.row label{font-size:13px;color:#90A8C8;flex:1;min-width:0}
+.row input[type=range]{flex:1.2;accent-color:#1565C0}
+.row .val{font-size:13px;font-weight:500;color:#fff;min-width:72px;text-align:right}
+.row input[type=number]{width:90px;background:#0D2047;border:1px solid #1E3A6E;border-radius:6px;padding:5px 8px;font-size:13px;color:#fff;text-align:right;outline:none}
+.row input[type=number]:focus{border-color:#1565C0}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:20px}
+.rcard{background:#0D2047;border-radius:10px;padding:12px 14px;border:1px solid #1E3A6E}
+.rcard.highlight{background:#0D3470;border-color:#1565C0}
+.rcard.danger{background:#200A0A;border-color:#7F1D1D}
+.rcard.success{background:#071A0E;border-color:#14532D}
+.rcard-label{font-size:11px;color:#5C7FA8;margin-bottom:6px}
+.rcard-val{font-size:20px;font-weight:500;color:#fff}
+.rcard-val.pos{color:#4CAF50}
+.rcard-val.neg{color:#EF5350}
+.rcard-val.blue{color:#64B5F6}
+.rcard-sub{font-size:11px;color:#5C7FA8;margin-top:3px}
+.divider{height:1px;background:#1E3A6E;margin:16px 0}
+.alert{border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.6;margin-top:14px}
+.alert.warn{background:#1A0E00;border:1px solid #7C4A00;color:#F5A623}
+.alert.ok{background:#071A0E;border:1px solid #1B5E20;color:#66BB6A}
+.alert.info{background:#0A1A30;border:1px solid #1E3A6E;color:#64B5F6}
+.chart-wrap{margin-top:16px}
+.chart-label{font-size:11px;color:#5C7FA8;margin-bottom:8px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar-name{font-size:12px;color:#90A8C8;width:120px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;height:22px;background:#0D2047;border-radius:4px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;transition:width .3s}
+.bar-fill.cost{background:#1565C0}
+.bar-fill.rev{background:#1B5E20}
+.bar-fill.prof{background:#0D47A1}
+.bar-num{font-size:12px;color:#fff;width:60px;text-align:right;flex-shrink:0}
+.be-section{margin-top:16px}
+.be-line{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1E3A6E;font-size:13px}
+.be-line:last-child{border-bottom:none}
+.be-name{color:#90A8C8}
+.be-val{color:#fff;font-weight:500}
+.be-val.accent{color:#64B5F6}
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.sc-card{background:#0D2047;border-radius:8px;padding:10px 12px;border:1px solid #1E3A6E;text-align:center}
+.sc-title{font-size:11px;color:#5C7FA8;margin-bottom:6px}
+.sc-rev{font-size:15px;font-weight:500;color:#64B5F6}
+.sc-profit{font-size:12px;margin-top:3px}
+.tip{font-size:11px;color:#5C7FA8;padding:8px 12px;background:#080F1E;border-radius:6px;margin-top:12px;line-height:1.5}
+</style>
+
+<h2 class="sr-only">Финансовая таблица клинингового бизнеса — интерактивный калькулятор</h2>
+
+<div class="wrap">
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo"><i class="ti ti-chart-bar" style="font-size:18px;color:#90CAF9" aria-hidden="true"></i></div>
+    <div>
+      <h1>Финансовая таблица клинингового бизнеса</h1>
+    </div>
+    <span class="badge" style="margin-left:auto;flex-shrink:0">БЕСПЛАТНО</span>
+  </div>
+  <p>Юнит-экономика · Точка безубыточности · Реальная прибыль</p>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="showTab('unit',this)">Юнит-экономика</div>
+  <div class="tab" onclick="showTab('be',this)">Безубыточность</div>
+  <div class="tab" onclick="showTab('month',this)">Месяц целиком</div>
+  <div class="tab" onclick="showTab('scenarios',this)">Сценарии</div>
+</div>
+
+<div id="unit" class="panel on">
+  <div class="section-label">Одна уборка — доходы</div>
+  <div class="row"><label>Средний чек</label><input type="range" id="price" min="1500" max="15000" step="100" value="4500" oninput="calc()"><span class="val" id="price-v">4 500 ₽</span></div>
+
+  <div class="section-label">Прямые расходы на одну уборку</div>
+  <div class="row"><label>Зарплата мастера (за объект)</label><input type="range" id="salary" min="300" max="4000" step="50" value="1200" oninput="calc()"><span class="val" id="salary-v">1 200 ₽</span></div>
+  <div class="row"><label>Химия и расходники</label><input type="range" id="chem" min="50" max="800" step="10" value="180" oninput="calc()"><span class="val" id="chem-v">180 ₽</span></div>
+  <div class="row"><label>Транспорт / доставка</label><input type="range" id="trans" min="0" max="600" step="10" value="120" oninput="calc()"><span class="val" id="trans-v">120 ₽</span></div>
+  <div class="row"><label>Амортизация инвентаря</label><input type="range" id="equip" min="0" max="300" step="10" value="60" oninput="calc()"><span class="val" id="equip-v">60 ₽</span></div>
+  <div class="row"><label>Стоимость привлечения (реклама ÷ заявки)</label><input type="range" id="acq" min="0" max="2000" step="50" value="350" oninput="calc()"><span class="val" id="acq-v">350 ₽</span></div>
+
+  <div class="results" id="unit-results"></div>
+
+  <div class="chart-wrap">
+    <div class="chart-label">Структура выручки</div>
+    <div id="unit-bars"></div>
+  </div>
+  <div class="alert info" id="unit-tip"></div>
+</div>
+
+<div id="be" class="panel">
+  <div class="section-label">Постоянные расходы в месяц</div>
+  <div class="row"><label>Аренда офиса / склада</label><input type="range" id="rent" min="0" max="60000" step="500" value="15000" oninput="calc()"><span class="val" id="rent-v">15 000 ₽</span></div>
+  <div class="row"><label>Зарплата администратора</label><input type="range" id="admin" min="0" max="60000" step="500" value="25000" oninput="calc()"><span class="val" id="admin-v">25 000 ₽</span></div>
+  <div class="row"><label>Реклама и маркетинг (фикс.)</label><input type="range" id="mkt" min="0" max="50000" step="500" value="8000" oninput="calc()"><span class="val" id="mkt-v">8 000 ₽</span></div>
+  <div class="row"><label>Прочее (связь, сервисы, налоги)</label><input type="range" id="misc" min="0" max="30000" step="500" value="7000" oninput="calc()"><span class="val" id="misc-v">7 000 ₽</span></div>
+
+  <div class="be-section" id="be-results"></div>
+  <div class="alert" id="be-alert" style="margin-top:14px"></div>
+</div>
+
+<div id="month" class="panel">
+  <div class="section-label">Объём работ в месяц</div>
+  <div class="row"><label>Количество уборок в месяц</label><input type="range" id="orders" min="5" max="200" step="1" value="30" oninput="calc()"><span class="val" id="orders-v">30</span></div>
+  <div class="row"><label>% регулярных клиентов</label><input type="range" id="regular" min="0" max="100" step="5" value="40" oninput="calc()"><span class="val" id="regular-v">40%</span></div>
+  <div class="row"><label>Число мастеров</label><input type="range" id="masters" min="1" max="20" step="1" value="2" oninput="calc()"><span class="val" id="masters-v">2</span></div>
+
+  <div class="results" id="month-results"></div>
+  <div class="chart-wrap" style="margin-top:20px">
+    <div class="chart-label">Разбивка доходов и расходов</div>
+    <div id="month-bars"></div>
+  </div>
+  <div class="alert" id="month-alert" style="margin-top:14px"></div>
+</div>
+
+<div id="scenarios" class="panel">
+  <div class="section-label">Три сценария развития — на основе ваших цифр</div>
+  <div class="scenario-grid" id="sc-grid"></div>
+
+  <div class="divider"></div>
+  <div class="section-label">Динамика прибыли по количеству заказов</div>
+  <div id="sc-chart"></div>
+
+  <div class="tip" id="sc-tip"></div>
+  <div style="margin-top:14px">
+    <button onclick="sendPrompt('Как мне увеличить маржу каждой уборки в клининговом бизнесе?')" style="width:100%;padding:10px;font-size:13px;border-radius:8px;cursor:pointer;background:#0D2047;border:1px solid #1565C0;color:#64B5F6">Как увеличить маржу каждой уборки? ↗</button>
+  </div>
+</div>
+</div>
+
+<script>
+function fmt(n){return Math.round(n).toLocaleString('ru-RU')+'₽'}
+function fmtN(n){return Math.round(n).toLocaleString('ru-RU')}
+function pct(n){return Math.round(n)+'%'}
+function r(id){return parseInt(document.getElementById(id).value)}
+function setV(id,txt){let el=document.getElementById(id);if(el)el.textContent=txt}
+
+function calc(){
+  let price=r('price'),salary=r('salary'),chem=r('chem'),trans=r('trans'),equip=r('equip'),acq=r('acq');
+  let rent=r('rent'),admin=r('admin'),mkt=r('mkt'),misc=r('misc');
+  let orders=r('orders'),regular=r('regular'),masters=r('masters');
+
+  setV('price-v',fmt(price));
+  setV('salary-v',fmt(salary));
+  setV('chem-v',fmt(chem));
+  setV('trans-v',fmt(trans));
+  setV('equip-v',fmt(equip));
+  setV('acq-v',fmt(acq));
+  setV('rent-v',fmt(rent));
+  setV('admin-v',fmt(admin));
+  setV('mkt-v',fmt(mkt));
+  setV('misc-v',fmt(misc));
+  setV('orders-v',fmtN(orders));
+  setV('regular-v',pct(regular));
+  setV('masters-v',fmtN(masters));
+
+  let varCost=salary+chem+trans+equip+acq;
+  let unitMargin=price-varCost;
+  let marginPct=price>0?Math.round(unitMargin/price*100):0;
+  let fixedCosts=rent+admin+mkt+misc;
+
+  let ur=document.getElementById('unit-results');
+  let cardClass=unitMargin>0?'success':unitMargin<0?'danger':'rcard';
+  ur.innerHTML=`
+    <div class="rcard"><div class="rcard-label">Выручка</div><div class="rcard-val blue">${fmt(price)}</div></div>
+    <div class="rcard"><div class="rcard-label">Переменные расходы</div><div class="rcard-val ${unitMargin<0?'pos':'neg'}">${fmt(varCost)}</div></div>
+    <div class="rcard ${unitMargin>=0?'success':'danger'}"><div class="rcard-label">Маржа с уборки</div><div class="rcard-val ${unitMargin>=0?'pos':'neg'}">${fmt(unitMargin)}</div><div class="rcard-sub">${pct(marginPct)} от чека</div></div>
+    <div class="rcard ${marginPct>=40?'success':marginPct>=25?'highlight':'danger'}"><div class="rcard-label">Маржинальность</div><div class="rcard-val ${marginPct>=40?'pos':marginPct>=25?'blue':'neg'}">${pct(marginPct)}</div><div class="rcard-sub">${marginPct>=40?'Отлично':marginPct>=25?'Норма':'Опасно'}</div></div>
+  `;
+
+  let maxCost=Math.max(salary,chem,trans,equip,acq,unitMargin>0?unitMargin:0,1);
+  document.getElementById('unit-bars').innerHTML=`
+    ${bar('Зарплата мастера',salary,maxCost,'cost')}
+    ${bar('Химия и расход.',chem,maxCost,'cost')}
+    ${bar('Транспорт',trans,maxCost,'cost')}
+    ${bar('Амортизация',equip,maxCost,'cost')}
+    ${bar('Привлечение',acq,maxCost,'cost')}
+    ${bar('Ваша маржа',unitMargin>0?unitMargin:0,maxCost,'prof')}
+  `;
+
+  let tipText=marginPct>=45?'Отличная маржинальность! Ваш чек выше средних расходов на привлечение. Можно масштабировать.':
+    marginPct>=30?'Хорошая маржа. Проверьте стоимость привлечения — это часто скрытый убийца прибыли.':
+    marginPct>=15?'Маржа ниже нормы. Ключевые зоны: зарплата мастера и стоимость привлечения клиента.':
+    'Критично низкая маржа. Этот объект может быть убыточным с учётом постоянных расходов.';
+  document.getElementById('unit-tip').textContent=tipText;
+
+  let beOrders=unitMargin>0?Math.ceil(fixedCosts/unitMargin):999;
+  let beRev=unitMargin>0?beOrders*price:0;
+  document.getElementById('be-results').innerHTML=`
+    <div class="be-line"><span class="be-name">Постоянные расходы / месяц</span><span class="be-val">${fmt(fixedCosts)}</span></div>
+    <div class="be-line"><span class="be-name">Маржа с одной уборки</span><span class="be-val">${fmt(unitMargin)}</span></div>
+    <div class="be-line"><span class="be-name">Уборок для выхода в ноль</span><span class="be-val accent">${unitMargin>0?fmtN(beOrders)+' уборок':'∞ (маржа ≤ 0)'}</span></div>
+    <div class="be-line"><span class="be-name">Выручка точки безубыточности</span><span class="be-val accent">${unitMargin>0?fmt(beRev):'—'}</span></div>
+    <div class="be-line"><span class="be-name">Это ${unitMargin>0?fmtN(Math.round(beOrders/30*100)):0}% месячной загрузки</span><span class="be-name" style="color:#5C7FA8">(при 30 днях в месяце)</span></div>
+  `;
+  let beAlert=document.getElementById('be-alert');
+  if(unitMargin<=0){beAlert.className='alert warn';beAlert.textContent='Маржа с одной уборки отрицательная или нулевая. Точка безубыточности недостижима при текущих параметрах. Поднимите чек или снизьте переменные расходы.';}
+  else if(beOrders<=15){beAlert.className='alert ok';beAlert.textContent=`Точка безубыточности — всего ${fmtN(beOrders)} уборок. Устойчивая модель. При ${fmtN(orders)} заказах в месяц вы зарабатываете.`;}
+  else if(beOrders<=orders){beAlert.className='alert info';beAlert.textContent=`Для безубыточности нужно ${fmtN(beOrders)} уборок. У вас ${fmtN(orders)} — это покрывает постоянные расходы.`;}
+  else{beAlert.className='alert warn';beAlert.textContent=`Для безубыточности нужно ${fmtN(beOrders)} уборок, а у вас ${fmtN(orders)}. Бизнес работает в убыток. Нужно больше заказов или меньше постоянных расходов.`;}
+
+  let monthRev=orders*price;
+  let monthVarCost=orders*varCost;
+  let monthGross=monthRev-monthVarCost;
+  let monthNet=monthGross-fixedCosts;
+  let monthNetPct=monthRev>0?Math.round(monthNet/monthRev*100):0;
+  let perMaster=masters>0?Math.round(monthNet/masters):0;
+
+  let mr=document.getElementById('month-results');
+  mr.innerHTML=`
+    <div class="rcard"><div class="rcard-label">Выручка за месяц</div><div class="rcard-val blue">${fmt(monthRev)}</div><div class="rcard-sub">${fmtN(orders)} уборок × ${fmt(price)}</div></div>
+    <div class="rcard"><div class="rcard-label">Переменные расходы</div><div class="rcard-val neg">${fmt(monthVarCost)}</div></div>
+    <div class="rcard"><div class="rcard-label">Постоянные расходы</div><div class="rcard-val neg">${fmt(fixedCosts)}</div></div>
+    <div class="rcard ${monthNet>=0?'success':'danger'}"><div class="rcard-label">Чистая прибыль</div><div class="rcard-val ${monthNet>=0?'pos':'neg'}">${fmt(monthNet)}</div><div class="rcard-sub">${pct(monthNetPct)} от выручки</div></div>
+    <div class="rcard"><div class="rcard-label">Прибыль на 1 мастера</div><div class="rcard-val ${perMaster>=0?'blue':'neg'}">${fmt(perMaster)}</div></div>
+    <div class="rcard"><div class="rcard-label">Уборок для безубытка</div><div class="rcard-val blue">${unitMargin>0?fmtN(beOrders):'—'}</div><div class="rcard-sub">из ${fmtN(orders)} текущих</div></div>
+  `;
+
+  let maxM=Math.max(monthRev,monthVarCost+fixedCosts,1);
+  document.getElementById('month-bars').innerHTML=`
+    ${bar2('Выручка',monthRev,maxM,'rev',fmt(monthRev))}
+    ${bar2('Перем. расходы',monthVarCost,maxM,'cost',fmt(monthVarCost))}
+    ${bar2('Пост. расходы',fixedCosts,maxM,'cost',fmt(fixedCosts))}
+    ${bar2('Чистая прибыль',Math.max(monthNet,0),maxM,'prof',fmt(monthNet))}
+  `;
+
+  let ma=document.getElementById('month-alert');
+  if(monthNet<0){ma.className='alert warn';ma.textContent=`Убыток ${fmt(Math.abs(monthNet))} в месяц. Нужно ещё ${unitMargin>0?fmtN(beOrders-orders)+' уборок':' поднять маржу с одной уборки'} для выхода в ноль.`;}
+  else if(monthNetPct>=30){ma.className='alert ok';ma.textContent=`Отличный результат — ${pct(monthNetPct)} чистой маржи. Бизнес устойчив. Можно инвестировать в рост.`;}
+  else if(monthNetPct>=15){ma.className='alert info';ma.textContent=`Прибыль есть, маржа ${pct(monthNetPct)} — норма для клининга. Фокус на увеличение среднего чека и снижение стоимости привлечения.`;}
+  else{ma.className='alert warn';ma.textContent=`Прибыль есть, но маржа только ${pct(monthNetPct)}. Любой сбой (меньше заказов, рост расходов) уйдёт в минус. Нужна работа над юнит-экономикой.`;}
+
+  let scCon={label:'Консервативный',mult:.7,chekAdj:0};
+  let scBase={label:'Базовый',mult:1,chekAdj:0};
+  let scGrow={label:'Рост',mult:1.4,chekAdj:500};
+  let scGrid=document.getElementById('sc-grid');
+  scGrid.innerHTML=[scCon,scBase,scGrow].map(s=>{
+    let sOrders=Math.round(orders*s.mult);
+    let sPrice=price+s.chekAdj;
+    let sVarCost=salary+chem+trans+equip+acq;
+    let sRev=sOrders*sPrice;
+    let sNet=sRev-sOrders*sVarCost-fixedCosts;
+    let sNetPct=sRev>0?Math.round(sNet/sRev*100):0;
+    return `<div class="sc-card"><div class="sc-title">${s.label}</div><div class="sc-rev">${fmt(sRev)}</div><div class="sc-profit" style="color:${sNet>=0?'#4CAF50':'#EF5350'}">${fmt(sNet)} / ${pct(sNetPct)}</div><div style="font-size:11px;color:#5C7FA8;margin-top:3px">${fmtN(sOrders)} уборок</div></div>`;
+  }).join('');
+
+  let chartHtml='';
+  let steps=[10,20,30,40,50,60,70,80];
+  let maxProfit=Math.max(...steps.map(o=>Math.abs(o*unitMargin-fixedCosts)),1);
+  steps.forEach(o=>{
+    let p=o*unitMargin-fixedCosts;
+    let pct2=Math.round(Math.min(Math.max((p+maxProfit)/(maxProfit*2)*100,2),98));
+    let col=p>=0?'#4CAF50':'#EF5350';
+    chartHtml+=`<div class="bar-row"><span class="bar-name" style="width:50px">${o} уб.</span><div class="bar-track"><div class="bar-fill" style="width:${pct2}%;background:${col}"></div></div><span class="bar-num" style="color:${col}">${fmt(p)}</span></div>`;
+  });
+  document.getElementById('sc-chart').innerHTML=chartHtml;
+
+  let beIdx=steps.findIndex(o=>o*unitMargin>=fixedCosts);
+  document.getElementById('sc-tip').textContent=unitMargin>0?
+    `При текущих параметрах безубыточность достигается на ${fmtN(beOrders)} уборке. Каждая дополнительная уборка сверх этого — чистые ${fmt(unitMargin)} прибыли.`:
+    'Переменные расходы превышают чек. Скорректируйте цену или расходы во вкладке «Юнит-экономика».';
+}
+
+function bar(name,val,maxVal,cls){
+  let w=maxVal>0?Math.round(Math.max(val/maxVal*100,2)):2;
+  return `<div class="bar-row"><span class="bar-name">${name}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${w}%"></div></div><span class="bar-num">${fmt(val)}</span></div>`;
+}
+function bar2(name,val,maxVal,cls,label){
+  let w=maxVal>0?Math.round(Math.max(val/maxVal*100,2)):2;
+  return `<div class="bar-row"><span class="bar-name">${name}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${w}%"></div></div><span class="bar-num">${label}</span></div>`;
+}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+calc();
+</script>
