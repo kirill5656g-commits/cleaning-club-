@@ -1,0 +1,556 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{background:#080F1E;border-radius:16px;overflow:hidden;font-family:var(--font-sans)}
+.topbar{background:#0D2047;padding:14px 20px;border-bottom:1px solid #1E3A6E;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tb-logo{width:34px;height:34px;border-radius:8px;background:#1565C0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-title{font-size:15px;font-weight:500;color:#fff;flex:1}
+.tb-badge{background:#4A1B0C;color:#F0997B;font-size:11px;font-weight:500;padding:4px 12px;border-radius:100px;border:1px solid #993C1D}
+.tabs{display:flex;background:#060D1A;border-bottom:1px solid #1E3A6E;overflow-x:auto}
+.tab{padding:10px 14px;font-size:12px;font-weight:500;color:#5C7FA8;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;white-space:nowrap;flex-shrink:0}
+.tab.on{color:#64B5F6;border-color:#1565C0;background:#0A1628}
+.tab:hover:not(.on){color:#90CAF9}
+.panel{display:none;padding:18px 20px 24px}
+.panel.on{display:block}
+.sec-label{font-size:10px;font-weight:500;color:#5C7FA8;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;margin-top:20px}
+.sec-label:first-child{margin-top:0}
+.copy-card{background:#0D2047;border:1px solid #1E3A6E;border-radius:12px;overflow:hidden;margin-bottom:10px}
+.copy-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none;transition:.15s}
+.copy-hdr:hover{background:#0A1A35}
+.copy-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.copy-title{font-size:13px;font-weight:500;color:#fff;flex:1}
+.copy-badge{font-size:10px;padding:2px 8px;border-radius:100px;margin-left:auto}
+.copy-chv{font-size:11px;color:#5C7FA8;transition:transform .2s;margin-left:6px}
+.copy-card.open .copy-chv{transform:rotate(180deg)}
+.copy-body{display:none;border-top:1px solid #1E3A6E}
+.copy-card.open .copy-body{display:block}
+.text-block{padding:14px 16px;font-size:12.5px;color:#B0C8E4;line-height:1.8;white-space:pre-wrap;background:#060D1A;font-family:var(--font-sans)}
+.copy-btn-row{padding:10px 14px;display:flex;gap:8px;border-top:1px solid #1E3A6E;background:#0A1628}
+.cbtn{padding:6px 14px;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;border:none;font-family:var(--font-sans);display:flex;align-items:center;gap:5px;transition:.15s}
+.cbtn.blue{background:#1565C0;color:#fff}
+.cbtn.blue:hover{background:#1E88E5}
+.cbtn.ghost{background:transparent;color:#64B5F6;border:1px solid #1565C040}
+.cbtn.ghost:hover{background:#0D2047}
+.copied{color:#4CAF50!important;background:#071A0E!important;border-color:#1B5E20!important}
+.kp-block{background:#0D2047;border:1px solid #1E3A6E;border-radius:12px;padding:16px;margin-bottom:12px}
+.kp-title{font-size:14px;font-weight:500;color:#64B5F6;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1E3A6E}
+.kp-section{margin-bottom:14px}
+.kp-sec-name{font-size:11px;color:#5C7FA8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.kp-text{font-size:12.5px;color:#B0C8E4;line-height:1.8;white-space:pre-wrap}
+.kp-highlight{background:#0A1628;border-left:3px solid #1565C0;padding:10px 14px;border-radius:0 6px 6px 0;margin:8px 0;font-size:12px;color:#90CAF9;line-height:1.7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mini-card{background:#0A1628;border:1px solid #1E3A6E;border-radius:8px;padding:10px 12px}
+.mini-title{font-size:11px;font-weight:500;color:#64B5F6;margin-bottom:5px}
+.mini-text{font-size:11.5px;color:#8A9BB5;line-height:1.6}
+.profile-mockup{background:#0A1628;border-radius:10px;border:1px solid #1E3A6E;overflow:hidden;margin-bottom:12px}
+.pm-header{background:#1565C0;height:60px;position:relative;display:flex;align-items:flex-end;padding:0 14px 8px}
+.pm-avatar{width:52px;height:52px;border-radius:50%;background:#0D2047;border:3px solid #0A1628;position:absolute;bottom:-20px;left:14px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#64B5F6;font-weight:500}
+.pm-body{padding:28px 14px 14px}
+.pm-name{font-size:14px;font-weight:500;color:#fff;margin-bottom:2px}
+.pm-sub{font-size:11px;color:#5C7FA8;margin-bottom:8px}
+.pm-bio{font-size:12px;color:#B0C8E4;line-height:1.6;margin-bottom:8px}
+.pm-links{display:flex;gap:6px;flex-wrap:wrap}
+.pm-link{font-size:11px;color:#64B5F6;background:#0D2047;padding:4px 10px;border-radius:6px;border:1px solid #1565C030}
+.faq-item{background:#0D2047;border:1px solid #1E3A6E;border-radius:10px;overflow:hidden;margin-bottom:8px}
+.faq-q{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none;transition:.15s}
+.faq-q:hover{background:#0A1A35}
+.faq-num{width:22px;height:22px;border-radius:5px;background:#1565C0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#fff;flex-shrink:0}
+.faq-qtext{font-size:12.5px;font-weight:500;color:#fff;flex:1}
+.faq-chv{font-size:11px;color:#5C7FA8;transition:transform .2s}
+.faq-item.open .faq-chv{transform:rotate(180deg)}
+.faq-a{display:none;padding:10px 14px 12px;font-size:12.5px;color:#B0C8E4;line-height:1.75;border-top:1px solid #1E3A6E;background:#060D1A}
+.faq-item.open .faq-a{display:block}
+.progress-wrap{display:flex;gap:8px;flex-wrap:wrap;padding:10px 20px;background:#060D1A;border-top:1px solid #1E3A6E}
+.prog-pill{flex:1;min-width:80px;background:#0D2047;border-radius:7px;padding:7px 10px;text-align:center;border:1px solid #1E3A6E}
+.prog-n{font-size:16px;font-weight:500;color:#64B5F6}
+.prog-l{font-size:10px;color:#5C7FA8;margin-top:1px}
+</style>
+
+<h2 class="sr-only">Упаковка клининговой компании — полный пакет материалов</h2>
+
+<div class="app">
+<div class="topbar">
+  <div class="tb-logo"><i class="ti ti-package" style="font-size:17px;color:#90CAF9" aria-hidden="true"></i></div>
+  <div class="tb-title">Упаковка клининговой компании — полный пакет</div>
+  <span class="tb-badge">999 ₽</span>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="showTab(0,this)"><i class="ti ti-file-text" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>КП</div>
+  <div class="tab" onclick="showTab(1,this)"><i class="ti ti-brand-instagram" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>Профиль</div>
+  <div class="tab" onclick="showTab(2,this)"><i class="ti ti-list" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>12 услуг</div>
+  <div class="tab" onclick="showTab(3,this)"><i class="ti ti-building" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>О компании</div>
+  <div class="tab" onclick="showTab(4,this)"><i class="ti ti-help" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>FAQ 20</div>
+</div>
+
+<!-- TAB 0: КП -->
+<div class="panel on" id="p0">
+  <div class="sec-label">Шаблон для физических лиц</div>
+  <div class="kp-block">
+    <div class="kp-title">Коммерческое предложение — Частные клиенты</div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Шапка / первый экран</div>
+      <div class="kp-text">Здравствуйте, [Имя]!
+
+Вы оставили заявку на [тип уборки]. Высылаю состав работ и стоимость — всё чётко, без скрытых доплат.</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Блок «Что входит»</div>
+      <div class="kp-highlight">Что сделаем на вашем объекте ([площадь] кв.м.):</div>
+      <div class="kp-text">✓ Кухня — фасады, техника внутри и снаружи, плита, вытяжка, холодильник
+✓ Санузел — унитаз (под ободком), ванна/душ, известковый налёт, фурнитура
+✓ Комнаты — пыль со всех поверхностей включая плинтусы и карнизы
+✓ Окна изнутри — стекло, рама, откосы, подоконник
+✓ Пол — пылесос + влажная уборка, углы, под мебелью
+✓ Фотоотчёт до и после — получаете на телефон</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Блок стоимости</div>
+      <div class="kp-text">Стоимость: [ЦЕНА] рублей — финальная, без доплат
+
+В цену включено: работа [N] мастеров, профессиональная химия, инвентарь, фотоотчёт.
+Не входит (по желанию): химчистка мебели +[цена], мойка окон снаружи +[цена]</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Блок гарантии</div>
+      <div class="kp-highlight">Наша гарантия: если что-то не понравится — мастер возвращается в течение 24 часов и переделывает бесплатно. Это письменное обязательство, не просто слова.</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Закрытие / CTA</div>
+      <div class="kp-text">Ближайшее свободное время: [дата1] или [дата2].
+Бронирую за вами слот на 24 часа.
+
+Чтобы подтвердить — просто ответьте «Беру» или назовите удобную дату.
+
+[Имя менеджера] · [Телефон]</div>
+    </div>
+    <div style="padding:10px 0 4px;display:flex;gap:8px">
+      <button class="cbtn blue" onclick="copyKP('kp_fiz')"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать КП</button>
+    </div>
+  </div>
+
+  <div class="sec-label">Шаблон для юридических лиц / B2B</div>
+  <div class="kp-block">
+    <div class="kp-title">Коммерческое предложение — Бизнес-клиенты</div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Вводный блок</div>
+      <div class="kp-text">Уважаемый [ФИО / Должность],
+
+По итогам нашего разговора направляю коммерческое предложение на обслуживание [объекта: офис / ТЦ / апартаменты].
+
+Компания [название] оказывает профессиональные клининговые услуги для бизнеса с [год]. Работаем по договору, с актами и закрывающими документами.</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Блок «Условия обслуживания»</div>
+      <div class="kp-highlight">Объект: [адрес, площадь, тип помещения]
+Периодичность: [ежедневно / 3×/нед / еженедельно]
+Время выезда: [удобное для вас окно]
+Закреплённая бригада: [N] мастеров, один и тот же состав</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Состав работ</div>
+      <div class="kp-text">Ежедневное обслуживание (включено):
+— Офисные зоны: столы, техника, полки (пыль)
+— Кухонная зона: техника, мойка, поверхности
+— Санузлы: полная санация по стандарту
+— Пол всех помещений: пылесос + влажная уборка
+— Мусорные корзины: замена пакетов
+— Входная группа: коврики, зеркала, ручки
+
+По запросу (в смету отдельно):
+— Мойка окон, химчистка мебели, генеральная раз в квартал</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Стоимость и условия</div>
+      <div class="kp-text">Ежемесячная стоимость: [ЦЕНА] рублей
+Оплата: счёт + акт ежемесячно, НДС [по запросу / не облагается]
+Договор: стандартный сервисный, срок от 3 месяцев
+Менеджер контроля качества: звонок раз в неделю, оперативная обратная связь</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Почему мы</div>
+      <div class="kp-text">✓ Работаем по чек-листу 87 точек — фиксируем результат
+✓ Закреплённая бригада — знакомые люди, стабильное качество  
+✓ Страхование ответственности — при порче имущества возмещаем
+✓ Полный документооборот — договор, акты, счета
+✓ Гарантия переделки 24 часа — письменно</div>
+    </div>
+    <div class="kp-section">
+      <div class="kp-sec-name">Следующий шаг</div>
+      <div class="kp-text">Предлагаю: тестовая уборка по себестоимости — вы оцениваете качество без риска.
+Если всё устраивает — подписываем договор.
+
+Для согласования даты: [телефон] / [email]
+[Имя] · [Должность] · [Компания]</div>
+    </div>
+    <div style="padding:10px 0 4px;display:flex;gap:8px">
+      <button class="cbtn blue" onclick="copyKP('kp_b2b')"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать КП</button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 1: Профиль -->
+<div class="panel" id="p1">
+  <div class="sec-label">Готовый профиль Instagram / VK — скопируй и вставь</div>
+
+  <div class="profile-mockup">
+    <div class="pm-header"></div>
+    <div class="pm-avatar">АК</div>
+    <div class="pm-body">
+      <div class="pm-name">Клининг [Город] · Уборка квартир</div>
+      <div class="pm-sub">@cleaning_[город]</div>
+      <div class="pm-bio">Профессиональная уборка квартир и офисов
+Чек-лист 87 точек · Гарантия переделки 24ч
+📸 Фотоотчёт до и после каждого объекта
+Работаем [город] и [район]
+⬇️ Записаться — ссылка ниже</div>
+      <div class="pm-links">
+        <span class="pm-link">Записаться</span>
+        <span class="pm-link">Цены</span>
+        <span class="pm-link">Отзывы</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Формулы заголовков профиля</div>
+  <div id="heads-list"></div>
+
+  <div class="sec-label">Структура шапки профиля — 5 строк</div>
+  <div class="copy-card open" id="profile-struct">
+    <div class="copy-body">
+      <div class="text-block">Строка 1 — КТО и ГДЕ (ключевое слово для поиска):
+«Клининг [Город] · Уборка квартир и офисов»
+
+Строка 2 — ГЛАВНОЕ ОТЛИЧИЕ (не «качество», а конкретика):
+«Чек-лист 87 точек · Гарантия переделки 24 ч»
+
+Строка 3 — ДОКАЗАТЕЛЬСТВО (что видит клиент):
+«Фотоотчёт до и после · Работаем с 20__»
+
+Строка 4 — ЗОНА РАБОТЫ:
+«Обслуживаем [район1], [район2], [район3]»
+
+Строка 5 — ПРИЗЫВ К ДЕЙСТВИЮ:
+«⬇️ Записаться и узнать цену — ссылка ниже»</div>
+      <div class="copy-btn-row">
+        <button class="cbtn blue" onclick="copyText(this,'Строка 1 — КТО и ГДЕ (ключевое слово для поиска):\n«Клининг [Город] · Уборка квартир и офисов»\n\nСтрока 2 — ГЛАВНОЕ ОТЛИЧИЕ (не «качество», а конкретика):\n«Чек-лист 87 точек · Гарантия переделки 24 ч»\n\nСтрока 3 — ДОКАЗАТЕЛЬСТВО (что видит клиент):\n«Фотоотчёт до и после · Работаем с 20__»\n\nСтрока 4 — ЗОНА РАБОТЫ:\n«Обслуживаем [район1], [район2], [район3]»\n\nСтрока 5 — ПРИЗЫВ К ДЕЙСТВИЮ:\n«⬇️ Записаться и узнать цену — ссылка ниже»')"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">Заголовки для постов — 10 формул</div>
+  <div id="post-headlines"></div>
+</div>
+
+<!-- TAB 2: 12 услуг -->
+<div class="panel" id="p2">
+  <div class="sec-label">Готовые описания — копируй на сайт, в соцсети, в КП</div>
+  <div id="services-list"></div>
+</div>
+
+<!-- TAB 3: О компании -->
+<div class="panel" id="p3">
+  <div class="sec-label">Три варианта — для разной аудитории</div>
+  <div id="about-list"></div>
+</div>
+
+<!-- TAB 4: FAQ -->
+<div class="panel" id="p4">
+  <div class="sec-label">20 вопросов с ответами — для сайта, профиля, чат-бота</div>
+  <div id="faq-list"></div>
+  <div style="margin-top:14px">
+    <button class="cbtn blue" onclick="copyAllFAQ()"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i> Скопировать все 20 вопросов и ответов</button>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="prog-pill"><div class="prog-n">2</div><div class="prog-l">шаблона КП</div></div>
+  <div class="prog-pill"><div class="prog-n">12</div><div class="prog-l">описаний услуг</div></div>
+  <div class="prog-pill"><div class="prog-n">3</div><div class="prog-l">текста «О нас»</div></div>
+  <div class="prog-pill"><div class="prog-n">20</div><div class="prog-l">вопросов FAQ</div></div>
+  <div class="prog-pill"><div class="prog-n">10</div><div class="prog-l">формул заголовков</div></div>
+</div>
+</div>
+
+<script>
+const HEADLINES = [
+  {formula:'Цифра + результат', example:'За 4 часа квартира 80 кв.м. — как будто только въехали'},
+  {formula:'Вопрос-боль', example:'Когда убирали последний раз за холодильником? Мы знаем ответ.'},
+  {formula:'До/После', example:'Это один и тот же диван. Разница — 2 часа нашей работы.'},
+  {formula:'Разрушение мифа', example:'«Химия опасна для детей» — вот правда о том, чем мы убираем'},
+  {formula:'Конкретный кейс', example:'Объект 120 кв.м. после ремонта: 6 часов, 2 мастера, 9 400 ₽. Вот что входило'},
+  {formula:'Сравнение', example:'Обычная уборка vs наш чек-лист: 18 точек, которые все пропускают'},
+  {formula:'Провокация', example:'Мы отказали 3 клиентам на прошлой неделе. Вот почему это правильно'},
+  {formula:'Секрет профи', example:'Средство за 180 ₽, которым мы убираем известковый налёт за 7 минут'},
+  {formula:'Социальное доказательство', example:'127 уборок в этом месяце. Ни одной рекламации. Вот как это устроено'},
+  {formula:'Страх потери', example:'Пятно на мраморе, которое нельзя убрать. Как мы его всё равно убрали'},
+];
+
+const SERVICES = [
+  {name:'Поддерживающая уборка', tag:'Ежедневный спрос', text:`Поддерживающая уборка — это регулярный уход за порядком в вашем доме. Приезжаем в удобное для вас время, работаем по стандартному чек-листу: пыль, полы, кухня, санузел, быстрый порядок в комнатах.
+
+Для кого: семьи с детьми, занятые люди, те кто хочет стабильный результат без усилий.
+
+Что включено: протирка пыли со всех горизонтальных поверхностей, пылесос + влажная уборка полов, кухня (поверхности, плита, мойка), санузел (унитаз, раковина, душ), зеркала, вынос мусора.
+
+Стоимость зависит от площади. При регулярке от 2×/мес — фиксированная цена на 6 месяцев.`},
+  {name:'Генеральная уборка', tag:'Флагман', text:`Генеральная уборка — полное обновление пространства. Работаем по чек-листу 87 точек: добираемся до мест, которые месяцами не видели уборки.
+
+Для кого: уборка перед/после праздников, смена сезона, «давно откладывали генеральную».
+
+Что включено: всё из поддерживающей + внутри шкафов (по запросу), внутри холодильника, духовки, микроволновки, все плинтусы, радиаторы, карнизы, пространство под мебелью, мойка окон изнутри.
+
+Результат фиксируем фотоотчётом. Гарантия переделки 24 часа.`},
+  {name:'Уборка после ремонта', tag:'Высокий чек', text:`После ремонта остаётся строительная пыль, следы от скотча, известковые брызги и клей — обычная уборка с этим не справится. Используем профессиональную химию и оборудование.
+
+Для кого: сразу после ремонта, перед сдачей объекта, перед заездом.
+
+Что включено: удаление строительной пыли (HEPA-пылесос), очистка стёкол от наклеек и скотча, удаление известковых брызг с плитки и сантехники, очистка плинтусов и откосов, финальная полировка поверхностей.
+
+Сроки: 1 рабочий день на квартиру до 80 кв.м.`},
+  {name:'Химчистка мебели', tag:'Допродажа', text:`Профессиональная химчистка удаляет загрязнения, которые не берёт пылесос: въевшиеся пятна, запах животных, бытовую грязь из ворса. Безопасно для детей и аллергиков.
+
+Что чистим: диваны, кресла, пуфы, матрасы, офисные кресла, ковры.
+
+Как работаем: нанесение профессионального средства → глубокая экстракция → сушка 3–5 часов. Результат виден сразу.
+
+Удаляем: пятна от еды, напитков, крови, чернил, запах домашних животных и табака.`},
+  {name:'Мойка окон', tag:'Сезонный спрос', text:`Профессиональная мойка окон — без разводов, без белых пятен. Работаем специальным раствором и безворсовой микрофиброй.
+
+Что включено: стекло внутри и снаружи (при доступе), рама, фурнитура, уплотнители, подоконник, откосы, москитная сетка.
+
+Почему без разводов: используем деионизированную воду + профессиональный концентрат. Обычная вода оставляет минеральные следы.
+
+Цена за створку. Комплексная скидка при мойке всей квартиры.`},
+  {name:'Озонирование', tag:'Высокая маржа', text:`Озонирование устраняет запахи, которые не поддаются обычной уборке: табак, животные, плесень, запах после болезни или пожара. Озон проникает в поры поверхностей и нейтрализует запах на молекулярном уровне.
+
+Как проходит: помещение обрабатывается генератором озона 40–60 минут. Через час можно заходить — озон распадается до обычного кислорода. Химии не остаётся.
+
+Для кого: покупка/аренда квартиры со стойким запахом, дом с животными, помещение после болезни, автомобиль.`},
+  {name:'Уборка после переезда', tag:'Разовый спрос', text:`Уборка при заезде или выезде — приводим квартиру в состояние «как новая». Работаем как в пустом помещении, так и после вывоза мебели.
+
+При заезде: глубокая очистка всех поверхностей до расстановки мебели — потом это сделать гораздо сложнее.
+
+При выезде: возврат квартиры в состояние для нового жильца, устранение следов от мебели и картин, чистка всей сантехники.
+
+Документируем состояние фото — полезно при споре с арендодателем.`},
+  {name:'Уборка офиса', tag:'B2B / договор', text:`Регулярное обслуживание офисов по договору. Закреплённая бригада, стабильное расписание, менеджер контроля качества.
+
+Что входит в ежедневную уборку: рабочие столы и техника (пыль), кухонная зона, санузлы (полная санация), пол (пылесос + влажная), мусорные корзины, входная группа.
+
+Документооборот: договор, акты, счета — всё для бухгалтерии.
+
+Дополнительно: генеральная уборка раз в квартал, химчистка кресел, мойка окон — отдельной позицией в смете.`},
+  {name:'Уборка после праздников', tag:'Сезонный', text:`После дня рождения, корпоратива или новогодней вечеринки — приводим пространство в порядок быстро и без стресса. Работаем в том числе ночью и ранним утром.
+
+Что делаем: сбор мусора и посуды, очистка всех поверхностей от еды и напитков, пол (пятна, крошки), туалет и кухня, проветривание и устранение запаха.
+
+Срочный выезд: в течение 2–4 часов после заявки (при наличии свободного мастера).`},
+  {name:'Уборка загородного дома', tag:'Высокий чек', text:`Уборка дач, загородных домов, коттеджей — большие площади, специфическое загрязнение: уличная грязь, пыль после зимы, камины, деревянные поверхности.
+
+Что учитываем: обработка деревянных полов (специальные средства), очистка каминов снаружи, обработка открытых веранд и террас, особое внимание подвалам и хозяйственным помещениям.
+
+Команда: от 2 до 4 мастеров в зависимости от площади. Сроки согласуем под вас.`},
+  {name:'Мытьё посуды и кухни после готовки', tag:'Низкий барьер', text:`Быстрая услуга для тех, кто много готовит: приведём кухню в порядок после активной готовки, праздничного стола или выпечки.
+
+Что включено: вся посуда (вручную или загрузка в посудомойку), плита и варочная панель, столешница, фартук, мойка, фасады от брызг.
+
+Время: 1–2 часа. Идеально совместить с поддерживающей уборкой — небольшая доплата.`},
+  {name:'Уборка апартаментов / посуточная аренда', tag:'B2B ниша', text:`Специальный формат для арендодателей посуточного жилья — быстрая смена между гостями. Стандарт отельного качества, строгий тайминг.
+
+Что включено: полная смена постельного белья и полотенец (если предоставляете), уборка всех зон по чек-листу, проверка расходников (мыло, бумага, пакеты), фотоотчёт о состоянии квартиры до и после гостей.
+
+Работаем по вашему расписанию заездов. Приоритетный выезд в течение 2 часов после выселения.`},
+];
+
+const ABOUTS = [
+  {aud:'Для семей и частных клиентов', color:'#1565C0',
+   text:`Мы знаем, как важно возвращаться домой, где всё чисто и приятно пахнет — без того, чтобы тратить на это выходные.
+
+[Название компании] работает в [город] с [год]. За это время мы провели более [N] уборок и выработали простое правило: клиент не должен ничего перепроверять за нами.
+
+Именно поэтому мы ввели чек-лист из 87 точек контроля — мастер фиксирует каждую зону и присылает фотоотчёт. Если что-то не устроит — возвращаемся и переделываем в течение 24 часов, бесплатно.
+
+Мы не обещаем «качество» — мы доказываем его цифрами и фотографиями.`},
+  {aud:'Для B2B / корпоративных клиентов', color:'#0277BD',
+   text:`[Название компании] — профессиональный клининг-партнёр для бизнеса в [город].
+
+Мы обслуживаем офисы, торговые помещения, апартаменты и объекты посуточной аренды с [год]. Более [N] действующих договоров на регулярное обслуживание.
+
+Что важно для бизнеса:
+— Закреплённая бригада: одни и те же люди, знакомые с вашим объектом
+— Полный документооборот: договор, акты выполненных работ, счета
+— Менеджер контроля: еженедельная связь, оперативная реакция на замечания
+— Страхование ответственности: при повреждении имущества — возмещаем
+
+Работаем прозрачно, по договору, с актами. Первая уборка — по себестоимости.`},
+  {aud:'Короткая версия (для шапки сайта / профиля)', color:'#388E3C',
+   text:`Профессиональная уборка квартир, офисов и загородных домов в [город].
+
+Работаем по чек-листу 87 точек · Фотоотчёт до и после · Гарантия переделки 24 часа
+
+[N]+ выполненных уборок · Работаем с [год] · Договор и документы
+
+Записаться: [телефон / ссылка]`},
+];
+
+const FAQS = [
+  {q:'Сколько стоит уборка?', a:'Стоимость зависит от площади, типа уборки и состояния объекта. Поддерживающая уборка — от 2 000 ₽, генеральная — от 3 500 ₽, после ремонта — от 5 000 ₽. Чтобы назвать точную цену, скажите площадь и тип уборки — ответим за 5 минут.'},
+  {q:'Как быстро вы можете приехать?', a:'Ближайший выезд обычно возможен на следующий день. При срочной потребности — уточняйте наличие свободного мастера: иногда возможен выезд в тот же день.'},
+  {q:'Нужно ли мне быть дома во время уборки?', a:'Нет, не обязательно. Многие клиенты передают ключи — мы работаем по акту приёма-передачи и присылаем фотоотчёт по завершении. Если хотите присутствовать — выберем удобное для вас время.'},
+  {q:'Чем вы убираете? Безопасно ли для детей и животных?', a:'Используем профессиональную химию сертифицированных брендов — она безопасна для людей, детей и домашних животных при соблюдении технологии. Средства выбираются под тип поверхности и степень загрязнения.'},
+  {q:'Что входит в генеральную уборку?', a:'Кухня (вся техника внутри и снаружи, фасады, плита, вытяжка), санузел (унитаз под ободком, ванна, душ, известковый налёт), все комнаты (пыль со всех поверхностей включая плинтусы и карнизы), мойка окон изнутри, пол по всей квартире. Полный чек-лист присылаем по запросу.'},
+  {q:'Есть ли гарантия качества?', a:'Да — письменная. Если что-то не понравится, мастер возвращается в течение 24 часов и переделывает бесплатно. Без споров и оправданий. За [N] лет работы мы переделывали менее 3% заказов.'},
+  {q:'Вы привозите своё оборудование и химию?', a:'Да, всё своё: профессиональный пылесос, швабры, микрофибра, химия под каждый тип поверхности. Вам ничего готовить не нужно.'},
+  {q:'Сколько мастеров приедет?', a:'Зависит от объёма. Поддерживающая уборка — 1 мастер. Генеральная на 60–100 кв.м. — 2 мастера. После ремонта или большие площади — 2–3 мастера. Указываем в подтверждении заказа.'},
+  {q:'Можно ли заказать регулярную уборку?', a:'Да, и это выгоднее. При регулярке от 2 раз в месяц — фиксированная цена на 6 месяцев (без повышения), закреплённый мастер, приоритетный выезд. Скидка от 10–15% к разовому заказу.'},
+  {q:'Работаете ли вы с юридическими лицами?', a:'Да. Заключаем договор, выдаём акты выполненных работ и счета. Работаем с НДС и без. Для B2B — закреплённая бригада, менеджер контроля качества, еженедельная обратная связь.'},
+  {q:'Что делать, если что-то пропало или повреждено?', a:'Мы несём материальную ответственность. Все мастера работают по договору с указанием ответственности. При повреждении имущества — возмещаем стоимость по рыночной оценке. За всё время работы подобных случаев не было.'},
+  {q:'Можно ли заказать уборку вечером или в выходные?', a:'Да. Работаем с 8:00 до 21:00, включая субботу и воскресенье. Вечерние слоты бронируются быстрее — рекомендуем записываться заранее.'},
+  {q:'За сколько дней нужно записываться?', a:'Для будних дней — обычно достаточно 1–2 дней. На выходные и срочные даты — лучше за 3–4 дня. Срочный выезд в тот же день — уточняйте наличие свободного мастера.'},
+  {q:'Убираете ли вы загородные дома и дачи?', a:'Да, выезжаем на загородные объекты. Стоимость уточняйте — учитываем площадь и удалённость. Специализируемся на домах после зимы, перед сезоном или после стройки.'},
+  {q:'Делаете ли вы химчистку мебели?', a:'Да. Чистим диваны, кресла, пуфы, матрасы, ковры. Удаляем пятна, запах животных и табака. Используем профессиональное экстракционное оборудование. Сушка — 3–5 часов.'},
+  {q:'Нужно ли убирать квартиру перед вашим приездом?', a:'Нет. Мы работаем в любом состоянии. Единственная просьба — убрать ценные вещи и документы в надёжное место.'},
+  {q:'Как происходит оплата?', a:'Оплата после выполнения работы — наличными, картой или переводом. Для юридических лиц — по выставленному счёту. Предоплата не требуется.'},
+  {q:'Присылаете ли вы фотоотчёт?', a:'Да, всегда. Мастер фотографирует каждую зону до начала и после завершения уборки. Отчёт приходит в мессенджер сразу по окончании работы.'},
+  {q:'Убираете ли вы после смерти или особо сложные случаи?', a:'Да, мы готовы работать со сложными объектами. Работаем деликатно и конфиденциально. Уточняйте детали лично — оценим ситуацию и назовём стоимость.'},
+  {q:'Как записаться?', a:'Напишите или позвоните нам: [телефон / мессенджер / ссылка]. Скажите площадь, тип уборки и удобную дату — назовём цену и запишем на ближайшее время. Ответим в течение 5 минут.'},
+];
+
+function showTab(i, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p'+i).classList.add('on');
+}
+
+function copyText(btn, text){
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.classList.add('copied');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i> Скопировано';
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);
+  });
+}
+
+function copyKP(type){
+  const texts = {
+    kp_fiz: `КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ — Частный клиент\n\nЗдравствуйте, [Имя]!\n\nВы оставили заявку на [тип уборки]. Высылаю состав работ и стоимость — всё чётко, без скрытых доплат.\n\nЧТО СДЕЛАЕМ НА ВАШЕМ ОБЪЕКТЕ ([площадь] кв.м.):\n✓ Кухня — фасады, техника внутри и снаружи, плита, вытяжка, холодильник\n✓ Санузел — унитаз (под ободком), ванна/душ, известковый налёт, фурнитура\n✓ Комнаты — пыль со всех поверхностей включая плинтусы и карнизы\n✓ Окна изнутри — стекло, рама, откосы, подоконник\n✓ Пол — пылесос + влажная уборка, углы, под мебелью\n✓ Фотоотчёт до и после — получаете на телефон\n\nСТОИМОСТЬ: [ЦЕНА] рублей — финальная, без доплат\n\nГАРАНТИЯ: если что-то не понравится — мастер возвращается в течение 24 часов и переделывает бесплатно.\n\nБлижайшее свободное время: [дата1] или [дата2].\nЧтобы подтвердить — просто ответьте «Беру» или назовите удобную дату.\n\n[Имя менеджера] · [Телефон]`,
+    kp_b2b: `КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ — B2B\n\nУважаемый [ФИО / Должность],\n\nПо итогам нашего разговора направляю коммерческое предложение на обслуживание [объекта].\n\nОБЪЕКТ: [адрес, площадь, тип помещения]\nПЕРИОДИЧНОСТЬ: [ежедневно / 3×/нед / еженедельно]\nЗАКРЕПЛЁННАЯ БРИГАДА: [N] мастеров\n\nСОСТАВ РАБОТ:\n— Офисные зоны: столы, техника, полки\n— Кухонная зона: техника, мойка, поверхности\n— Санузлы: полная санация по стандарту\n— Пол: пылесос + влажная уборка\n— Мусорные корзины: замена пакетов\n— Входная группа: коврики, зеркала, ручки\n\nЕЖЕМЕСЯЧНАЯ СТОИМОСТЬ: [ЦЕНА] рублей\nОплата: счёт + акт ежемесячно\n\nПОЧЕМУ МЫ:\n✓ Чек-лист 87 точек — фиксируем результат\n✓ Закреплённая бригада — стабильное качество\n✓ Страхование ответственности\n✓ Полный документооборот\n✓ Гарантия переделки 24 часа\n\nПредлагаю: тестовая уборка по себестоимости.\n\n[Имя] · [Должность] · [Телефон]`
+  };
+  navigator.clipboard.writeText(texts[type]).then(()=>{alert('КП скопировано в буфер обмена!');});
+}
+
+function copyAllFAQ(){
+  const text = FAQS.map((f,i)=>`${i+1}. ${f.q}\n${f.a}`).join('\n\n');
+  navigator.clipboard.writeText(text).then(()=>{alert('Все 20 вопросов скопированы!');});
+}
+
+function buildProfiles(){
+  const hl = document.getElementById('heads-list');
+  hl.innerHTML = HEADLINES.map(h=>`
+    <div class="copy-card" style="margin-bottom:8px">
+      <div class="copy-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <div class="copy-icon" style="background:#0D3470"><i class="ti ti-text-size" style="font-size:13px;color:#64B5F6" aria-hidden="true"></i></div>
+        <span class="copy-title">${h.formula}</span>
+        <i class="ti ti-chevron-down copy-chv" aria-hidden="true"></i>
+      </div>
+      <div class="copy-body">
+        <div class="text-block">${h.example}</div>
+        <div class="copy-btn-row">
+          <button class="cbtn blue" onclick="copyText(this,'${h.example.replace(/'/g,"\\'")}')"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const ph = document.getElementById('post-headlines');
+  const postTitles = [
+    '«[N] признаков, что пора заказать генеральную уборку»',
+    '«Сколько стоит генеральная уборка в [город] в 2025 году — честный разбор»',
+    '«До и после: кухня 8 кв.м., 2 часа работы, 3 800 ₽»',
+    '«Почему ваша уборка не убивает 90% бактерий — и как это исправить»',
+    '«5 мест в квартире, которые убирают реже всего (и зря)»',
+    '«Какую химию мы используем — и почему она безопасна для вашего ребёнка»',
+    '«Как мы работаем по чек-листу 87 точек — показываем изнутри»',
+    '«Отзыв клиента: генеральная после 3 лет без уборки»',
+    '«За что наши клиенты платят нам каждые 2 недели уже год»',
+    '«Почему мы не даём скидки — и почему это честно»',
+  ];
+  ph.innerHTML = postTitles.map((t,i)=>`
+    <div class="copy-card" style="margin-bottom:6px">
+      <div class="copy-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <div class="copy-icon" style="background:#1A1200"><span style="font-size:11px;font-weight:500;color:#FFB74D">${i+1}</span></div>
+        <span class="copy-title" style="font-size:12px">${t}</span>
+        <i class="ti ti-chevron-down copy-chv" aria-hidden="true"></i>
+      </div>
+      <div class="copy-body">
+        <div class="copy-btn-row">
+          <button class="cbtn blue" onclick="copyText(this,'${t.replace(/'/g,"\\'")}')"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать заголовок</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function buildServices(){
+  const COLORS = ['#0D3470','#0A2E1A','#1A0E2E','#1A1200','#1A0505','#0A1E1A','#1A0D1A','#0A1628','#0D3470','#0A2E1A','#1A1200','#0A1628'];
+  const ICONS = ['ti-sparkles','ti-home-2','ti-tools','ti-sofa','ti-window','ti-wind','ti-arrows-move','ti-building','ti-confetti','ti-tree','ti-bowl','ti-key'];
+  const el = document.getElementById('services-list');
+  el.innerHTML = SERVICES.map((s,i)=>`
+    <div class="copy-card" id="svc${i}">
+      <div class="copy-hdr" onclick="document.getElementById('svc${i}').classList.toggle('open')">
+        <div class="copy-icon" style="background:${COLORS[i]}"><i class="ti ${ICONS[i]}" style="font-size:13px;color:#90CAF9" aria-hidden="true"></i></div>
+        <div class="copy-title">${i+1}. ${s.name}</div>
+        <span class="copy-badge" style="background:#0D3470;color:#64B5F6;border:1px solid #1565C030">${s.tag}</span>
+        <i class="ti ti-chevron-down copy-chv" aria-hidden="true"></i>
+      </div>
+      <div class="copy-body">
+        <div class="text-block">${s.text}</div>
+        <div class="copy-btn-row">
+          <button class="cbtn blue" onclick="copyText(this,\`${s.text.replace(/`/g,'\\`')}\`)"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать описание</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function buildAbouts(){
+  const el = document.getElementById('about-list');
+  el.innerHTML = ABOUTS.map((a,i)=>`
+    <div class="copy-card" id="abt${i}">
+      <div class="copy-hdr" onclick="document.getElementById('abt${i}').classList.toggle('open')">
+        <div class="copy-icon" style="background:#0D3470"><i class="ti ti-building" style="font-size:13px;color:#64B5F6" aria-hidden="true"></i></div>
+        <div class="copy-title">Вариант ${i+1}: ${a.aud}</div>
+        <i class="ti ti-chevron-down copy-chv" aria-hidden="true"></i>
+      </div>
+      <div class="copy-body">
+        <div class="text-block">${a.text}</div>
+        <div class="copy-btn-row">
+          <button class="cbtn blue" onclick="copyText(this,\`${a.text.replace(/`/g,'\\`')}\`)"><i class="ti ti-copy" style="font-size:12px" aria-hidden="true"></i>Скопировать текст</button>
+          <button class="cbtn ghost" onclick="sendPrompt('Адаптируй текст «О компании» вариант ${i+1} под компанию в [мой город], название [моё название]') ">Адаптировать под меня ↗</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function buildFAQ(){
+  const el = document.getElementById('faq-list');
+  el.innerHTML = FAQS.map((f,i)=>`
+    <div class="faq-item" id="faq${i}">
+      <div class="faq-q" onclick="document.getElementById('faq${i}').classList.toggle('open')">
+        <div class="faq-num">${i+1}</div>
+        <div class="faq-qtext">${f.q}</div>
+        <i class="ti ti-chevron-down faq-chv" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">${f.a}
+        <div style="margin-top:8px">
+          <button class="cbtn ghost" style="font-size:11px;padding:5px 10px" onclick="copyText(this,'${f.q}\\n${f.a.replace(/'/g,"\\'")}')"><i class="ti ti-copy" style="font-size:11px" aria-hidden="true"></i> Скопировать Q&A</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+buildProfiles();
+buildServices();
+buildAbouts();
+buildFAQ();
+</script>
