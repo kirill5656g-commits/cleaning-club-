@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🔵 Диагностика прибыльной клининговой компании · Ассоциация клининга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --navy-deep:#06122a;
+    --navy:#0b1f3f;
+    --navy-mid:#16315f;
+    --navy-soft:#1f3f7a;
+    --blue:#2563eb;
+    --blue-bright:#3b82f6;
+    --sky:#38bdf8;
+    --sky-soft:#7dd3fc;
+    --sky-pale:#bae6fd;
+    --white:#ffffff;
+    --cream:#f0f9ff;
+    --line:#1e3a6e;
+    --line-soft:#22417a;
+    --mute:#7591bd;
+    --mute-light:#a8baD6;
+    --green:#34d399;
+    --orange:#fb923c;
+    --red:#f87171;
+    --gold:#e8c468;
+  }
+  html,body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(56,189,248,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 30%, rgba(37,99,235,0.12), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(37,99,235,0.10), transparent 70%),
+      linear-gradient(180deg, #06122a 0%, #08172e 100%);
+    color:var(--white);
+    font-family:'Manrope',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body{padding:24px 16px 60px}
+
+  .corner{position:fixed;width:32px;height:32px;border:1.5px solid var(--sky);opacity:0.35;z-index:1;pointer-events:none}
+  .corner.tl{top:18px;left:18px;border-right:none;border-bottom:none}
+  .corner.tr{top:18px;right:18px;border-left:none;border-bottom:none}
+  .corner.bl{bottom:18px;left:18px;border-right:none;border-top:none}
+  .corner.br{bottom:18px;right:18px;border-left:none;border-top:none}
+
+  .app{max-width:680px;margin:0 auto;position:relative;z-index:2}
+
+  /* ─── HEADER (always visible) ─── */
+  .header{
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:32px;
+  }
+  .brand-mark{
+    width:42px;height:42px;border-radius:11px;
+    background:linear-gradient(135deg,var(--blue),var(--sky));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    color:var(--white);font-size:17px;letter-spacing:-0.8px;
+    box-shadow:0 6px 18px rgba(37,99,235,0.4);
+    flex-shrink:0;
+  }
+  .brand-text{flex:1}
+  .brand-name{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;color:var(--sky-soft);text-transform:uppercase}
+  .brand-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mute);letter-spacing:0.8px;margin-top:2px;text-transform:uppercase}
+
+  /* ─── SCREENS ─── */
+  .screen{display:none;animation:fadeIn 0.4s ease}
+  .screen.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ═══════════════════════════════════ */
+  /* WELCOME SCREEN                       */
+  /* ═══════════════════════════════════ */
+  .welcome-label{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;
+    background:rgba(52,211,153,0.12);
+    border:1px solid rgba(52,211,153,0.35);
+    border-radius:100px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--green);
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+    margin-bottom:18px;
+  }
+  .welcome-title{
+    font-family:'Unbounded',sans-serif;
+    font-size:42px;font-weight:700;
+    line-height:1;letter-spacing:-1.8px;
+    margin-bottom:16px;
+  }
+  .welcome-title em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--sky),var(--sky-soft),var(--white));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    font-weight:400;
+  }
+  .welcome-sub{
+    font-size:15px;color:var(--mute-light);
+    line-height:1.55;margin-bottom:28px;
+  }
+  .welcome-sub b{color:var(--sky-soft);font-weight:600}
+
+  .welcome-viz{
+    margin:8px auto 28px;
+    width:100%;max-width:520px;height:220px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .welcome-viz svg{width:100%;height:100%}
+
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px}
+  .stat-card{
+    padding:14px 10px;
+    background:rgba(15,36,71,0.5);
+    border:1px solid var(--line);
+    border-radius:12px;
+    text-align:center;
+  }
+  .stat-num{
+    font-family:'Unbounded',sans-serif;font-weight:700;
+    font-size:24px;color:var(--sky);
+    line-height:1;letter-spacing:-0.5px;
+    margin-bottom:6px;
+  }
+  .stat-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--mute);
+    letter-spacing:0.8px;text-transform:uppercase;
+    line-height:1.3;
+  }
+
+  .what-inside{
+    background:rgba(15,36,71,0.5);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:24px;
+  }
+  .what-inside-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--sky);
+    letter-spacing:1.5px;text-transform:uppercase;
+    font-weight:600;margin-bottom:10px;
+  }
+  .circuits-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .circuit{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 10px;
+    background:rgba(56,189,248,0.05);
+    border:1px solid rgba(56,189,248,0.15);
+    border-radius:8px;
+    font-size:12px;color:var(--white);
+  }
+  .circuit-dot{
+    width:24px;height:24px;border-radius:7px;
+    background:linear-gradient(135deg,var(--blue),var(--sky));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .circuit-dot svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .circuit-name{flex:1}
+  .circuit-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sky-soft);font-weight:600}
+
+  /* Big CTA button */
+  .cta-btn{
+    width:100%;
+    padding:18px 24px;
+    background:linear-gradient(135deg,var(--blue),var(--sky));
+    border:none;border-radius:14px;
+    color:var(--white);
+    font-family:'Unbounded',sans-serif;font-weight:600;
+    font-size:16px;letter-spacing:0.2px;
+    cursor:pointer;
+    box-shadow:0 10px 28px rgba(37,99,235,0.4);
+    transition:transform 0.15s, box-shadow 0.15s;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .cta-btn:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(37,99,235,0.5)}
+  .cta-btn:active{transform:translateY(0)}
+  .cta-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  .welcome-note{
+    text-align:center;
+    font-size:11px;color:var(--mute);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  /* ═══════════════════════════════════ */
+  /* QUIZ SCREEN                          */
+  /* ═══════════════════════════════════ */
+  .progress-wrap{
+    margin-bottom:28px;
+  }
+  .progress-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:8px;
+  }
+  .progress-step{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--sky);
+    letter-spacing:1.5px;font-weight:600;text-transform:uppercase;
+  }
+  .progress-circuit{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--mute);
+    letter-spacing:1px;text-transform:uppercase;
+  }
+  .progress-bar{
+    height:6px;background:rgba(56,189,248,0.10);
+    border-radius:10px;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--sky));
+    border-radius:10px;
+    transition:width 0.4s ease;
+    box-shadow:0 0 12px rgba(56,189,248,0.5);
+  }
+
+  .question-block{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:28px 24px;
+    margin-bottom:20px;
+    position:relative;overflow:hidden;
+  }
+  .question-block::before{
+    content:"";position:absolute;top:-50%;right:-50%;
+    width:120%;height:120%;
+    background:radial-gradient(circle,rgba(56,189,248,0.06),transparent 60%);
+    pointer-events:none;
+  }
+  .q-circuit-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:5px 11px;border-radius:100px;
+    background:rgba(56,189,248,0.10);
+    border:1px solid rgba(56,189,248,0.3);
+    font-family:'JetBrains Mono',monospace;font-weight:600;
+    font-size:10px;color:var(--sky);
+    letter-spacing:1px;text-transform:uppercase;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .q-circuit-tag svg{width:12px;height:12px;stroke:var(--sky);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .q-title{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;font-size:21px;
+    line-height:1.35;letter-spacing:-0.4px;
+    color:var(--white);
+    margin-bottom:12px;
+    position:relative;
+  }
+  .q-norm{
+    padding:12px 14px;
+    background:rgba(56,189,248,0.05);
+    border:1px solid var(--line-soft);
+    border-left:3px solid var(--sky);
+    border-radius:8px;
+    font-size:13px;color:var(--mute-light);
+    line-height:1.55;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .q-norm b{color:var(--sky-soft);font-weight:600}
+
+  .answers{
+    display:flex;flex-direction:column;gap:10px;
+    position:relative;
+  }
+  .answer{
+    display:flex;align-items:center;gap:14px;
+    padding:14px 18px;
+    background:rgba(15,36,71,0.4);
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    cursor:pointer;
+    transition:all 0.18s ease;
+    user-select:none;
+  }
+  .answer:hover{
+    background:rgba(56,189,248,0.08);
+    border-color:var(--sky-soft);
+    transform:translateX(4px);
+  }
+  .answer:active{transform:translateX(2px)}
+  .ans-check{
+    width:24px;height:24px;border-radius:7px;
+    border:1.5px solid var(--line-soft);
+    background:rgba(15,36,71,0.6);
+    flex-shrink:0;
+    position:relative;
+    transition:all 0.18s ease;
+  }
+  .ans-text{
+    font-family:'Manrope',sans-serif;
+    font-weight:600;font-size:15px;
+    color:var(--white);
+    flex:1;
+  }
+  .ans-points{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--mute);
+    letter-spacing:0.8px;font-weight:600;
+  }
+
+  .answer.yes:hover{background:rgba(52,211,153,0.10);border-color:var(--green)}
+  .answer.partial:hover{background:rgba(232,196,104,0.10);border-color:var(--gold)}
+  .answer.no:hover{background:rgba(248,113,113,0.10);border-color:var(--red)}
+
+  .quiz-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:20px;
+  }
+  .back-btn{
+    padding:10px 18px;
+    background:rgba(15,36,71,0.5);
+    border:1px solid var(--line);
+    border-radius:100px;
+    color:var(--mute-light);
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:13px;
+    cursor:pointer;
+    transition:all 0.15s;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .back-btn:hover{background:rgba(56,189,248,0.08);color:var(--sky-soft);border-color:var(--sky-soft)}
+  .back-btn:disabled{opacity:0.3;cursor:not-allowed}
+  .back-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  .quiz-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--mute);
+    letter-spacing:1px;
+  }
+
+  /* ═══════════════════════════════════ */
+  /* RESULT SCREEN                        */
+  /* ═══════════════════════════════════ */
+  .result-label{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;
+    background:rgba(56,189,248,0.12);
+    border:1px solid rgba(56,189,248,0.35);
+    border-radius:100px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--sky);
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+    margin-bottom:18px;
+  }
+  .result-title{
+    font-family:'Unbounded',sans-serif;
+    font-size:32px;font-weight:700;
+    line-height:1;letter-spacing:-1.2px;
+    margin-bottom:8px;
+  }
+  .result-sub{
+    font-size:14px;color:var(--mute-light);
+    line-height:1.5;margin-bottom:28px;
+  }
+
+  /* Score hero */
+  .score-hero{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-deep) 100%);
+    border:2px solid var(--line);
+    border-radius:22px;
+    padding:32px 24px;
+    margin-bottom:24px;
+    position:relative;overflow:hidden;
+    text-align:center;
+  }
+  .score-hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 0%, rgba(56,189,248,0.12), transparent 60%);
+    pointer-events:none;
+  }
+  .score-hero > *{position:relative}
+
+  .score-circle{
+    width:200px;height:200px;
+    margin:0 auto 18px;
+    position:relative;
+  }
+  .score-num{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .score-num-big{
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    font-size:68px;line-height:1;letter-spacing:-3px;
+    background:linear-gradient(135deg,var(--sky),var(--white));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .score-num-max{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;color:var(--mute);
+    letter-spacing:1.2px;font-weight:600;
+    margin-top:4px;
+  }
+
+  .score-band{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 18px;
+    border-radius:100px;
+    font-family:'Unbounded',sans-serif;font-weight:600;
+    font-size:13px;letter-spacing:0.4px;
+    border:1.5px solid;
+  }
+  .score-band.red{background:rgba(248,113,113,0.12);color:var(--red);border-color:rgba(248,113,113,0.4)}
+  .score-band.orange{background:rgba(251,146,60,0.12);color:var(--orange);border-color:rgba(251,146,60,0.4)}
+  .score-band.sky{background:rgba(56,189,248,0.12);color:var(--sky);border-color:rgba(56,189,248,0.4)}
+  .score-band.green{background:rgba(52,211,153,0.12);color:var(--green);border-color:rgba(52,211,153,0.4)}
+
+  .score-verdict{
+    margin-top:18px;
+    font-size:14.5px;color:var(--mute-light);
+    line-height:1.55;
+    padding:0 8px;
+  }
+  .score-verdict b{color:var(--white);font-weight:600}
+
+  /* Circuits breakdown */
+  .breakdown{
+    background:rgba(15,36,71,0.5);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:24px 22px;
+    margin-bottom:24px;
+  }
+  .breakdown-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--sky);
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+    margin-bottom:6px;
+  }
+  .breakdown-h{
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;font-size:18px;
+    color:var(--white);
+    letter-spacing:-0.4px;
+    margin-bottom:18px;
+  }
+  .circuit-bar{
+    display:grid;grid-template-columns:130px 1fr 60px;
+    align-items:center;gap:12px;
+    margin-bottom:14px;
+  }
+  .cb-label{
+    display:flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--white);font-weight:600;
+  }
+  .cb-label-icon{
+    width:22px;height:22px;border-radius:6px;
+    background:linear-gradient(135deg,var(--blue),var(--sky));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .cb-label-icon svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .cb-bar{
+    height:10px;
+    background:rgba(56,189,248,0.10);
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .cb-fill{
+    height:100%;
+    border-radius:10px;
+    transition:width 0.8s ease;
+  }
+  .cb-fill.red{background:linear-gradient(90deg,#f87171,#fb923c);box-shadow:0 0 10px rgba(248,113,113,0.4)}
+  .cb-fill.orange{background:linear-gradient(90deg,#fb923c,#fbbf24);box-shadow:0 0 10px rgba(251,146,60,0.4)}
+  .cb-fill.sky{background:linear-gradient(90deg,#3b82f6,#38bdf8);box-shadow:0 0 10px rgba(56,189,248,0.4)}
+  .cb-fill.green{background:linear-gradient(90deg,#34d399,#7dd3fc);box-shadow:0 0 10px rgba(52,211,153,0.4)}
+
+  .cb-score{
+    font-family:'Unbounded',sans-serif;font-weight:700;
+    font-size:14px;color:var(--sky);
+    text-align:right;letter-spacing:-0.3px;
+  }
+
+  /* Weakest circuit highlight */
+  .weakest{
+    background:linear-gradient(135deg,rgba(248,113,113,0.10),rgba(248,113,113,0.03));
+    border:1.5px solid rgba(248,113,113,0.35);
+    border-radius:16px;
+    padding:20px 22px;
+    margin-bottom:24px;
+  }
+  .weakest-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:4px 10px;
+    background:rgba(248,113,113,0.15);
+    border-radius:100px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--red);
+    letter-spacing:1px;text-transform:uppercase;font-weight:600;
+    margin-bottom:10px;
+  }
+  .weakest-h{
+    font-family:'Unbounded',sans-serif;font-weight:600;
+    font-size:17px;color:var(--white);
+    line-height:1.3;letter-spacing:-0.3px;
+    margin-bottom:8px;
+  }
+  .weakest-text{
+    font-size:13px;color:var(--mute-light);
+    line-height:1.55;
+  }
+  .weakest-text b{color:var(--sky-soft);font-weight:600}
+
+  /* CTA to Club */
+  .restart-link{
+    text-align:center;
+    margin-top:14px;
+    font-size:12px;color:var(--mute);
+  }
+  .restart-link button{
+    background:none;border:none;
+    color:var(--sky-soft);
+    font-size:12px;font-family:'Manrope',sans-serif;font-weight:600;
+    cursor:pointer;text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .restart-link button:hover{color:var(--sky)}
+
+  .footer-note{
+    text-align:center;margin-top:32px;padding-top:18px;
+    border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;color:var(--mute);
+    letter-spacing:1px;text-transform:uppercase;
+  }
+
+  /* Mobile tweaks */
+  @media(max-width:600px){
+    .welcome-title{font-size:34px}
+    .result-title{font-size:26px}
+    .score-num-big{font-size:56px}
+    .score-circle{width:170px;height:170px}
+    .stats-row{grid-template-columns:repeat(2,1fr)}
+    .circuits-grid{grid-template-columns:1fr}
+    .circuit-bar{grid-template-columns:100px 1fr 50px;gap:8px}
+    .cb-label{font-size:12px}
+    .q-title{font-size:18px}
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<div class="app">
+
+  <!-- HEADER (always visible) -->
+  <div class="header">
+    <div class="brand-mark">АК</div>
+    <div class="brand-text">
+      <div class="brand-name">Ассоциация клининга</div>
+      <div class="brand-sub">Бесплатная диагностика · F1</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═════ SCREEN 1: WELCOME ═══════════ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="screen active" id="screen-welcome">
+
+    <div class="welcome-label">🎁 Бесплатно · 10 минут</div>
+    <h1 class="welcome-title">10 диагностических<br><em>вопросов</em></h1>
+    <p class="welcome-sub">
+      Прибыльной клининговой компании. Пройдите за 10 минут — поймёте,
+      где у вашего бизнеса <b>есть фундамент</b>, а где зияет <b>дыра</b>,
+      которая стоит вам денег каждый месяц
+    </p>
+
+    <!-- Hero visual: 4 circuits diagram -->
+    <div class="welcome-viz">
+      <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <defs>
+          <linearGradient id="bv-1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2563eb" stop-opacity="0.4"/>
+            <stop offset="1" stop-color="#38bdf8" stop-opacity="0.1"/>
+          </linearGradient>
+          <radialGradient id="bv-glow">
+            <stop offset="0" stop-color="#38bdf8" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="260" cy="110" rx="240" ry="100" fill="url(#bv-glow)"/>
+
+        <!-- Connection lines forming an inner square -->
+        <g stroke="#38bdf8" stroke-width="1.2" opacity="0.5" stroke-dasharray="2,2">
+          <line x1="100" y1="55" x2="420" y2="55"/>
+          <line x1="100" y1="165" x2="420" y2="165"/>
+          <line x1="100" y1="55" x2="100" y2="165"/>
+          <line x1="420" y1="55" x2="420" y2="165"/>
+          <line x1="100" y1="55" x2="420" y2="165"/>
+          <line x1="420" y1="55" x2="100" y2="165"/>
+        </g>
+
+        <!-- 4 circuit nodes -->
+        <!-- Клиенты -->
+        <g transform="translate(100,55)">
+          <circle r="32" fill="url(#bv-1)" stroke="#3b82f6" stroke-width="1.5"/>
+          <circle r="22" fill="rgba(15,36,71,0.6)"/>
+          <g stroke="#7dd3fc" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="0" cy="-3" r="5"/>
+            <path d="M-9 9c0-4 4-7 9-7s9 3 9 7"/>
+          </g>
+          <text y="55" text-anchor="middle" font-family="Manrope" font-size="12" font-weight="600" fill="#bae6fd">Клиенты</text>
+        </g>
+
+        <!-- Услуги -->
+        <g transform="translate(420,55)">
+          <circle r="32" fill="url(#bv-1)" stroke="#3b82f6" stroke-width="1.5"/>
+          <circle r="22" fill="rgba(15,36,71,0.6)"/>
+          <g stroke="#7dd3fc" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="-8" y="-9" width="16" height="18" rx="2"/>
+            <line x1="-4" y1="-4" x2="4" y2="-4"/>
+            <line x1="-4" y1="0" x2="4" y2="0"/>
+            <line x1="-4" y1="4" x2="2" y2="4"/>
+          </g>
+          <text y="55" text-anchor="middle" font-family="Manrope" font-size="12" font-weight="600" fill="#bae6fd">Услуги</text>
+        </g>
+
+        <!-- Команда -->
+        <g transform="translate(100,165)">
+          <circle r="32" fill="url(#bv-1)" stroke="#3b82f6" stroke-width="1.5"/>
+          <circle r="22" fill="rgba(15,36,71,0.6)"/>
+          <g stroke="#7dd3fc" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="-5" cy="-3" r="3.5"/>
+            <circle cx="5" cy="-3" r="3.5"/>
+            <path d="M-12 9c0-3 3-5 7-5s2 0 0 0M0 9c0-3 3-5 7-5s2 0 0 0"/>
+          </g>
+          <text y="55" text-anchor="middle" font-family="Manrope" font-size="12" font-weight="600" fill="#bae6fd">Команда</text>
+        </g>
+
+        <!-- Деньги -->
+        <g transform="translate(420,165)">
+          <circle r="32" fill="url(#bv-1)" stroke="#3b82f6" stroke-width="1.5"/>
+          <circle r="22" fill="rgba(15,36,71,0.6)"/>
+          <g stroke="#7dd3fc" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="-9 4 -3 -3 2 2 9 -6"/>
+            <polyline points="4 -6 9 -6 9 -1"/>
+          </g>
+          <text y="55" text-anchor="middle" font-family="Manrope" font-size="12" font-weight="600" fill="#bae6fd">Деньги</text>
+        </g>
+
+        <!-- Center hex with "10" -->
+        <g transform="translate(260,110)">
+          <circle r="46" fill="none" stroke="#38bdf8" stroke-width="0.6" opacity="0.4"/>
+          <circle r="36" fill="none" stroke="#38bdf8" stroke-width="0.6" opacity="0.5"/>
+          <polygon points="0,-30 26,-15 26,15 0,30 -26,15 -26,-15" fill="rgba(37,99,235,0.25)" stroke="#e8c468" stroke-width="2"/>
+          <text y="8" text-anchor="middle" font-family="Unbounded" font-size="26" font-weight="800" fill="#f4d77a">10</text>
+        </g>
+
+        <!-- Animated pulse dots -->
+        <g fill="#38bdf8" opacity="0.7">
+          <circle cx="180" cy="55" r="2"/>
+          <circle cx="340" cy="55" r="2"/>
+          <circle cx="180" cy="165" r="2"/>
+          <circle cx="340" cy="165" r="2"/>
+          <circle cx="200" cy="100" r="1.5"/>
+          <circle cx="320" cy="120" r="1.5"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Вопросов<br>диагностики</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Контура<br>бизнеса</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">~10</div>
+        <div class="stat-label">Минут<br>прохождения</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Честная<br>картина</div>
+      </div>
+    </div>
+
+    <!-- What's inside -->
+    <div class="what-inside">
+      <div class="what-inside-title">◆ 4 контура любого клининга</div>
+      <div class="circuits-grid">
+        <div class="circuit">
+          <div class="circuit-dot"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 4-8 8-8s8 3 8 8"/></svg></div>
+          <span class="circuit-name">Клиенты</span>
+          <span class="circuit-count">3 вопроса</span>
+        </div>
+        <div class="circuit">
+          <div class="circuit-dot"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="18" x2="12" y2="18"/></svg></div>
+          <span class="circuit-name">Услуги</span>
+          <span class="circuit-count">2 вопроса</span>
+        </div>
+        <div class="circuit">
+          <div class="circuit-dot"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><circle cx="17" cy="7" r="3"/><path d="M3 21c0-4 3-7 6-7s6 3 6 7M14 21c0-3 2-5 4-5s4 2 4 5"/></svg></div>
+          <span class="circuit-name">Команда</span>
+          <span class="circuit-count">2 вопроса</span>
+        </div>
+        <div class="circuit">
+          <div class="circuit-dot"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></div>
+          <span class="circuit-name">Деньги</span>
+          <span class="circuit-count">3 вопроса</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="cta-btn" onclick="startQuiz()">
+      Начать диагностику
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+
+    <div class="welcome-note">
+      Без регистрации · Без рекламы · Результат сразу
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═════ SCREEN 2: QUIZ ══════════════ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="screen" id="screen-quiz">
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-step" id="prog-step">Вопрос 01 / 10</span>
+        <span class="progress-circuit" id="prog-circuit">◆ Клиенты</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="prog-fill" style="width:10%"></div>
+      </div>
+    </div>
+
+    <!-- Question -->
+    <div class="question-block" id="question-block">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="quiz-nav">
+      <button class="back-btn" id="back-btn" onclick="prevQuestion()" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Назад
+      </button>
+      <span class="quiz-meta" id="quiz-meta">Жмите ответ, чтобы продолжить →</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═════ SCREEN 3: RESULT ════════════ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="screen" id="screen-result">
+
+    <div class="result-label" id="res-label">◆ Готово · ваш результат</div>
+    <h1 class="result-title" id="res-title-h">Ваш результат</h1>
+    <p class="result-sub">Сколько баллов из 30 по 10 вопросам. И как это перевести в действия</p>
+
+    <!-- Score hero -->
+    <div class="score-hero">
+      <div class="score-circle" id="score-circle">
+        <!-- SVG progress ring filled by JS -->
+        <div class="score-num">
+          <div class="score-num-big" id="score-big">0</div>
+          <div class="score-num-max">из 30 баллов</div>
+        </div>
+      </div>
+      <div class="score-band" id="score-band">—</div>
+      <div class="score-verdict" id="score-verdict">—</div>
+    </div>
+
+    <!-- Breakdown by circuits -->
+    <div class="breakdown">
+      <div class="breakdown-title">◆ Разбивка по 4 контурам</div>
+      <div class="breakdown-h">Где сидят ваши деньги</div>
+
+      <div class="circuit-bar">
+        <div class="cb-label">
+          <span class="cb-label-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 4-8 8-8s8 3 8 8"/></svg></span>
+          Клиенты
+        </div>
+        <div class="cb-bar"><div class="cb-fill" id="cb-clients" style="width:0%"></div></div>
+        <div class="cb-score" id="cb-clients-s">0/9</div>
+      </div>
+
+      <div class="circuit-bar">
+        <div class="cb-label">
+          <span class="cb-label-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/></svg></span>
+          Услуги
+        </div>
+        <div class="cb-bar"><div class="cb-fill" id="cb-services" style="width:0%"></div></div>
+        <div class="cb-score" id="cb-services-s">0/6</div>
+      </div>
+
+      <div class="circuit-bar">
+        <div class="cb-label">
+          <span class="cb-label-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><circle cx="17" cy="7" r="3"/><path d="M3 21c0-4 3-7 6-7M14 21c0-3 2-5 4-5"/></svg></span>
+          Команда
+        </div>
+        <div class="cb-bar"><div class="cb-fill" id="cb-team" style="width:0%"></div></div>
+        <div class="cb-score" id="cb-team-s">0/6</div>
+      </div>
+
+      <div class="circuit-bar">
+        <div class="cb-label">
+          <span class="cb-label-icon"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/></svg></span>
+          Деньги
+        </div>
+        <div class="cb-bar"><div class="cb-fill" id="cb-money" style="width:0%"></div></div>
+        <div class="cb-score" id="cb-money-s">0/9</div>
+      </div>
+    </div>
+
+    <!-- Weakest area highlight -->
+    <div class="weakest" id="weakest-block">
+      <span class="weakest-tag">⚠ Самая большая дыра</span>
+      <div class="weakest-h" id="weakest-h">—</div>
+      <div class="weakest-text" id="weakest-text">—</div>
+    </div>
+
+    <div class="restart-link">
+      Хотите пройти ещё раз? <button onclick="restart()">Сбросить и начать заново</button>
+    </div>
+
+    <div class="footer-note">© Ассоциация клининга · 2026 · Бесплатный материал F1</div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════
+// QUESTIONS DATA
+// ════════════════════════════════════════════
+const QUESTIONS = [
+  // CLIENTS (3)
+  {
+    circuit: 'clients',
+    circuitName: 'Клиенты',
+    title: 'У вас прописан портрет идеального клиента в 5-7 характеристиках?',
+    norm: '<b>Норма:</b> доход, тип жилья, район, частота заказа, повод обращения, ценовой сегмент. Если «все, у кого есть деньги» — это НЕ портрет'
+  },
+  {
+    circuit: 'clients',
+    circuitName: 'Клиенты',
+    title: 'Вы знаете LTV (среднюю общую ценность клиента за весь срок)?',
+    norm: '<b>Норма:</b> цифра в рублях, обновляется ежеквартально. Например: «B2C-клиент = 12 400₽ за всё время сотрудничества». Не знаете — сжигаете маркетинг-бюджет'
+  },
+  {
+    circuit: 'clients',
+    circuitName: 'Клиенты',
+    title: 'У вас есть критерии отказа клиенту на этапе сметы?',
+    norm: '<b>Норма:</b> прописанный список «когда мы НЕ берёмся» (бюджет ниже X, район дальше Y, объём меньше Z, токсичный клиент). Иначе берёте всех — теряете маржу на 18-25%'
+  },
+
+  // SERVICES (2)
+  {
+    circuit: 'services',
+    circuitName: 'Услуги',
+    title: 'У вас есть техкарты под каждый тип уборки — с временем работы и расходом материалов?',
+    norm: '<b>Норма:</b> документ под каждую услугу: какие зоны, в какой последовательности, сколько времени, сколько химии. Иначе мастер «как привык» — брак 5-15%'
+  },
+  {
+    circuit: 'services',
+    circuitName: 'Услуги',
+    title: 'На каждом объекте используется чек-лист приёмки минимум на 25 пунктов с подписью клиента?',
+    norm: '<b>Норма:</b> бумажный или электронный чек-лист, который мастер заполняет с клиентом в конце уборки. Это снимает 70% возможных рекламаций и защищает в спорах'
+  },
+
+  // TEAM (2)
+  {
+    circuit: 'team',
+    circuitName: 'Команда',
+    title: 'Каждый мастер видит свой KPI и понимает, как рассчитывается его ФОТ?',
+    norm: '<b>Норма:</b> прозрачная формула «ФОТ = база + бонус за качество + бонус за объём - штрафы за брак». Без неё команда работает «как привыкла», КПД 55-65%'
+  },
+  {
+    circuit: 'team',
+    circuitName: 'Команда',
+    title: 'Текучка команды за последние 12 месяцев менее 25%?',
+    norm: '<b>Норма:</b> из 8 мастеров за год ушло не более 2. Выше 30% текучки — постоянное обучение новых = постоянное падение качества и переплата на ФОТ'
+  },
+
+  // MONEY (3)
+  {
+    circuit: 'money',
+    circuitName: 'Деньги',
+    title: 'У вас есть P&L (структура доходов и расходов) по каждому месяцу за последние 6 месяцев?',
+    norm: '<b>Норма:</b> таблица в Excel/Notion: выручка, ФОТ, химия, транспорт, маркетинг, налоги, прибыль. Помесячно. Без P&L вы не знаете, на чём реально зарабатываете'
+  },
+  {
+    circuit: 'money',
+    circuitName: 'Деньги',
+    title: 'Маркетинг-бюджет — фиксированный % от выручки, который не урезается в плохие месяцы?',
+    norm: '<b>Норма:</b> 8-14% от выручки уходит в маркетинг ВСЕГДА. Урезать маркетинг в плохой месяц = ускорить плохие месяцы. Это самая частая ошибка владельцев'
+  },
+  {
+    circuit: 'money',
+    circuitName: 'Деньги',
+    title: 'У вас на счёте есть резерв минимум на 30 дней работы без новых поступлений?',
+    norm: '<b>Норма:</b> сумма всех обязательств за 1 месяц (ФОТ, аренда, налоги, химия) лежит «неприкосновенно». Без резерва — банкротство при любом кассовом разрыве'
+  }
+];
+
+const ANSWERS = [
+  {key:'yes', label:'Да, это работает в компании прямо сейчас', points:3, cls:'yes'},
+  {key:'partial', label:'Частично, есть наброски/в процессе', points:1, cls:'partial'},
+  {key:'no', label:'Нет / не задумывался', points:0, cls:'no'}
+];
+
+const CIRCUIT_DETAILS = {
+  clients: {name:'Клиенты', max:9, count:3},
+  services: {name:'Услуги', max:6, count:2},
+  team: {name:'Команда', max:6, count:2},
+  money: {name:'Деньги', max:9, count:3}
+};
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+let state = {
+  currentQ: 0,
+  answers: new Array(10).fill(null)
+};
+
+// ════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function startQuiz(){
+  state.currentQ = 0;
+  state.answers = new Array(10).fill(null);
+  renderQuestion();
+  showScreen('quiz');
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[state.currentQ];
+  const prog = ((state.currentQ + 1) / QUESTIONS.length) * 100;
+
+  document.getElementById('prog-step').textContent =
+    `Вопрос ${String(state.currentQ + 1).padStart(2, '0')} / 10`;
+  document.getElementById('prog-circuit').textContent = '◆ ' + q.circuitName;
+  document.getElementById('prog-fill').style.width = prog + '%';
+
+  const circuitIcons = {
+    clients: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 4-8 8-8s8 3 8 8"/></svg>',
+    services: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="18" x2="12" y2="18"/></svg>',
+    team: '<svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><circle cx="17" cy="7" r="3"/><path d="M3 21c0-4 3-7 6-7M14 21c0-3 2-5 4-5"/></svg>',
+    money: '<svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>'
+  };
+
+  let answersHtml = ANSWERS.map((a, i) => {
+    const selected = state.answers[state.currentQ] === i;
+    return `
+      <div class="answer ${a.cls}" onclick="selectAnswer(${i})">
+        <div class="ans-check"></div>
+        <div class="ans-text">${a.label}</div>
+        <div class="ans-points">+${a.points}</div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('question-block').innerHTML = `
+    <div class="q-circuit-tag">
+      ${circuitIcons[q.circuit]}
+      Контур: ${q.circuitName}
+    </div>
+    <div class="q-title">${q.title}</div>
+    <div class="q-norm">${q.norm}</div>
+    <div class="answers">${answersHtml}</div>
+  `;
+
+  document.getElementById('back-btn').disabled = state.currentQ === 0;
+  const isLast = state.currentQ === QUESTIONS.length - 1;
+  document.getElementById('quiz-meta').textContent = isLast
+    ? 'Последний вопрос — после ответа увидите результат →'
+    : 'Жмите ответ, чтобы продолжить →';
+}
+
+function selectAnswer(idx){
+  state.answers[state.currentQ] = idx;
+  // small delay for visual feedback
+  setTimeout(() => {
+    if(state.currentQ < QUESTIONS.length - 1){
+      state.currentQ++;
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }, 200);
+}
+
+function prevQuestion(){
+  if(state.currentQ > 0){
+    state.currentQ--;
+    renderQuestion();
+  }
+}
+
+// ════════════════════════════════════════════
+// RESULT
+// ════════════════════════════════════════════
+function computeScores(){
+  const breakdown = {clients:0, services:0, team:0, money:0};
+  let total = 0;
+  state.answers.forEach((aIdx, qIdx) => {
+    if(aIdx === null) return;
+    const points = ANSWERS[aIdx].points;
+    const circuit = QUESTIONS[qIdx].circuit;
+    breakdown[circuit] += points;
+    total += points;
+  });
+  return {total, breakdown};
+}
+
+function getBand(score){
+  if(score <= 9) return {
+    key:'red',
+    name:'Хаос',
+    sub:'Это не бизнес — это самозанятость',
+    verdict:'Вы держите компанию на личной энергии. Любая болезнь, отпуск или большой заказ-«монстр» — и всё рушится. <b>Хорошая новость</b>: 80% клинингов начинают именно с этой зоны. Главное — увидеть честную картину сейчас, чтобы начать менять.'
+  };
+  if(score <= 17) return {
+    key:'orange',
+    name:'Базовая структура',
+    sub:'Есть фундамент, но не система',
+    verdict:'У вас есть отдельные элементы (учёт, прайс, какая-то структура), но они НЕ связаны в систему. Главная проблема — невидимые утечки прибыли и зависимость от вашего личного участия. <b>Прорыв происходит</b>, когда соберёте 3-4 ключевых элемента в одну стратегическую карту.'
+  };
+  if(score <= 24) return {
+    key:'sky',
+    name:'Сильная середина',
+    sub:'Растёте устойчиво',
+    verdict:'У вас отстроены ключевые блоки. Стабильно растёте 30-80% в год. Основной фокус сейчас — выйти из «среднего сегмента» в премиум или масштабироваться на вторую точку. <b>Это уже не «как выжить»</b>, а «как расти быстрее».'
+  };
+  return {
+    key:'green',
+    name:'Системный бизнес',
+    sub:'Готов к масштабу',
+    verdict:'Это бизнес, а не самозанятость. Вы выстроили систему, у вас выделено время на стратегию, команда работает без вашего ежедневного контроля. <b>Следующий уровень</b> — франшиза, экспансия в другие города, выход в премиум-сегмент или вертикальная интеграция.'
+  };
+}
+
+function findWeakest(breakdown){
+  let weakest = null, worstRatio = 1;
+  Object.entries(breakdown).forEach(([key, score]) => {
+    const max = CIRCUIT_DETAILS[key].max;
+    const ratio = score / max;
+    if(ratio < worstRatio){
+      worstRatio = ratio;
+      weakest = key;
+    }
+  });
+  return {key:weakest, ratio:worstRatio};
+}
+
+const WEAKEST_TEXTS = {
+  clients: {
+    h:'Контур «Клиенты» — самый слабый',
+    text:'Без портрета идеального клиента, понимания LTV и критериев отказа вы берёте всех подряд. <b>Результат:</b> до 25% выручки уходит в обслуживание убыточных клиентов. На обороте 600К — это 150К ₽ в МЕСЯЦ. Первое действие — описать идеального клиента в 7 характеристиках за 2 часа.'
+  },
+  services: {
+    h:'Контур «Услуги» — самый слабый',
+    text:'Без техкарт и чек-листов приёмки команда работает «как умеет». <b>Результат:</b> брак 5-15% против нормы 1-2%. На обороте 600К это 30-90К ₽ в месяц в минус: переделки, возвраты, потерянные клиенты. Первое действие — техкарта одной самой массовой услуги за 4 часа.'
+  },
+  team: {
+    h:'Контур «Команда» — самый слабый',
+    text:'Без прозрачных KPI и низкой текучки вы постоянно обучаете новых людей. <b>Результат:</b> КПД команды 55-65% против нормы 80%+. Переплачиваете ФОТ на 20-30%. Первое действие — переписать формулу ФОТ с прозрачной структурой бонусов за 3-4 часа.'
+  },
+  money: {
+    h:'Контур «Деньги» — самый слабый',
+    text:'Без P&L, маркетинг-бюджета и резерва вы движетесь вслепую. <b>Результат:</b> попадаете в кассовые разрывы, режете маркетинг в плохие месяцы (что делает следующий месяц ещё хуже), не понимаете, на чём реально зарабатываете. Первое действие — собрать P&L за 6 месяцев в Excel за 5-6 часов.'
+  }
+};
+
+function showResult(){
+  const {total, breakdown} = computeScores();
+  const band = getBand(total);
+
+  // Big number
+  animateNumber('score-big', 0, total, 800);
+
+  // Band
+  const bandEl = document.getElementById('score-band');
+  bandEl.className = 'score-band ' + band.key;
+  bandEl.textContent = '◆ ' + band.name + ' · ' + band.sub;
+
+  // Verdict
+  document.getElementById('score-verdict').innerHTML = band.verdict;
+
+  // Score circle SVG
+  renderScoreRing(total, band.key);
+
+  // Breakdown
+  setTimeout(() => {
+    Object.entries(breakdown).forEach(([key, score]) => {
+      const max = CIRCUIT_DETAILS[key].max;
+      const pct = (score / max) * 100;
+      const ratio = score / max;
+      let cls = 'red';
+      if(ratio >= 0.85) cls = 'green';
+      else if(ratio >= 0.6) cls = 'sky';
+      else if(ratio >= 0.35) cls = 'orange';
+
+      const fillEl = document.getElementById('cb-' + key);
+      fillEl.className = 'cb-fill ' + cls;
+      fillEl.style.width = pct + '%';
+      document.getElementById('cb-' + key + '-s').textContent = score + '/' + max;
+    });
+  }, 100);
+
+  // Weakest
+  const weakest = findWeakest(breakdown);
+  document.getElementById('weakest-h').textContent = WEAKEST_TEXTS[weakest.key].h;
+  document.getElementById('weakest-text').innerHTML = WEAKEST_TEXTS[weakest.key].text;
+
+  // Title
+  document.getElementById('res-title-h').textContent =
+    band.key === 'green' ? 'Поздравляем — у вас система!' :
+    band.key === 'sky' ? 'Хороший результат' :
+    band.key === 'orange' ? 'Фундамент есть, нужна система' :
+    'Видите слабые места?';
+
+  showScreen('result');
+}
+
+function animateNumber(elId, from, to, duration){
+  const el = document.getElementById(elId);
+  const start = performance.now();
+  function tick(now){
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+    el.textContent = Math.round(from + (to - from) * eased);
+    if(t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderScoreRing(score, bandKey){
+  const colors = {
+    red:'#f87171',
+    orange:'#fb923c',
+    sky:'#38bdf8',
+    green:'#34d399'
+  };
+  const color = colors[bandKey];
+  const r = 84;
+  const c = 2 * Math.PI * r;
+  const pct = score / 30;
+  const offset = c * (1 - pct);
+
+  const svg = `
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;transform:rotate(-90deg)">
+      <defs>
+        <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="${color}" stop-opacity="0.8"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0.8"/>
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(56,189,248,0.10)" stroke-width="10"/>
+      <circle cx="100" cy="100" r="${r}" fill="none" stroke="url(#ring-grad)" stroke-width="10"
+        stroke-linecap="round"
+        stroke-dasharray="${c}"
+        stroke-dashoffset="${c}"
+        style="animation: drawRing 1.2s ease forwards; filter: drop-shadow(0 0 8px ${color}88);"/>
+      <style>
+        @keyframes drawRing {
+          to { stroke-dashoffset: ${offset}; }
+        }
+      </style>
+    </svg>
+  `;
+
+  // Insert before the score-num div
+  const circle = document.getElementById('score-circle');
+  const existing = circle.querySelector('svg');
+  if(existing) existing.remove();
+  circle.insertAdjacentHTML('afterbegin', svg);
+}
+
+function restart(){
+  state.currentQ = 0;
+  state.answers = new Array(10).fill(null);
+  showScreen('welcome');
+}
+</script>
+
+</body>
+</html>
