@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мини-аудит «Где ты застрял» — НАШ КЛУБ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #09111F;
+  --ink2:      #0E1A2E;
+  --ink3:      #152236;
+  --ink4:      #1C2E47;
+  --gold:      #C8973A;
+  --gold2:     #DDB05A;
+  --gold3:     #EDD080;
+  --cream:     #F4EDDC;
+  --cream2:    #E8DEAD;
+  --fog:       #8A9BB8;
+  --fog2:      #5A6F8F;
+  --goldline:  rgba(200,151,58,.30);
+  --golddim:   rgba(200,151,58,.07);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Geologica', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── COVER ── */
+.cover {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(200,151,58,.06) 0%, transparent 70%);
+}
+.cover-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
+
+.cover-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); border: .75px solid var(--goldline);
+  padding: 5px 16px; border-radius: 100px; margin-bottom: 2.5rem;
+  position: relative;
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+
+.cover-kicker {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(13px, 2vw, 16px);
+  font-style: italic; color: var(--fog);
+  margin-bottom: 1rem; position: relative;
+}
+.cover-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(42px, 7vw, 72px);
+  font-weight: 500; line-height: 1.1;
+  color: var(--cream); margin-bottom: .75rem;
+  position: relative;
+}
+.cover-title em { font-style: italic; color: var(--gold2); }
+
+.cover-rule { width: 48px; height: 1.5px; background: var(--gold); margin: 2rem auto; position: relative; }
+
+.cover-sub {
+  font-size: clamp(14px, 2vw, 16px);
+  color: var(--fog); line-height: 1.8;
+  max-width: 520px; margin: 0 auto 2.5rem;
+  position: relative;
+}
+
+.cover-pills {
+  display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  margin-bottom: 3rem; position: relative;
+}
+.cover-pill {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--fog);
+}
+.pill-mark { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 10px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 15px; font-weight: 500; letter-spacing: .02em;
+  padding: 1rem 2.5rem; cursor: pointer;
+  transition: background .2s, transform .15s;
+  position: relative; text-decoration: none;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-primary:active { transform: translateY(0); }
+
+.cover-trust {
+  font-size: 11px; color: var(--fog2);
+  margin-top: 1.25rem; position: relative;
+}
+
+/* ── SECTION WRAPPER ── */
+.section {
+  max-width: 680px; margin: 0 auto; padding: 0 1.25rem;
+}
+
+/* ── HOW IT WORKS ── */
+.hiw {
+  padding: 5rem 0 4rem;
+  border-top: .75px solid rgba(200,151,58,.12);
+}
+.section-eyebrow {
+  text-align: center;
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.section-title {
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 4vw, 36px); font-weight: 500;
+  color: var(--cream); line-height: 1.2; margin-bottom: .75rem;
+}
+.section-sub {
+  text-align: center;
+  font-size: 14px; color: var(--fog); line-height: 1.75;
+  max-width: 440px; margin: 0 auto 3rem;
+}
+
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 1.25rem; align-items: flex-start;
+  padding: 1.5rem 0;
+  border-bottom: .75px solid rgba(200,151,58,.1);
+}
+.step:last-child { border-bottom: none; }
+.step-num-wrap { position: relative; flex-shrink: 0; }
+.step-num {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--ink2); border: .75px solid var(--goldline);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; color: var(--gold);
+}
+.step-line {
+  position: absolute; left: 50%; top: 38px;
+  width: .75px; height: calc(100% + 1.5rem - 38px);
+  background: var(--goldline); transform: translateX(-50%);
+}
+.step:last-child .step-line { display: none; }
+.step-body {}
+.step-title { font-size: 14px; font-weight: 500; color: var(--cream); margin-bottom: .35rem; }
+.step-desc { font-size: 13px; color: var(--fog); line-height: 1.65; }
+.step-tag {
+  display: inline-block; margin-top: .5rem;
+  font-size: 10px; padding: 2px 10px; border-radius: 100px;
+  background: var(--golddim); color: var(--gold2);
+  border: .75px solid var(--goldline); letter-spacing: .05em;
+}
+
+/* ── LEADERS ── */
+.leaders-section { padding: 4rem 0; border-top: .75px solid rgba(200,151,58,.12); }
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px; margin-top: 2.5rem;
+}
+.leader-card {
+  background: var(--ink2); border: .75px solid rgba(200,151,58,.18);
+  border-radius: 12px; padding: 1.1rem;
+  transition: border-color .2s;
+}
+.leader-card:hover { border-color: var(--goldline); }
+.leader-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--ink3); border: .75px solid var(--goldline);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; color: var(--gold); margin-bottom: .75rem;
+}
+.leader-name { font-size: 13px; font-weight: 500; color: var(--cream); margin-bottom: .2rem; }
+.leader-role { font-size: 11px; color: var(--fog); margin-bottom: .2rem; line-height: 1.4; }
+.leader-city { font-size: 10px; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; }
+
+/* ── FORM ── */
+.form-section {
+  padding: 4rem 0 5rem;
+  border-top: .75px solid rgba(200,151,58,.12);
+}
+
+.form-card {
+  background: var(--ink2); border: .75px solid var(--goldline);
+  border-radius: 16px; overflow: hidden;
+}
+
+.form-card-header {
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: .75px solid rgba(200,151,58,.12);
+}
+.fch-eyebrow {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .75rem;
+}
+.fch-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(22px, 3vw, 28px); font-weight: 500;
+  color: var(--cream); line-height: 1.25; margin-bottom: .4rem;
+}
+.fch-sub { font-size: 13px; color: var(--fog); line-height: 1.6; }
+
+.form-body { padding: 1.75rem 2rem; }
+
+.q-group { margin-bottom: 1.5rem; }
+.q-group:last-of-type { margin-bottom: 2rem; }
+
+.q-header-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: .6rem;
+}
+.q-bubble {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--gold); color: var(--ink);
+  font-size: 11px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.q-label { font-size: 14px; font-weight: 500; color: var(--cream); line-height: 1.4; }
+.q-sub { font-size: 12px; color: var(--fog); margin-bottom: .75rem; font-style: italic; font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1.5; }
+
+textarea, input[type="text"], select {
+  width: 100%;
+  background: var(--ink3); border: .75px solid rgba(200,151,58,.22);
+  border-radius: 8px; color: var(--cream);
+  font-family: 'Geologica', sans-serif; font-weight: 300;
+  font-size: 13.5px; padding: .75rem 1rem;
+  transition: border-color .2s;
+  outline: none; resize: none; appearance: none;
+}
+textarea { min-height: 80px; line-height: 1.6; }
+input[type="text"] { height: 44px; }
+select { height: 44px; cursor: pointer; }
+select option { background: var(--ink2); }
+textarea:focus, input:focus, select:focus {
+  border-color: var(--gold);
+}
+textarea::placeholder, input::placeholder { color: var(--fog2); }
+
+.radio-group { display: flex; flex-direction: column; gap: 7px; }
+.radio-opt {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--ink3); border: .75px solid rgba(200,151,58,.15);
+  border-radius: 8px; padding: .7rem .9rem; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.radio-opt:hover { border-color: var(--goldline); background: var(--ink4); }
+.radio-opt input[type="radio"] { display: none; }
+.radio-mark {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: .75px solid rgba(200,151,58,.4);
+  background: var(--ink2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s, background .2s;
+}
+.radio-mark::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: transparent; transition: background .15s;
+}
+.radio-opt input:checked + .radio-mark { border-color: var(--gold); background: rgba(200,151,58,.15); }
+.radio-opt input:checked + .radio-mark::after { background: var(--gold); }
+.radio-text { font-size: 13px; color: var(--cream2); line-height: 1.45; }
+.radio-opt:has(input:checked) { border-color: var(--gold); background: rgba(200,151,58,.08); }
+.radio-opt:has(input:checked) .radio-text { color: var(--cream); }
+
+.city-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.city-opt {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--ink3); border: .75px solid rgba(200,151,58,.15);
+  border-radius: 8px; padding: .65rem .85rem; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.city-opt:hover { border-color: var(--goldline); }
+.city-opt input[type="radio"] { display: none; }
+.city-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: .75px solid rgba(200,151,58,.4);
+  background: transparent; flex-shrink: 0;
+  transition: background .15s, border-color .15s;
+}
+.city-name { font-size: 12px; color: var(--cream2); }
+.city-opt:has(input:checked) { border-color: var(--gold); background: rgba(200,151,58,.08); }
+.city-opt:has(input:checked) .city-dot { background: var(--gold); border-color: var(--gold); }
+.city-opt:has(input:checked) .city-name { color: var(--cream); }
+
+.privacy-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 1.5rem; cursor: pointer;
+}
+.privacy-row input[type="checkbox"] { display: none; }
+.check-box {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: .75px solid rgba(200,151,58,.3);
+  background: var(--ink3); flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, border-color .15s;
+}
+.check-box::after {
+  content: ''; width: 9px; height: 5px;
+  border-left: 1.5px solid transparent; border-bottom: 1.5px solid transparent;
+  transform: rotate(-45deg) translateY(-1px);
+  transition: border-color .15s;
+}
+.privacy-row:has(input:checked) .check-box { background: var(--gold); border-color: var(--gold); }
+.privacy-row:has(input:checked) .check-box::after { border-color: var(--ink); }
+.privacy-text { font-size: 12px; color: var(--fog); line-height: 1.6; }
+
+.btn-submit {
+  width: 100%; background: var(--gold); color: var(--ink);
+  border: none; border-radius: 10px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 15px; font-weight: 500; letter-spacing: .02em;
+  padding: 1rem; cursor: pointer;
+  transition: background .2s, transform .15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-bottom: .75rem;
+}
+.btn-submit:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-submit:active { transform: translateY(0); }
+.btn-sub-note { text-align: center; font-size: 11.5px; color: var(--fog2); }
+
+/* ── SUCCESS ── */
+.success-card {
+  display: none;
+  background: var(--ink2); border: .75px solid var(--goldline);
+  border-radius: 16px; padding: 3rem 2.5rem; text-align: center;
+}
+.success-card.show { display: block; }
+.success-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(200,151,58,.12); border: .75px solid var(--goldline);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 1.5rem;
+}
+.success-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 28px; font-weight: 500;
+  color: var(--cream); margin-bottom: .5rem;
+}
+.success-title em { font-style: italic; color: var(--gold2); }
+.success-sub { font-size: 14px; color: var(--fog); line-height: 1.75; margin-bottom: 2rem; }
+.success-steps {
+  display: flex; flex-direction: column; gap: 10px;
+  text-align: left; margin-bottom: 2rem;
+}
+.ss-row { display: flex; gap: 12px; align-items: flex-start; }
+.ss-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gold); color: var(--ink);
+  font-size: 10px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ss-text { font-size: 13px; color: var(--cream2); line-height: 1.6; }
+.ss-text strong { color: var(--cream); font-weight: 500; }
+.success-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 10px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px; font-weight: 500; padding: .9rem 2rem; cursor: pointer;
+  transition: background .2s; text-decoration: none;
+}
+.success-btn:hover { background: var(--gold2); }
+
+/* ── WHAT TO EXPECT ── */
+.expect-section { padding: 4rem 0; border-top: .75px solid rgba(200,151,58,.12); }
+.expect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 2.5rem; }
+@media(max-width:500px){ .expect-grid { grid-template-columns: 1fr; } }
+.expect-card {
+  background: var(--ink2); border: .75px solid rgba(200,151,58,.18);
+  border-radius: 12px; padding: 1.25rem;
+}
+.ec-icon { font-size: 20px; margin-bottom: .75rem; color: var(--gold); }
+.ec-title { font-size: 13px; font-weight: 500; color: var(--cream); margin-bottom: .4rem; }
+.ec-body { font-size: 12px; color: var(--fog); line-height: 1.6; }
+
+/* ── EXAMPLE ── */
+.example-section { padding: 4rem 0; border-top: .75px solid rgba(200,151,58,.12); }
+.example-card {
+  background: var(--ink2); border: .75px solid var(--goldline);
+  border-radius: 14px; overflow: hidden; margin-top: 2.5rem;
+}
+.ex-header {
+  padding: 1.25rem 1.5rem; border-bottom: .75px solid rgba(200,151,58,.1);
+  display: flex; gap: 10px; align-items: center;
+}
+.ex-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--ink3); border: .75px solid var(--goldline);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; color: var(--gold);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ex-meta { flex: 1; }
+.ex-name { font-size: 13px; font-weight: 500; color: var(--cream); }
+.ex-role { font-size: 11px; color: var(--fog); }
+.ex-badge {
+  font-size: 9.5px; padding: 3px 9px; border-radius: 100px;
+  background: rgba(200,151,58,.12); color: var(--gold2);
+  border: .75px solid var(--goldline); letter-spacing: .05em;
+}
+.ex-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 10px; }
+.msg {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.msg-bubble {
+  border-radius: 12px 12px 12px 4px;
+  padding: .75rem 1rem;
+  font-size: 13px; line-height: 1.65;
+}
+.msg.user .msg-bubble {
+  background: var(--ink3); border: .75px solid rgba(200,151,58,.15);
+  color: var(--cream2); border-radius: 12px 12px 4px 12px; margin-left: auto;
+}
+.msg.user { flex-direction: row-reverse; }
+.msg.leader .msg-bubble {
+  background: rgba(200,151,58,.08); border: .75px solid rgba(200,151,58,.2);
+  color: var(--cream2);
+}
+.msg-av {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--ink3); border: .75px solid var(--goldline);
+  font-size: 10px; color: var(--gold); font-family: 'Cormorant Garamond', serif;
+  display: flex; align-items: center; justify-content: center;
+}
+.msg-time { font-size: 10px; color: var(--fog2); margin-top: 3px; }
+.msg-note {
+  font-size: 11.5px; color: var(--fog); font-style: italic;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  text-align: center; padding: .5rem 0;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: .75px solid rgba(200,151,58,.12);
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+  font-size: 12px; color: var(--fog2);
+  line-height: 1.7;
+}
+footer strong { color: var(--gold); font-weight: 400; }
+</style>
+</head>
+<body>
+
+<!-- ════════ COVER ════════ -->
+<div class="cover">
+  <div class="cover-accent"></div>
+
+  <div class="cover-badge">
+    <div class="badge-dot"></div>
+    НАШ КЛУБ · бесплатный разбор
+  </div>
+
+  <div class="cover-kicker">Ответ от живого человека. Не от бота.</div>
+
+  <div class="cover-title">Мини-аудит<br>«Где ты <em>застрял»</em></div>
+
+  <div class="cover-rule"></div>
+
+  <div class="cover-sub">
+    Ответь на 5 вопросов о своей ситуации — и в течение 24 часов получи личный разбор от лидера клуба в твоём городе. Конкретные наблюдения и следующий шаг. Бесплатно.
+  </div>
+
+  <div class="cover-pills">
+    <div class="cover-pill"><div class="pill-mark"></div>3 минуты на заполнение</div>
+    <div class="cover-pill"><div class="pill-mark"></div>Ответ за 24 часа</div>
+    <div class="cover-pill"><div class="pill-mark"></div>Живой разбор, не шаблон</div>
+  </div>
+
+  <a class="btn-primary" href="#form">
+    Получить разбор
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="cover-trust">Мест ограничено — 7 разборов в неделю</div>
+</div>
+
+<!-- ════════ HOW IT WORKS ════════ -->
+<div class="hiw">
+  <div class="section">
+    <div class="section-eyebrow">Как это работает</div>
+    <div class="section-title">Три шага — и ты знаешь, где застрял</div>
+    <div class="section-sub">Никаких продаж, никаких скриптов. Живой разговор через текст.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Заполняешь форму — 5 вопросов</div>
+          <div class="step-desc">Кто ты, что хочешь запустить, что мешает, сколько времени это длится, что уже пробовал(а). Честно, без прикрас. Чем точнее — тем полезнее разбор.</div>
+          <span class="step-tag">3 минуты</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Лидер клуба в твоём городе читает ответы</div>
+          <div class="step-desc">Не менеджер, не бот. Живой человек — психолог, коуч или эксперт — который сам прошёл путь запуска. Он видит в ответах то, что ты не замечаешь.</div>
+          <span class="step-tag">До 24 часов</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num-wrap">
+          <div class="step-num">3</div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Получаешь личный ответ в ЛС ВКонтакте</div>
+          <div class="step-desc">Конкретные наблюдения по твоей ситуации — не «всем подходит», а именно тебе. Один-три чётких следующих шага. И в конце — приглашение попробовать живую встречу клуба.</div>
+          <span class="step-tag">В личку ВК</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ LEADERS ════════ -->
+<div class="leaders-section">
+  <div class="section">
+    <div class="section-eyebrow">Кто даёт разбор</div>
+    <div class="section-title">Лидеры клуба в твоём городе</div>
+    <div class="section-sub">Живые люди с опытом. Каждый прошёл через то, о чём ты спрашиваешь.</div>
+
+    <div class="leaders-grid">
+      <div class="leader-card">
+        <div class="leader-avatar">ОЗ</div>
+        <div class="leader-name">Ольга Зарумная</div>
+        <div class="leader-role">Магистрант психологии · Практик</div>
+        <div class="leader-city">Основатель · все города</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">КЛ</div>
+        <div class="leader-name">Константин Лопатинский</div>
+        <div class="leader-role">Психолог · Коуч</div>
+        <div class="leader-city">Ростов-на-Дону</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">АП</div>
+        <div class="leader-name">Анна Павленко</div>
+        <div class="leader-role">Коуч · ДПДГ · Креативный директор</div>
+        <div class="leader-city">Волгоград</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ДА</div>
+        <div class="leader-name">Даниэль Атабекян</div>
+        <div class="leader-role">Риелтор · Музыкант · Астролог</div>
+        <div class="leader-city">Батайск</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">МД</div>
+        <div class="leader-name">Мануэла Дубровина</div>
+        <div class="leader-role">Женская энергия · Лёгкость</div>
+        <div class="leader-city">Санкт-Петербург</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ЮМ</div>
+        <div class="leader-name">Юлия Маяк</div>
+        <div class="leader-role">Среда и движение вместе</div>
+        <div class="leader-city">Ставрополь</div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ЕН</div>
+        <div class="leader-name">Елена Навериани</div>
+        <div class="leader-role">Психолог · Сексолог · 40 лет в медицине</div>
+        <div class="leader-city">Новочеркасск</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ EXAMPLE ════════ -->
+<div class="example-section">
+  <div class="section">
+    <div class="section-eyebrow">Пример разбора</div>
+    <div class="section-title">Как это выглядит в переписке</div>
+    <div class="section-sub">Реальный формат — адаптированный пример. Имя изменено.</div>
+
+    <div class="example-card">
+      <div class="ex-header">
+        <div class="ex-avatar">КЛ</div>
+        <div class="ex-meta">
+          <div class="ex-name">Константин Лопатинский</div>
+          <div class="ex-role">Психолог · Лидер клуба в Ростове</div>
+        </div>
+        <div class="ex-badge">Личный разбор</div>
+      </div>
+      <div class="ex-body">
+        <div class="msg-note">Ответ участника (форма)</div>
+        <div class="msg user">
+          <div>
+            <div class="msg-bubble">Я психолог, 6 лет практики. Хочу запустить онлайн-курс про тревогу. Мешает ощущение что «недостаточно готова» — каждый раз нахожу что улучшить. Так уже 1,5 года. Пробовала делать контент — 3 поста и бросила.</div>
+            <div class="msg-time">Анна К. · только что</div>
+          </div>
+        </div>
+
+        <div class="msg-note">Ответ лидера клуба · через 4 часа</div>
+        <div class="msg leader">
+          <div class="msg-av">КЛ</div>
+          <div>
+            <div class="msg-bubble">Анна, прочитал твой ответ — и вижу несколько вещей, которые ты, возможно, сама не замечаешь.<br><br>«Недостаточно готова» после 1,5 лет и 6 лет практики — это не про готовность. Это классический страх видимости, замаскированный под перфекционизм. Мозг всегда найдёт что улучшить — это его работа, не твоя проблема.<br><br>3 поста и стоп — это не лень. Это одиночество. Когда делаешь в пустоту без обратной связи, энергия кончается быстро.<br><br>Один конкретный шаг: перестань делать «курс». Сделай одну живую встречу — расскажи о тревоге группе из 5-8 человек. Посмотри на реакцию. Это займёт 2 недели, а не год.<br><br>Хочу позвать тебя на ближайшую встречу нашего клуба в Ростове — там как раз есть люди, которым нужны психологи. Это безопасная среда для первого шага.</div>
+            <div class="msg-time">Константин · 4 часа спустя</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ WHAT TO EXPECT ════════ -->
+<div class="expect-section">
+  <div class="section">
+    <div class="section-eyebrow">Что ты получишь</div>
+    <div class="section-title">Не мотивация. Конкретика.</div>
+
+    <div class="expect-grid">
+      <div class="expect-card">
+        <div class="ec-icon">◈</div>
+        <div class="ec-title">Взгляд снаружи</div>
+        <div class="ec-body">Человек, который не внутри твоей ситуации, видит паттерны, которые ты давно перестал(а) замечать.</div>
+      </div>
+      <div class="expect-card">
+        <div class="ec-icon">◈</div>
+        <div class="ec-title">Имя блоку</div>
+        <div class="ec-body">Не «ты просто боишься» — а конкретно: страх видимости, перфекционизм-избегание, изоляция или информационный перегруз.</div>
+      </div>
+      <div class="expect-card">
+        <div class="ec-icon">◈</div>
+        <div class="ec-title">1–3 следующих шага</div>
+        <div class="ec-body">Не список задач на месяц. Один-три действия, которые можно сделать в ближайшие 7 дней.</div>
+      </div>
+      <div class="expect-card">
+        <div class="ec-icon">◈</div>
+        <div class="ec-title">Приглашение в клуб</div>
+        <div class="ec-body">В конце — предложение попробовать живую встречу клуба в твоём городе. Без давления. Просто возможность.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ FORM ════════ -->
+<div class="form-section" id="form">
+  <div class="section">
+    <div id="form-wrap">
+      <div class="form-card">
+        <div class="form-card-header">
+          <div class="fch-eyebrow">Мини-аудит · бесплатно</div>
+          <div class="fch-title">Расскажи о своей ситуации</div>
+          <div class="fch-sub">5 вопросов · 3 минуты · Чем честнее — тем точнее разбор</div>
+        </div>
+        <div class="form-body">
+
+          <!-- Q1 -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble">1</div>
+              <div class="q-label">Кто ты и чем занимаешься?</div>
+            </div>
+            <div class="q-sub">Профессия, сфера, опыт. Пиши как человек, не как резюме.</div>
+            <textarea id="q1" placeholder="Например: я психолог, работаю 6 лет в частной практике. Веду онлайн и офлайн клиентов по тревоге и самооценке…"></textarea>
+          </div>
+
+          <!-- Q2 -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble">2</div>
+              <div class="q-label">Что ты хочешь запустить или реализовать?</div>
+            </div>
+            <div class="q-sub">Идея, проект, продукт, изменение. Конкретно — что именно?</div>
+            <textarea id="q2" placeholder="Например: хочу запустить онлайн-курс по работе с тревогой, начать вести соцсети и выйти на 10+ клиентов в месяц…"></textarea>
+          </div>
+
+          <!-- Q3 -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble">3</div>
+              <div class="q-label">Что мешает? Что останавливает прямо сейчас?</div>
+            </div>
+            <div class="q-sub">Не «всё» — назови главное. Одну-две вещи, которые крутятся в голове чаще всего.</div>
+            <div class="radio-group" id="q3-radio">
+              <label class="radio-opt">
+                <input type="radio" name="q3" value="Не знаю с чего начать и как правильно выстроить шаги">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Не знаю с чего начать и как правильно выстроить шаги</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q3" value="Страшно заявить о себе — боюсь оценки и осуждения">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Страшно заявить о себе — боюсь оценки и осуждения</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q3" value="Делаю всё один(одна) — нет энергии и нет людей рядом">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Делаю всё один(одна) — нет энергии и нет людей рядом</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q3" value="Знаю что делать — но не делаю. Снова и снова откладываю">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Знаю что делать — но не делаю. Снова и снова откладываю</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q3" value="other">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Что-то другое — напишу сам(а)</div>
+              </label>
+            </div>
+            <div id="q3-other-wrap" style="display:none;margin-top:8px;">
+              <textarea id="q3-other" placeholder="Опиши своими словами…" style="min-height:64px;"></textarea>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble">4</div>
+              <div class="q-label">Сколько времени это уже длится?</div>
+            </div>
+            <div class="q-sub">Примерно — сколько ты уже в этом состоянии «хочу, но не запускаю»?</div>
+            <div class="radio-group">
+              <label class="radio-opt">
+                <input type="radio" name="q4" value="Меньше 3 месяцев — только начинаю понимать что застрял(а)">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Меньше 3 месяцев — только начинаю понимать что застрял(а)</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q4" value="3–12 месяцев — уже долго думаю, иногда что-то делаю">
+                <div class="radio-mark"></div>
+                <div class="radio-text">3–12 месяцев — уже долго думаю, иногда что-то делаю</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q4" value="Больше года — это давно стало хроническим состоянием">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Больше года — это давно стало хроническим состоянием</div>
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="q4" value="Несколько лет — я уже почти привык(ла)">
+                <div class="radio-mark"></div>
+                <div class="radio-text">Несколько лет — я уже почти привык(ла)</div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble">5</div>
+              <div class="q-label">Что ты уже пробовал(а)? Что не сработало — и почему, как ты думаешь?</div>
+            </div>
+            <div class="q-sub">Курсы, коучинг, книги, попытки запуска. Что случилось? Честно — без приукрашивания.</div>
+            <textarea id="q5" placeholder="Например: проходила три курса по контент-маркетингу — знания есть, делать постоянно не получается. Пробовала вести канал — 2 недели и бросила. Ходила к психологу раз — показалось поверхностно…"></textarea>
+          </div>
+
+          <!-- City -->
+          <div class="q-group">
+            <div class="q-header-row">
+              <div class="q-bubble" style="background:var(--ink3);border:.75px solid var(--goldline);color:var(--gold);">★</div>
+              <div class="q-label">Выбери свой город — лидер оттуда свяжется с тобой</div>
+            </div>
+            <div class="city-grid">
+              <label class="city-opt"><input type="radio" name="city" value="Ростов-на-Дону"><div class="city-dot"></div><div class="city-name">Ростов-на-Дону</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Волгоград"><div class="city-dot"></div><div class="city-name">Волгоград</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Санкт-Петербург"><div class="city-dot"></div><div class="city-name">Санкт-Петербург</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Ставрополь"><div class="city-dot"></div><div class="city-name">Ставрополь</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Батайск"><div class="city-dot"></div><div class="city-name">Батайск</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Новочеркасск"><div class="city-dot"></div><div class="city-name">Новочеркасск</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Москва"><div class="city-dot"></div><div class="city-name">Москва</div></label>
+              <label class="city-opt"><input type="radio" name="city" value="Другой город"><div class="city-dot"></div><div class="city-name">Другой город</div></label>
+            </div>
+          </div>
+
+          <!-- Privacy -->
+          <label class="privacy-row">
+            <input type="checkbox" id="privacy">
+            <div class="check-box"></div>
+            <div class="privacy-text">Я понимаю, что лидер клуба прочитает мои ответы и ответит лично в ВКонтакте. Ответы используются только для разбора и не передаются третьим лицам.</div>
+          </label>
+
+          <button class="btn-submit" onclick="submitForm()">
+            Отправить на разбор
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="btn-sub-note">Ответ в ЛС ВКонтакте в течение 24 часов · Бесплатно · Без обязательств</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="success-card" id="success-card">
+      <div class="success-icon">✦</div>
+      <div class="success-title">Ответы <em>отправлены</em></div>
+      <div class="success-sub">Лидер клуба в твоём городе прочитает их и напишет тебе в ЛС ВКонтакте. Обычно это занимает несколько часов — максимум 24.</div>
+      <div class="success-steps">
+        <div class="ss-row">
+          <div class="ss-num">1</div>
+          <div class="ss-text"><strong>Проверь, что аккаунт ВК открыт для сообщений</strong> — иначе лидер не сможет написать тебе.</div>
+        </div>
+        <div class="ss-row">
+          <div class="ss-num">2</div>
+          <div class="ss-text">Подпишись на сообщество НАШ КЛУБ ВКонтакте — так лидер найдёт тебя быстрее.</div>
+        </div>
+        <div class="ss-row">
+          <div class="ss-num">3</div>
+          <div class="ss-text">Жди сообщения. <strong>Не от бота — от живого человека.</strong> Ответь на него — это начало разговора.</div>
+        </div>
+      </div>
+      <a class="success-btn" href="https://vk.com/nashklub_ru" target="_blank">
+        Перейти в сообщество ВК
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>НАШ КЛУБ</strong> · nashklub.ru<br>
+  Основатель: Ольга Зарумная · Живые встречи по всей России<br>
+  Ростов · Москва · СПб · Волгоград · Ставрополь · Батайск · Новочеркасск
+</footer>
+
+<script>
+document.querySelectorAll('input[name="q3"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    var wrap = document.getElementById('q3-other-wrap');
+    wrap.style.display = this.value === 'other' ? 'block' : 'none';
+  });
+});
+
+function submitForm() {
+  var q1 = document.getElementById('q1').value.trim();
+  var q2 = document.getElementById('q2').value.trim();
+  var q3radio = document.querySelector('input[name="q3"]:checked');
+  var q4radio = document.querySelector('input[name="q4"]:checked');
+  var q5 = document.getElementById('q5').value.trim();
+  var city = document.querySelector('input[name="city"]:checked');
+  var privacy = document.getElementById('privacy').checked;
+
+  if (!q1) { alert('Расскажи кратко кто ты — вопрос 1'); return; }
+  if (!q2) { alert('Опиши что хочешь запустить — вопрос 2'); return; }
+  if (!q3radio) { alert('Выбери главное препятствие — вопрос 3'); return; }
+  if (!q4radio) { alert('Укажи сколько времени это длится — вопрос 4'); return; }
+  if (!q5) { alert('Расскажи что уже пробовал(а) — вопрос 5'); return; }
+  if (!city) { alert('Выбери свой город'); return; }
+  if (!privacy) { alert('Подтверди согласие на разбор'); return; }
+
+  document.getElementById('form-wrap').style.display = 'none';
+  var sc = document.getElementById('success-card');
+  sc.classList.add('show');
+  sc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>
