@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>НАШ КЛУБ — Полная упаковка ВК сообщества</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0B;
+  --card: #111113;
+  --card2: #18181B;
+  --border: #222226;
+  --border2: #2E2E34;
+  --text: #F0EDE6;
+  --muted: #6B6B75;
+  --muted2: #9999A8;
+  --accent: #D4632A;
+  --accent2: #E8874E;
+  --gold: #C8A84B;
+  --gold2: #D4B96A;
+  --green: #2DBD8F;
+  --blue: #4A8ED4;
+  --r: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Onest', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 6rem; position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+.site-header {
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+.site-header .label {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent); font-family: 'Unbounded', sans-serif;
+  margin-bottom: .75rem;
+}
+.site-header h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  background: linear-gradient(135deg, #F0EDE6 0%, #C8A84B 50%, #D4632A 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: .5rem;
+}
+.site-header .sub {
+  color: var(--muted2); font-size: 13px;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.section-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 1rem 1.25rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; user-select: none;
+  transition: background .15s;
+}
+.section-head:hover { background: var(--card2); }
+.section-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 10px; font-weight: 700;
+  color: var(--accent);
+  min-width: 28px;
+}
+.section-title {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--text); flex: 1;
+  letter-spacing: .01em;
+}
+.section-badge {
+  font-size: 10px; padding: 3px 10px;
+  border-radius: 100px;
+  background: var(--card2);
+  color: var(--muted2);
+  border: 1px solid var(--border2);
+}
+.chevron { font-size: 10px; color: var(--muted); transition: transform .2s; }
+.chevron.open { transform: rotate(180deg); }
+.section-body { display: none; padding: 1.25rem; background: var(--card); }
+.section-body.open { display: block; }
+
+/* ── VARIANTS ── */
+.var-list { display: flex; flex-direction: column; gap: .75rem; }
+.var-item {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  position: relative;
+  transition: border-color .15s;
+}
+.var-item:hover { border-color: var(--accent); }
+.var-num {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: var(--bg); background: var(--accent);
+  border-radius: 4px; padding: 2px 7px;
+  margin-bottom: .5rem;
+  font-family: 'Unbounded', sans-serif;
+}
+.var-item .var-title {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  margin-bottom: .25rem;
+}
+.var-item .var-note {
+  font-size: 11px; color: var(--muted2); margin-top: .35rem;
+  font-style: italic;
+}
+.var-item .var-text {
+  font-size: 13px; color: #CCCABD; line-height: 1.7;
+  white-space: pre-wrap;
+}
+.best-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 9px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold); background: #C8A84B18;
+  border: 1px solid #C8A84B44;
+  border-radius: 100px; padding: 2px 8px;
+}
+.chars {
+  display: inline-block; font-size: 10px; color: var(--green);
+  background: #2DBD8F12; border: 1px solid #2DBD8F30;
+  border-radius: 100px; padding: 1px 7px; margin-top: .4rem;
+}
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .75rem; }
+@media(max-width:600px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+/* ── CARD ── */
+.card {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+}
+.card-icon { font-size: 20px; margin-bottom: .5rem; }
+.card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+.card-body { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+.card.accent { border-color: var(--accent); }
+.card.gold { border-color: var(--gold); }
+.card.green { border-color: var(--green); }
+
+/* ── PKM BLOCK ── */
+.pkm-block {
+  background: #12101A;
+  border: 1px solid #332D55;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.pkm-label {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: #9B8FD4; font-family: 'Unbounded', sans-serif;
+  margin-bottom: 1rem;
+}
+.pkm-field {
+  margin-bottom: .85rem;
+}
+.pkm-field-label {
+  font-size: 10px; color: #7B74A8; text-transform: uppercase;
+  letter-spacing: .1em; margin-bottom: .3rem;
+}
+.pkm-field-value {
+  background: #1C1829;
+  border: 1px solid #3D365E;
+  border-radius: 6px;
+  padding: .55rem .8rem;
+  font-size: 13px; color: #E8E0FF;
+  font-family: 'Onest', sans-serif;
+}
+.pkm-plaques {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+}
+.pkm-plaque {
+  background: #1C1829;
+  border: 1px solid #3D365E;
+  border-radius: 6px;
+  padding: .5rem .75rem;
+  font-size: 12px; color: #E8E0FF;
+}
+.pkm-plaque-label { font-size: 9px; color: #7B74A8; text-transform: uppercase; letter-spacing: .1em; margin-bottom: .2rem; }
+
+/* ── HIGHLIGHT ── */
+.hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: .6rem; }
+.hl-card {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: .75rem;
+  text-align: center;
+}
+.hl-icon { font-size: 22px; margin-bottom: .35rem; }
+.hl-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+.hl-desc { font-size: 10px; color: var(--muted2); line-height: 1.4; }
+
+/* ── WIDGET TILE ── */
+.widget-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: .6rem; }
+.widget-tile {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: .85rem;
+}
+.widget-tile-icon { font-size: 18px; margin-bottom: .4rem; }
+.widget-tile-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: .25rem; }
+.widget-tile-desc { font-size: 11px; color: var(--muted2); line-height: 1.5; }
+.widget-tile-order { font-size: 10px; color: var(--accent); margin-top: .35rem; font-weight: 600; }
+
+/* ── MENU ITEM ── */
+.menu-list { display: flex; flex-direction: column; gap: .5rem; }
+.menu-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: .75rem 1rem;
+}
+.menu-item-icon { font-size: 18px; min-width: 28px; text-align: center; }
+.menu-item-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.menu-item-desc { font-size: 11px; color: var(--muted2); }
+.menu-item-order {
+  margin-left: auto;
+  font-size: 10px; font-weight: 700;
+  font-family: 'Unbounded', sans-serif;
+  color: var(--accent);
+}
+
+/* ── APPS ── */
+.app-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: .85rem 1rem;
+  margin-bottom: .5rem;
+}
+.app-icon { font-size: 22px; min-width: 32px; }
+.app-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+.app-why { font-size: 11.5px; color: var(--muted2); line-height: 1.55; }
+.app-tag {
+  display: inline-block; font-size: 9px; padding: 2px 7px;
+  border-radius: 100px; border: 1px solid; margin-top: .3rem;
+  font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+}
+.tag-must { color: var(--accent); border-color: #D4632A44; background: #D4632A0F; }
+.tag-rec { color: var(--gold); border-color: #C8A84B44; background: #C8A84B0F; }
+
+/* ── DISCUSS ── */
+.disc-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--card2); border: 1px solid var(--border2);
+  border-radius: 8px; padding: .85rem 1rem; margin-bottom: .5rem;
+}
+.disc-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  min-width: 20px; margin-top: 1px;
+}
+.disc-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+.disc-body { font-size: 11.5px; color: var(--muted2); line-height: 1.55; }
+
+/* ── MSG BLOCK ── */
+.msg-bubble {
+  background: linear-gradient(135deg, #1A2A1F 0%, #141A18 100%);
+  border: 1px solid #2DBD8F33;
+  border-radius: 12px 12px 12px 4px;
+  padding: 1.25rem 1.4rem;
+  font-size: 13px; color: #D8EFE4; line-height: 1.75;
+  white-space: pre-wrap;
+  position: relative;
+}
+.msg-bubble::before {
+  content: '💬';
+  position: absolute; top: -12px; left: 12px;
+  font-size: 20px;
+}
+
+/* ── TIP ── */
+.tip {
+  background: #C8A84B08; border: 1px solid #C8A84B2A;
+  border-radius: 8px; padding: .75rem 1rem;
+  font-size: 11.5px; color: #D4B96A; line-height: 1.6;
+  margin-top: 1rem;
+}
+.tip strong { color: var(--gold2); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+/* ── LABEL TAG ── */
+.tag-line {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem;
+}
+.tag-pill {
+  font-size: 10px; padding: 3px 10px;
+  border-radius: 100px;
+  background: var(--card2); color: var(--muted2);
+  border: 1px solid var(--border2);
+}
+.tag-pill.accent { color: var(--accent); border-color: #D4632A44; background: #D4632A0D; }
+.tag-pill.gold { color: var(--gold); border-color: #C8A84B44; background: #C8A84B0D; }
+.tag-pill.green { color: var(--green); border-color: #2DBD8F44; background: #2DBD8F0D; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="site-header">
+  <div class="label">Полная упаковка ВКонтакте</div>
+  <h1>НАШ КЛУБ</h1>
+  <div class="sub">Сообщество · Клуб людей, которые запускают свои идеи · Основатель Ольга Зарумная</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     01. ОБЛОЖКА ПК — ПКмаркетинг
+════════════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">01</div>
+    <div class="section-title">ОБЛОЖКА ПК — ЗАПОЛНЕНИЕ В ПК‑МАРКЕТИНГЕ</div>
+    <div class="section-badge">Готово к вставке</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body open">
+    <div class="tag-line">
+      <span class="tag-pill accent">ПКмаркетинг → AI → Обложка видео</span>
+      <span class="tag-pill">Формат 1590×400 px</span>
+      <span class="tag-pill">Фото лица — Ольга Зарумная</span>
+    </div>
+
+    <p style="font-size:13px;color:var(--muted2);margin-bottom:1rem;">Вставляй точные значения из таблицы ниже в соответствующие поля формы ПКмаркетинга.</p>
+
+    <!-- ВАРИАНТ 1 — ОСНОВНОЙ -->
+    <div class="pkm-block" style="margin-bottom:1.25rem;">
+      <div class="pkm-label">⭐ Вариант 1 — Основной · Сила + Среда</div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Главная надпись</div>
+        <div class="pkm-field-value">НАШ КЛУБ</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Дополнительная надпись</div>
+        <div class="pkm-field-value">Среда, где идеи становятся действием</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Плашки (до 4 штук)</div>
+        <div class="pkm-plaques">
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 1</div>Живые встречи по всей России</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 2</div>Экспертные онлайн-встречи</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 3</div>Спринты · Нетворкинг · Рост</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 4</div>От 1 000 ₽ в месяц</div>
+        </div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Цвета обложки (цветовая гамма)</div>
+        <div class="pkm-field-value">тёмно-графитовый фон, терракотово-оранжевые акценты, молочный текст</div>
+      </div>
+    </div>
+
+    <!-- ВАРИАНТ 2 -->
+    <div class="pkm-block" style="margin-bottom:1.25rem;">
+      <div class="pkm-label">Вариант 2 — Провокационный · Против курсов</div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Главная надпись</div>
+        <div class="pkm-field-value">НАШ КЛУБ</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Дополнительная надпись</div>
+        <div class="pkm-field-value">Не очередной курс. Живое сообщество.</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Плашки (до 4 штук)</div>
+        <div class="pkm-plaques">
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 1</div>Без инфоцыганства</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 2</div>Только живые люди</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 3</div>Реальные результаты</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 4</div>Города по всей России</div>
+        </div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Цвета обложки</div>
+        <div class="pkm-field-value">чёрный фон, белый и янтарно-золотой текст, минималистично</div>
+      </div>
+    </div>
+
+    <!-- ВАРИАНТ 3 -->
+    <div class="pkm-block">
+      <div class="pkm-label">Вариант 3 — Эмоциональный · Про людей</div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Главная надпись</div>
+        <div class="pkm-field-value">НАШ КЛУБ</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Дополнительная надпись</div>
+        <div class="pkm-field-value">Здесь идеи запускают люди, а не алгоритмы</div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Плашки (до 4 штук)</div>
+        <div class="pkm-plaques">
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 1</div>Психологи · Коучи · Эксперты</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 2</div>Предприниматели · Творческие</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 3</div>Встречи без погон и пафоса</div>
+          <div class="pkm-plaque"><div class="pkm-plaque-label">Плашка 4</div>Вступление от 1 000 ₽/мес</div>
+        </div>
+      </div>
+      <div class="pkm-field">
+        <div class="pkm-field-label">Цвета обложки</div>
+        <div class="pkm-field-value">тёплый тёмный, терракот и кремовый, атмосферно</div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>📸 Фото лица:</strong> загружать фото Ольги Зарумной — живое, не постановочное. Идеально: фото с живой встречи клуба или в рабочей обстановке. PNG/JPEG до 7 МБ.<br><br>
+      <strong>🎨 Цветовая гамма словами для AI:</strong> используй точную фразу из поля «Цвета обложки» выше — ПКмаркетинг сам подберёт оттенки под описание.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     02. НАЗВАНИЕ
+════════════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">02</div>
+    <div class="section-title">НАЗВАНИЕ СООБЩЕСТВА</div>
+    <div class="section-badge">5 вариантов · до 48 симв.</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body open">
+    <div class="var-list">
+
+      <div class="var-item">
+        <div class="best-badge">⭐ Рекомендую</div>
+        <div class="var-num">01</div>
+        <div class="var-title">НАШ КЛУБ | Среда запуска идей</div>
+        <div class="var-note">Бренд + суть за одну строку. Отвечает «что это» сразу.</div>
+        <div class="chars">36 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">02</div>
+        <div class="var-title">НАШ КЛУБ — Живое сообщество роста</div>
+        <div class="var-note">Акцент на «живое» — отстройка от курсов и чат-ботов.</div>
+        <div class="chars">37 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">03</div>
+        <div class="var-title">НАШ КЛУБ | Ольга Зарумная</div>
+        <div class="var-note">Личный бренд основателя усиливает доверие и поисковую выдачу.</div>
+        <div class="chars">30 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">04</div>
+        <div class="var-title">НАШ КЛУБ — Запусти свою идею</div>
+        <div class="var-note">Прямой CTA в названии. Активирует намерение сразу.</div>
+        <div class="chars">32 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">05</div>
+        <div class="var-title">НАШ КЛУБ | Сообщество действия</div>
+        <div class="var-note">Жёстко, коротко, без воды. Для тех, кто ценит конкретику.</div>
+        <div class="chars">34 симв.</div>
+      </div>
+
+    </div>
+    <div class="tip"><strong>Совет:</strong> вариант 01 или 04 — лучший баланс между узнаваемостью бренда и ключевым словом для поиска внутри ВК.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     03. ИМЯ (АДРЕС)
+════════════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">03</div>
+    <div class="section-title">ИМЯ СООБЩЕСТВА (короткий адрес)</div>
+    <div class="section-badge">5 вариантов</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <div class="var-list">
+      <div class="var-item">
+        <div class="best-badge">⭐ Рекомендую</div>
+        <div class="var-num">01</div>
+        <div class="var-title">vk.com/nashklub_ru</div>
+        <div class="var-note">Чисто, просто, запоминаемо. _ru — для уникальности если nashklub занят.</div>
+      </div>
+      <div class="var-item">
+        <div class="var-num">02</div>
+        <div class="var-title">vk.com/club_nashklub</div>
+        <div class="var-note">Классическая структура, легко произносится.</div>
+      </div>
+      <div class="var-item">
+        <div class="var-num">03</div>
+        <div class="var-title">vk.com/nash.klub</div>
+        <div class="var-note">Короткий вариант с точкой — читается как бренд.</div>
+      </div>
+      <div class="var-item">
+        <div class="var-num">04</div>
+        <div class="var-title">vk.com/nashklub_zarumnaya</div>
+        <div class="var-note">Связка клуба с основателем — для личного бренда Ольги.</div>
+      </div>
+      <div class="var-item">
+        <div class="var-num">05</div>
+        <div class="var-title">vk.com/nashklub_community</div>
+        <div class="var-note">Нейтральный международный формат.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     04. СТАТУС
+════════════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">04</div>
+    <div class="section-title">СТАТУС СООБЩЕСТВА</div>
+    <div class="section-badge">5 вариантов · до 140 симв.</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <div class="var-list">
+
+      <div class="var-item">
+        <div class="best-badge">⭐ Рекомендую</div>
+        <div class="var-num">01</div>
+        <div class="var-title">Живые встречи · Онлайн с экспертами · Спринты · Нетворкинг | Вступление от 1 000 ₽</div>
+        <div class="var-note">Информационно: что есть + цена. Отвечает на «зачем подписаться» за 3 сек.</div>
+        <div class="chars">82 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">02</div>
+        <div class="var-title">Ростов · Москва · СПб · Волгоград · Ставрополь | Клуб людей, которые запускают идеи 🔥</div>
+        <div class="var-note">География сразу показывает масштаб — работает на доверие.</div>
+        <div class="chars">89 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">03</div>
+        <div class="var-title">Перестань копить знания. Начни их запускать. | Живая среда для роста и проявленности</div>
+        <div class="var-note">Бьёт по болям: «знаешь, но не делаешь». Провокационно и точно.</div>
+        <div class="chars">88 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">04</div>
+        <div class="var-title">Психологи · Коучи · Предприниматели · Эксперты | Встречи без погон. Среда для реализации.</div>
+        <div class="var-note">Аудиторный — сразу понятно «мои люди здесь».</div>
+        <div class="chars">91 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">05</div>
+        <div class="var-title">Нет случайных людей. Нет воды. Только живые встречи и настоящий рост. | Основатель: Ольга Зарумная</div>
+        <div class="var-note">Отстройка + личный бренд. Серьёзный и профессиональный тон.</div>
+        <div class="chars">104 симв.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     05. ОПИСАНИЕ СООБЩЕСТВА
+════════════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">05</div>
+    <div class="section-title">ОПИСАНИЕ СООБЩЕСТВА (шапка)</div>
+    <div class="section-badge">5 развёрнутых вариантов</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Лимит ВК — 4 096 символов. Все варианты в пределах. Описание должно отвечать на 3 вопроса за 5 сек: кто мы, зачем это, чем полезно.</p>
+
+    <div class="var-list">
+
+      <div class="var-item">
+        <div class="best-badge">⭐ Рекомендую</div>
+        <div class="var-num">01</div>
+        <div class="var-title">Структурный · Сила + Конкретика</div>
+        <div class="var-text">
+Ты умный. Ты готов. Ты давно знаешь, что хочешь сделать.
+Но что-то снова откладывается.
+
+НАШ КЛУБ — живая среда людей, которые перестали ждать «правильного момента» и начали действовать. Не курс. Не марафон. Живое пространство с реальными людьми.
+
+🔥 КТО МЫ
+Клуб основан Ольгой Зарумной — магистрантом психологии, практиком и организатором встреч по всей России. Рядом — лидеры клуба в каждом городе: Ростов, Москва, СПб, Волгоград, Ставрополь, Батайск, Новочеркасск.
+
+👥 КТО ЗДЕСЬ
+Психологи, коучи, предприниматели, специалисты, творческие люди, эксперты. Начинающие и опытные — без иерархии, без погон, без навязанных ролей. Здесь не нужно казаться. Здесь можно быть.
+
+📌 ЧТО ПРОИСХОДИТ КАЖДЫЙ МЕСЯЦ
+→ Онлайн-встречи с экспертами: маркетинг, ИИ, психология, продажи, проявленность, здоровье — под запрос участников
+→ Живые встречи по городам: нетворкинг, разборы, мозговые штурмы, тренинги
+→ Мини-спринты с призами — новая тема каждый месяц
+→ Киноклуб, подкасты, нетворкинг
+→ Разборы проектов — живая обратная связь
+→ Доска услуг: коллаборации и клиенты внутри клуба
+
+💳 ТАРИФЫ
+Базовый — 1 000 ₽/мес: встречи + спринты + нетворкинг + разборы
+Базовый + архив — 1 500 ₽/мес: всё выше + записи всех эфиров
+Фокус-группа — от идеи до продукта за 4 недели (5–8 чел.)
+
+Узнай, подходит ли клуб тебе → [ссылка на тест]
+Вопросы? Напиши нам — ответим честно.</div>
+        <div class="chars">~900 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">02</div>
+        <div class="var-title">Эмоциональный · Психологический вход</div>
+        <div class="var-text">
+Слишком много умных, сильных людей живут в режиме «когда-нибудь потом».
+
+Они читают. Сохраняют. Проходят курсы. Ждут «правильного момента» — который так и не приходит.
+
+Не потому что они слабые. А потому что они одни.
+
+НАШ КЛУБ существует, чтобы это изменить.
+
+Это живое сообщество людей, рядом с которыми начинает происходить то, что в одиночестве не получалось годами. Одна встреча часто меняет внутреннее состояние сильнее, чем годы откладывания.
+
+🌍 ВСТРЕЧИ ПО ГОРОДАМ
+Ростов-на-Дону · Москва · Санкт-Петербург · Волгоград · Ставрополь · Батайск · Новочеркасск
+Лидеры клуба в каждом городе — живые люди с экспертизой и историей.
+
+⚡ ЧТО ВНУТРИ
+Онлайн с экспертами (под запрос участников) · Живые встречи · Мини-спринты с призами · Разборы проектов · Киноклуб · Нетворкинг · Коллаборации и клиенты внутри клуба
+
+💳 ВХОД
+Базовый — 1 000 ₽/мес
+С архивом — 1 500 ₽/мес
+Фокус-группа (до продукта за 4 нед.) — отдельный формат
+
+Основатель — Ольга Зарумная, магистрант психологии, практик.
+
+→ Тест на самоэффективность (2 мин): [ссылка]</div>
+        <div class="chars">~850 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">03</div>
+        <div class="var-title">Жёсткий · Против инфоцыганства</div>
+        <div class="var-text">
+Жёстко честно: большинство людей никогда не запустят свою идею.
+Не потому что плохие. А потому что нет среды.
+
+НАШ КЛУБ — это среда. Живая. Настоящая. Без пафоса.
+
+Мы против:
+✗ Курсов, после которых ничего не меняется
+✗ «Успешного успеха» и вылизанных фасадов
+✗ Инфоцыганства и платы за воздух
+✗ Одиночного плавания, которое ведёт в никуда
+
+Мы за:
+✓ Живые встречи с реальными людьми
+✓ Практику, которую можно применить сегодня
+✓ Поддержку без осуждения и без иерархии
+✓ Идеи, которые запускаются — а не лежат в заметках
+
+👤 ОСНОВАТЕЛЬ
+Ольга Зарумная — магистрант психологии, организатор встреч по всей России
+
+🏙 ЛИДЕРЫ КЛУБА В ГОРОДАХ
+Ростов (Константин Лопатинский) · Волгоград (Анна Павленко) · СПб (Мануэла Дубровина) · Ставрополь (Юлия Маяк) · Батайск (Даниэль Атабекян) · Новочеркасск (Елена Навериани)
+
+💳 ОТ 1 000 ₽/МЕС
+Базовый · Базовый + архив · Фокус-группа
+
+→ Узнать подробнее: [ссылка]</div>
+        <div class="chars">~870 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">04</div>
+        <div class="var-title">Ценностный · Про смысл и людей</div>
+        <div class="var-text">
+В нашем клубе нет случайных людей.
+
+Сюда приходят те, кому важна не только карьера — но и смысл. Не только заработок — но и ощущение, что живёшь свою жизнь, а не чужой сценарий.
+
+Психологи. Коучи. Предприниматели. Специалисты. Творческие люди. Эксперты. Те, кто устал тянуть всё в одиночку и хочет наконец оказаться среди своих.
+
+Наши ценности:
+Развитие · Честность · Поддержка · Человечность · Реализация · Семья · Глубина
+
+📍 ЧТО МЫ ДЕЛАЕМ
+Встречи без погон — живые, по городам и онлайн. Спикеры под запрос участников. Мини-спринты с призами каждый месяц. Киноклуб. Подкасты. Нетворкинг. Разборы идей и проектов.
+
+Города: Ростов · Москва · СПб · Волгоград · Ставрополь · Батайск · Новочеркасск
+
+💳 ВСТУПЛЕНИЕ
+Базовый тариф — 1 000 ₽/мес
+Базовый + архив — 1 500 ₽/мес
+Фокус-группа (4 недели, до продукта) — отдельно
+
+Основатель: Ольга Зарумная
+→ Пройди тест и узнай, что тебя сдерживает: [ссылка]</div>
+        <div class="chars">~870 симв.</div>
+      </div>
+
+      <div class="var-item">
+        <div class="var-num">05</div>
+        <div class="var-title">Аудиторный · Для конкретного человека</div>
+        <div class="var-text">
+Если ты узнаёшь себя хотя бы в одном из этих:
+
+→ Есть идея, которая лежит в заметках уже больше года
+→ Ты умеешь помогать другим, но боишься заявить о себе
+→ Ты проходил курсы, но что-то так и не сдвинулось
+→ Ты устал платить за воздух и слушать пустые обещания
+→ Тебе нужно окружение, которое поддерживает — а не обесценивает
+
+— то НАШ КЛУБ создан для тебя.
+
+Живое сообщество, где идеи становятся действиями. Онлайн-встречи с экспертами под твой запрос. Живые встречи по городам. Мини-спринты с призами. Нетворкинг, киноклуб, разборы, коллаборации.
+
+🏙 В ТВОЁМ ГОРОДЕ
+Ростов · Москва · СПб · Волгоград · Ставрополь · Батайск · Новочеркасск
+
+Основатель — Ольга Зарумная (магистрант психологии)
+
+💳 Вступление от 1 000 ₽/мес
+
+→ 2 минуты — и ты поймёшь, твоё это или нет: [тест]</div>
+        <div class="chars">~840 симв.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     06. МЕНЮ
+════════════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">06</div>
+    <div class="section-title">МЕНЮ СООБЩЕСТВА</div>
+    <div class="section-badge">6 пунктов · только необходимое</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Меню — первое, что видит новый подписчик. Максимум 6–7 пунктов. Только то, что реально нужно человеку прямо сейчас.</p>
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="menu-item-icon">🏠</div>
+        <div>
+          <div class="menu-item-name">О клубе</div>
+          <div class="menu-item-desc">Кто мы, ценности, форматы — ссылка на пост-знакомство</div>
+        </div>
+        <div class="menu-item-order">1</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon">💳</div>
+        <div>
+          <div class="menu-item-name">Тарифы и вступление</div>
+          <div class="menu-item-desc">Базовый · Архив · Фокус-группа — цены, что входит, как вступить</div>
+        </div>
+        <div class="menu-item-order">2</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon">📅</div>
+        <div>
+          <div class="menu-item-name">Ближайшие встречи</div>
+          <div class="menu-item-desc">Анонсы онлайн и офлайн встреч по городам</div>
+        </div>
+        <div class="menu-item-order">3</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon">👥</div>
+        <div>
+          <div class="menu-item-name">Лидеры клуба</div>
+          <div class="menu-item-desc">Кто ведёт встречи в городах — знакомство с командой</div>
+        </div>
+        <div class="menu-item-order">4</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon">🏆</div>
+        <div>
+          <div class="menu-item-name">Истории участников</div>
+          <div class="menu-item-desc">Реальные кейсы — что изменилось после клуба</div>
+        </div>
+        <div class="menu-item-order">5</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon">📝</div>
+        <div>
+          <div class="menu-item-name">Тест на самоэффективность</div>
+          <div class="menu-item-desc">Бесплатно · 2 мин · Узнай, что тебя сдерживает → [ссылка]</div>
+        </div>
+        <div class="menu-item-order">6</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Важно:</strong> пункты «Тарифы» и «Ближайшие встречи» — всегда на виду. Это конверсионные точки. Не убирай их ниже 3-й позиции.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     07. ВИДЖЕТЫ (СТИЛЬ ПЛИТКИ)
+════════════════════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">07</div>
+    <div class="section-title">ВИДЖЕТЫ — СТИЛЬ «ПЛИТКА»</div>
+    <div class="section-badge">7 плиток · приоритет указан</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Виджеты-плитки отображаются прямо на странице сообщества. Каждая плитка — отдельный блок с иконкой, заголовком и ссылкой. Расставлять по убыванию приоритета.</p>
+    <div class="widget-grid">
+      <div class="widget-tile">
+        <div class="widget-tile-icon">🔥</div>
+        <div class="widget-tile-name">Вступить в клуб</div>
+        <div class="widget-tile-desc">Ссылка на тарифы или форму вступления. Главный конверсионный виджет.</div>
+        <div class="widget-tile-order">Приоритет: 1</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">📅</div>
+        <div class="widget-tile-name">Ближайшая встреча</div>
+        <div class="widget-tile-desc">Дата + город + формат. Обновлять каждый месяц. Создаёт срочность.</div>
+        <div class="widget-tile-order">Приоритет: 2</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">📝</div>
+        <div class="widget-tile-name">Тест на самоэффективность</div>
+        <div class="widget-tile-desc">Лид-магнит. 2 минуты. Ссылка на тест. Работает как точка входа.</div>
+        <div class="widget-tile-order">Приоритет: 3</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">🏙</div>
+        <div class="widget-tile-name">Мой город</div>
+        <div class="widget-tile-desc">Список городов с именами лидеров. Кнопка «Найти встречу рядом».</div>
+        <div class="widget-tile-order">Приоритет: 4</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">⚡</div>
+        <div class="widget-tile-name">Спринт месяца</div>
+        <div class="widget-tile-desc">Текущая тема спринта + прогресс. Обновлять ежемесячно.</div>
+        <div class="widget-tile-order">Приоритет: 5</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">🎯</div>
+        <div class="widget-tile-name">Фокус-группа</div>
+        <div class="widget-tile-desc">Краткое описание формата + кнопка «Узнать подробнее».</div>
+        <div class="widget-tile-order">Приоритет: 6</div>
+      </div>
+      <div class="widget-tile">
+        <div class="widget-tile-icon">🏆</div>
+        <div class="widget-tile-name">Истории участников</div>
+        <div class="widget-tile-desc">Одна сильная цитата + ссылка на подборку кейсов.</div>
+        <div class="widget-tile-order">Приоритет: 7</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Техника:</strong> виджет «Вступить в клуб» и «Ближайшая встреча» — всегда первые два. Остальные можно ротировать в зависимости от актуальной акции или события.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     08. ПРИЛОЖЕНИЯ
+════════════════════════════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">08</div>
+    <div class="section-title">ПРИЛОЖЕНИЯ ВК — ЧТО УСТАНОВИТЬ</div>
+    <div class="section-badge">6 приложений</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+
+    <div class="app-item">
+      <div class="app-icon">📋</div>
+      <div>
+        <div class="app-name">Форма заявки / Анкета вступления</div>
+        <div class="app-why">Приложение «Форма» или встроенные анкеты ВК. Человек заполняет анкету прямо в сообществе — ты получаешь данные в ЛС. Обязательно для сбора заявок на вступление и фокус-группу.</div>
+        <span class="app-tag tag-must">Обязательно</span>
+      </div>
+    </div>
+
+    <div class="app-item">
+      <div class="app-icon">🗳</div>
+      <div>
+        <div class="app-name">Тесты (приложение «Тесты»)</div>
+        <div class="app-why">Разместить тест на самоэффективность прямо внутри сообщества ВК — не уводить людей на сторонний сервис. Высокая конверсия, нет потери аудитории при переходе.</div>
+        <span class="app-tag tag-must">Обязательно</span>
+      </div>
+    </div>
+
+    <div class="app-item">
+      <div class="app-icon">🗓</div>
+      <div>
+        <div class="app-name">Расписание / Мероприятия</div>
+        <div class="app-why">Встроенные мероприятия ВК + приложение «Расписание». Все встречи, онлайн и офлайн, собраны в одном месте с датами. Участник регистрируется внутри ВК — получаешь напоминание.</div>
+        <span class="app-tag tag-must">Обязательно</span>
+      </div>
+    </div>
+
+    <div class="app-item">
+      <div class="app-icon">💬</div>
+      <div>
+        <div class="app-name">Senler — рассылки ВК</div>
+        <div class="app-why">Чат-бот и рассылки подписчикам внутри ВК. Отправлять напоминания о встречах, новые посты, воронку после теста. Открываемость ВК-сообщений — 80%+, выше email.</div>
+        <span class="app-tag tag-must">Обязательно</span>
+      </div>
+    </div>
+
+    <div class="app-item">
+      <div class="app-icon">🛍</div>
+      <div>
+        <div class="app-name">Магазин / Товары ВК</div>
+        <div class="app-why">Оформить тарифы как «товары» с описанием и кнопкой оплаты. Человек видит цену и состав прямо на странице — без переходов. Работает как мини-лендинг прямо в ВК.</div>
+        <span class="app-tag tag-rec">Рекомендую</span>
+      </div>
+    </div>
+
+    <div class="app-item">
+      <div class="app-icon">📊</div>
+      <div>
+        <div class="app-name">Статистика / VK Аналитика</div>
+        <div class="app-why">Стандартная аналитика ВК. Отслеживать охваты, приходы новых подписчиков после каждого поста, пик активности аудитории. Нужна для настройки частоты постинга.</div>
+        <span class="app-tag tag-rec">Рекомендую</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     09. ОБСУЖДЕНИЯ
+════════════════════════════════════════════ -->
+<div class="section" id="s9">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">09</div>
+    <div class="section-title">ОБСУЖДЕНИЯ СООБЩЕСТВА</div>
+    <div class="section-badge">7 тем</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Обсуждения = живой форум сообщества. Создают UGC, вовлечённость и дают новым участникам понять: здесь живут люди, а не только постят контент.</p>
+
+    <div class="disc-item">
+      <div class="disc-num">01</div>
+      <div>
+        <div class="disc-name">📌 Добро пожаловать! Представься — кто ты и зачем сюда пришёл</div>
+        <div class="disc-body">Первое обсуждение — для новых участников. Просишь написать: имя, город, чем занимаешься, что хочешь получить. Работает как нетворкинг-точка и социальное доказательство «здесь живые люди».</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">02</div>
+      <div>
+        <div class="disc-name">🏙 Встречи по городам — анонсы и отзывы</div>
+        <div class="disc-body">Лидеры клуба публикуют анонсы встреч в своих городах. Участники оставляют впечатления после. Создаёт живую географию присутствия.</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">03</div>
+      <div>
+        <div class="disc-name">💡 Доска идей и запросов: что ты хочешь разобрать</div>
+        <div class="disc-body">Участники пишут темы, которые хотят видеть на встречах. Используется для выбора спикеров под запрос — один из главных аргументов клуба.</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">04</div>
+      <div>
+        <div class="disc-name">🏆 Истории и победы: что изменилось после клуба</div>
+        <div class="disc-body">Участники делятся реальными результатами. Сильнейший инструмент социального доказательства. Закреплять лучшие истории сверху.</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">05</div>
+      <div>
+        <div class="disc-name">🛍 Доска услуг участников — предложи и найди</div>
+        <div class="disc-body">Участники публикуют свои услуги, ищут коллаборации и партнёров. Это одна из ключевых ценностей клуба — продвигать активно.</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">06</div>
+      <div>
+        <div class="disc-name">🎯 Спринт месяца — задания, прогресс, результаты</div>
+        <div class="disc-body">Тред текущего спринта: участники публикуют прохождение заданий, поддерживают друг друга, делятся результатами. Создаёт вовлечённость и публичную ответственность.</div>
+      </div>
+    </div>
+
+    <div class="disc-item">
+      <div class="disc-num">07</div>
+      <div>
+        <div class="disc-name">❓ Вопросы и ответы: спроси — ответим</div>
+        <div class="disc-body">Новые подписчики задают вопросы о клубе, тарифах, форматах. Лидеры или основатель отвечают. Снижает барьер входа и создаёт атмосферу живого общения.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     10. МОМЕНТЫ / ХАЙЛАЙТСЫ
+════════════════════════════════════════════ -->
+<div class="section" id="s10">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">10</div>
+    <div class="section-title">МОМЕНТЫ (ХАЙЛАЙТСЫ)</div>
+    <div class="section-badge">8 тем</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Моменты ВК = закреплённые истории в шапке. Первое, что видит человек после обложки. Каждый момент — ответ на один вопрос нового посетителя.</p>
+    <div class="hl-grid">
+      <div class="hl-card">
+        <div class="hl-icon">🏠</div>
+        <div class="hl-name">О клубе</div>
+        <div class="hl-desc">Кто мы, ценности, как всё устроено. Для тех, кто зашёл впервые.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">👥</div>
+        <div class="hl-name">Участники</div>
+        <div class="hl-desc">Лица, истории, цитаты резидентов. Социальное доказательство.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">🏙</div>
+        <div class="hl-name">Встречи</div>
+        <div class="hl-desc">Города, фото с живых встреч, атмосфера. Показываем что клуб живой.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">🏆</div>
+        <div class="hl-name">Результаты</div>
+        <div class="hl-desc">До/после, победы спринтов, запуски продуктов участников.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">💳</div>
+        <div class="hl-name">Тарифы</div>
+        <div class="hl-desc">Базовый / Архив / Фокус-группа. Цены, состав, как вступить.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">👤</div>
+        <div class="hl-name">Лидеры</div>
+        <div class="hl-desc">Кто ведёт клуб в городах. Лица + краткое bio каждого лидера.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">🎯</div>
+        <div class="hl-name">Фокус-группа</div>
+        <div class="hl-desc">Формат «от идеи до продукта за 4 недели». Результаты прошлых групп.</div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-icon">📝</div>
+        <div class="hl-name">Тест / Вход</div>
+        <div class="hl-desc">Тест на самоэффективность + призыв вступить. Конверсионный момент.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Порядок:</strong> О клубе → Тарифы → Встречи → Участники → Результаты → Лидеры → Фокус-группа → Тест. Такой порядок ведёт по логике «знакомство → доверие → решение».</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     11. ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ
+════════════════════════════════════════════ -->
+<div class="section" id="s11">
+  <div class="section-head" onclick="toggle(this)">
+    <div class="section-num">11</div>
+    <div class="section-title">ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ</div>
+    <div class="section-badge">3 варианта + структура</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--muted2);margin-bottom:1rem;">Автоматически отправляется в ЛС при подписке. Настраивается через Senler или встроенный виджет приветствия ВК. Первый контакт — решает всё.</p>
+
+    <div style="margin-bottom:1.25rem;">
+      <div class="var-num" style="margin-bottom:.75rem;">Вариант 01 — Тёплый + Лид-магнит (рекомендую)</div>
+      <div class="msg-bubble">Привет! Ты в НАШ КЛУБ — живом сообществе людей, которые запускают свои идеи 🔥
+
+Рад(а), что ты здесь. Пара минут — и ты поймёшь, твоё это или нет.
+
+📌 С чего начать:
+→ О нас и форматах: [ссылка на пост-знакомство]
+→ Тарифы и вступление: [ссылка]
+→ Ближайшая встреча в твоём городе: [ссылка]
+
+🎯 Бонус: пройди тест на самоэффективность (2 мин) — узнай, что конкретно тебя сдерживает прямо сейчас:
+[ссылка на тест]
+
+Если есть вопросы — пиши сюда или в сообщество. Ответим живо и честно 👋
+
+— Команда НАШ КЛУБ</div>
+    </div>
+
+    <div style="margin-bottom:1.25rem;">
+      <div class="var-num" style="margin-bottom:.75rem;">Вариант 02 — Прямой + Конкретный</div>
+      <div class="msg-bubble">Привет! Ты подписался(ась) на НАШ КЛУБ.
+
+Это живое сообщество для тех, кто хочет реализовать свои идеи — с живыми встречами, экспертами и реальными людьми рядом.
+
+Вот главное:
+🏠 Что такое клуб → [ссылка]
+💳 Как вступить (от 1 000 ₽/мес) → [ссылка]
+📅 Встречи в твоём городе → [ссылка]
+📝 Тест (2 мин, бесплатно) → [ссылка]
+
+Напиши, из какого ты города — расскажем о ближайшей встрече лично.</div>
+    </div>
+
+    <div>
+      <div class="var-num" style="margin-bottom:.75rem;">Вариант 03 — Личный · От Ольги</div>
+      <div class="msg-bubble">Привет! Я Ольга Зарумная, основатель НАШ КЛУБ.
+
+Рада, что ты здесь. Этот клуб я создала для людей, которым важна настоящая среда — живые встречи, реальные люди, поддержка без пафоса.
+
+Если тебе откликается — напиши, из какого ты города. Расскажу о ближайшей встрече и отвечу на все вопросы лично.
+
+Или начни с теста — 2 минуты, и ты поймёшь, что сейчас мешает двигаться:
+[ссылка на тест]
+
+До встречи внутри клуба 🙌</div>
+    </div>
+
+    <div class="tip"><strong>Настройка:</strong> использовать Senler (бесплатный тариф). Настроить авто-ответ при первом сообщении или при подписке. Добавить кнопку «Задать вопрос» для выхода на живой диалог.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     ИТОГ
+════════════════════════════════════════════ -->
+<div style="margin-top:2.5rem;padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r);">
+  <div style="font-family:'Unbounded',sans-serif;font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;">Чеклист упаковки</div>
+  <div class="grid-2">
+    <div>
+      <div style="font-size:12px;color:var(--muted2);line-height:2;">
+        ☐ Обложка ПК — заполнена в ПКмаркетинге<br>
+        ☐ Название сообщества — выбрано и установлено<br>
+        ☐ Имя (адрес) — установлен<br>
+        ☐ Статус — прописан<br>
+        ☐ Описание — выбрано и вставлено<br>
+        ☐ Меню — настроено (6 пунктов)<br>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;color:var(--muted2);line-height:2;">
+        ☐ Виджеты-плитки — добавлены (7 штук)<br>
+        ☐ Приложения — установлены (Senler + форма + тесты)<br>
+        ☐ Обсуждения — созданы (7 тем)<br>
+        ☐ Моменты — наполнены (8 штук)<br>
+        ☐ Приветственное сообщение — настроено в Senler<br>
+        ☐ Пост-закреп — опубликован и закреплён<br>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+function toggle(head) {
+  const body = head.nextElementSibling;
+  const chev = head.querySelector('.chevron');
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+</script>
+</body>
+</html>
