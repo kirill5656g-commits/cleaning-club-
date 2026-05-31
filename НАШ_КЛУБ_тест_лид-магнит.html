@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Что тебя сдерживает прямо сейчас — НАШ КЛУБ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #09111F;
+  --ink2:    #0E1A2E;
+  --ink3:    #152236;
+  --ink4:    #1C2E47;
+  --gold:    #C8973A;
+  --gold2:   #DDB05A;
+  --gold3:   #EDD080;
+  --goldfog: rgba(200,151,58,.15);
+  --goldline:rgba(200,151,58,.35);
+  --cream:   #F4EDDC;
+  --cream2:  #E8DEAD;
+  --fog:     #7A8FA8;
+  --fog2:    #4F6278;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Geologica', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem 4rem;
+  min-height: 100vh;
+}
+
+.shell {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+
+/* ── grain overlay ── */
+.shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; position: relative; z-index: 1; }
+.screen.active { display: block; }
+
+/* ─────────────────────────────
+   INTRO
+───────────────────────────── */
+.intro-wrap {
+  padding: 3rem 2.5rem 2.5rem;
+  background: var(--ink2);
+  border: 1px solid var(--goldline);
+  border-radius: 16px;
+  text-align: center;
+  animation: fadeUp .5s ease both;
+}
+
+.intro-eyebrow {
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.75rem;
+}
+
+.intro-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(34px, 6vw, 52px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: .5rem;
+}
+
+.intro-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.intro-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--goldline);
+  margin: 1.5rem auto;
+}
+
+.intro-sub {
+  font-size: 15px;
+  color: var(--fog);
+  line-height: 1.75;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+}
+
+.intro-meta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-size: 12px;
+  color: var(--fog);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.btn-start {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  padding: .9rem 2.75rem;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.btn-start:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-start:active { transform: translateY(0); }
+
+/* ─────────────────────────────
+   QUESTION
+───────────────────────────── */
+.q-wrap {
+  background: var(--ink2);
+  border: 1px solid var(--goldline);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeUp .35s ease both;
+}
+
+.q-top {
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid rgba(200,151,58,.12);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.q-progress-track {
+  flex: 1;
+  height: 2px;
+  background: rgba(200,151,58,.12);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.q-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 1px;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+}
+
+.q-count {
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--fog2);
+  white-space: nowrap;
+  min-width: 44px;
+  text-align: right;
+}
+
+.q-body { padding: 2rem 2rem 1.5rem; }
+
+.q-label {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.q-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--cream);
+  margin-bottom: .6rem;
+}
+
+.q-hint {
+  font-size: 13px;
+  color: var(--fog);
+  margin-bottom: 1.75rem;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.75rem; }
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--ink3);
+  border: 1px solid rgba(200,151,58,.15);
+  border-radius: 10px;
+  padding: .9rem 1.1rem;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-align: left;
+  width: 100%;
+  font-family: 'Geologica', sans-serif;
+}
+.opt:hover { border-color: var(--goldline); background: var(--ink4); }
+.opt.selected { border-color: var(--gold); background: rgba(200,151,58,.1); }
+
+.opt-letter {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--fog2);
+  background: var(--ink4);
+  border: 1px solid rgba(200,151,58,.2);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.opt.selected .opt-letter {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.opt-text {
+  font-size: 13.5px;
+  color: var(--cream2);
+  line-height: 1.55;
+  font-weight: 300;
+}
+.opt.selected .opt-text { color: var(--cream); }
+
+.q-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem 1.75rem;
+}
+
+.btn-back {
+  font-family: 'Geologica', sans-serif;
+  font-size: 12px;
+  color: var(--fog2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: .5rem 0;
+  transition: color .2s;
+}
+.btn-back:hover { color: var(--fog); }
+.btn-back svg { width: 14px; height: 14px; }
+.btn-back.hidden { visibility: hidden; }
+
+.btn-next {
+  font-family: 'Geologica', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--goldline);
+  border-radius: 8px;
+  padding: .6rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .2s, opacity .2s, transform .15s;
+  opacity: .3;
+  pointer-events: none;
+}
+.btn-next.ready {
+  opacity: 1;
+  pointer-events: all;
+}
+.btn-next.ready:hover { background: var(--goldfog); transform: translateX(2px); }
+.btn-next svg { width: 14px; height: 14px; }
+
+/* ─────────────────────────────
+   RESULT
+───────────────────────────── */
+.res-wrap {
+  background: var(--ink2);
+  border: 1px solid var(--goldline);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeUp .4s ease both;
+}
+
+.res-header {
+  padding: 2.5rem 2.5rem 2rem;
+  border-bottom: 1px solid rgba(200,151,58,.12);
+  text-align: center;
+  position: relative;
+}
+
+.res-eyebrow {
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.res-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 500;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: .5rem;
+}
+.res-title em { font-style: italic; color: var(--gold2); }
+
+.res-tagline {
+  font-size: 14px;
+  color: var(--fog);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.res-body { padding: 2rem 2.5rem 2.5rem; }
+
+.res-bars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+
+.bar-item {}
+.bar-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--fog2);
+  margin-bottom: 5px;
+  letter-spacing: .02em;
+}
+.bar-meta.active { color: var(--gold2); }
+.bar-track {
+  height: 3px;
+  background: rgba(200,151,58,.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 3px;
+  background: rgba(200,151,58,.3);
+  border-radius: 2px;
+  width: 0%;
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.bar-item.active .bar-fill { background: var(--gold); }
+
+.res-quote {
+  border-left: 2px solid var(--gold);
+  padding: 1rem 1.25rem;
+  background: rgba(200,151,58,.05);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 1.75rem;
+}
+.res-quote-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  color: var(--cream);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+.res-insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+.insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--cream2);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.insight-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.res-divider { height: 1px; background: rgba(200,151,58,.12); margin: 1.75rem 0; }
+
+.res-cta-label {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .6rem;
+}
+
+.res-cta-text {
+  font-size: 14px;
+  color: var(--cream2);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.btn-cta {
+  width: 100%;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  display: block;
+  margin-bottom: .75rem;
+}
+.btn-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-cta:active { transform: translateY(0); }
+
+.btn-retry {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(200,151,58,.2);
+  border-radius: 10px;
+  font-family: 'Geologica', sans-serif;
+  font-size: 13px;
+  color: var(--fog);
+  padding: .75rem;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+  letter-spacing: .02em;
+}
+.btn-retry:hover { border-color: var(--goldline); color: var(--cream2); }
+
+/* ── ANIMATION ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ─── INTRO ─── -->
+<div class="screen active" id="screen-intro">
+  <div class="intro-wrap">
+    <div class="intro-eyebrow">НАШ КЛУБ · бесплатный тест</div>
+    <div class="intro-title">Что тебя<br>сдерживает<br><em>прямо сейчас?</em></div>
+    <div class="intro-divider"></div>
+    <div class="intro-sub">10 вопросов о реальных ситуациях. В конце — твой конкретный блок и следующий шаг. Не абстрактный совет. Точный ответ.</div>
+    <div class="intro-meta">
+      <div class="meta-item"><div class="meta-dot"></div>2–3 минуты</div>
+      <div class="meta-item"><div class="meta-dot"></div>10 вопросов</div>
+      <div class="meta-item"><div class="meta-dot"></div>3 типа результата</div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Начать тест</button>
+  </div>
+</div>
+
+<!-- ─── QUESTION ─── -->
+<div class="screen" id="screen-question">
+  <div class="q-wrap">
+    <div class="q-top">
+      <div class="q-progress-track">
+        <div class="q-progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="q-count" id="q-count">1 / 10</div>
+    </div>
+    <div class="q-body">
+      <div class="q-label" id="q-label">Вопрос 1</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-hint" id="q-hint"></div>
+      <div class="opts" id="q-opts"></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back hidden" id="btn-back" onclick="goBack()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+        Назад
+      </button>
+      <button class="btn-next" id="btn-next" onclick="goNext()">
+        Дальше
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── RESULT ─── -->
+<div class="screen" id="screen-result">
+  <div class="res-wrap" id="result-container"></div>
+</div>
+
+</div>
+
+<script>
+var questions = [
+  {
+    text: "Есть идея или проект, который живёт в твоей голове уже больше трёх месяцев.",
+    hint: "Выбери то, что ближе всего к правде прямо сейчас.",
+    options: [
+      { text: "Да — идея чёткая, понимаю куда, но не знаю конкретных шагов", weights: [2, 0, 0] },
+      { text: "Есть, но среди людей, которые делают, я бы двигался(ась) быстрее", weights: [0, 2, 0] },
+      { text: "Есть, но страх что «не получится» или «осудят» останавливает", weights: [0, 0, 2] },
+      { text: "Ощущение что «пора», но куда именно — пока не ясно", weights: [1, 1, 1] }
+    ]
+  },
+  {
+    text: "Когда ты думаешь о публичном заявлении о себе или своём деле...",
+    hint: "Первая честная реакция — самая точная.",
+    options: [
+      { text: "Хочу — но не знаю как правильно упаковать и с чего начать", weights: [2, 0, 0] },
+      { text: "Готов(а), но в одиночестве нет энергии — нужна живая среда", weights: [0, 2, 0] },
+      { text: "Внутри что-то сжимается — «а вдруг не так, а вдруг осудят»", weights: [0, 0, 2] },
+      { text: "Уже делаю, но ощущения «моё» всё ещё нет", weights: [1, 1, 0] }
+    ]
+  },
+  {
+    text: "Ты проходил(а) курсы или обучения в последние 12 месяцев?",
+    hint: "Любой формат — онлайн, офлайн, короткий или длинный.",
+    options: [
+      { text: "Да — знания есть, понимание тоже, но действий нет", weights: [2, 0, 0] },
+      { text: "Да — но одиноко: хочется применять это вместе с людьми", weights: [0, 2, 0] },
+      { text: "Да — и всё равно тревога и сомнения никуда не уходят", weights: [0, 0, 2] },
+      { text: "Устал(а) от обучений — хочу среду и действие, не теорию", weights: [0, 2, 1] }
+    ]
+  },
+  {
+    text: "Рядом с тобой есть хотя бы один человек, который знает о твоей идее и верит в неё?",
+    hint: "Не «в целом поддерживает» — а именно эту идею, прямо сейчас.",
+    options: [
+      { text: "Есть, но поддержка общая — конкретной помощи с шагами нет", weights: [2, 0, 0] },
+      { text: "Нет — я тяну в одиночку и это сильно замедляет", weights: [0, 2, 0] },
+      { text: "Есть, но я боюсь показать им реальное состояние и сомнения", weights: [0, 0, 2] },
+      { text: "Я намеренно не рассказываю — страх чужой оценки", weights: [0, 1, 2] }
+    ]
+  },
+  {
+    text: "Как часто у тебя бывает «знаю что делать — но не делаю»?",
+    hint: "Конкретно по своей идее или делу, не вообще.",
+    options: [
+      { text: "Почти каждый день — план есть, действий нет", weights: [2, 0, 0] },
+      { text: "Бывает — особенно когда делаю всё один(одна)", weights: [0, 2, 0] },
+      { text: "Постоянно — и это самое мучительное состояние", weights: [1, 0, 2] },
+      { text: "Нет чёткого плана — поэтому и не делаю", weights: [2, 1, 0] }
+    ]
+  },
+  {
+    text: "Когда ты видишь, что кто-то в похожей теме уже запустился и работает...",
+    hint: "Первая реакция — не идеальная, а настоящая.",
+    options: [
+      { text: "Думаю: «Значит работает — надо разобраться как именно»", weights: [2, 0, 0] },
+      { text: "Вдохновляюсь — но потом возвращаюсь к одиночеству и гасну", weights: [0, 2, 0] },
+      { text: "Думаю: «Они лучше, у меня так не получится»", weights: [0, 0, 2] },
+      { text: "Злюсь на себя — надо было начинать раньше", weights: [1, 0, 1] }
+    ]
+  },
+  {
+    text: "Последний раз ты делал(а) что-то, от чего было страшно или неловко...",
+    hint: "Реальное действие — не намерение и не план.",
+    options: [
+      { text: "Недавно — я пробую, но не понимаю правильно ли иду", weights: [2, 0, 0] },
+      { text: "Давно — в одиночку на такое нет ни сил, ни смысла", weights: [0, 2, 0] },
+      { text: "Избегаю — слишком страшно и много внутреннего сопротивления", weights: [0, 0, 2] },
+      { text: "Хожу по знакомому безопасному кругу", weights: [1, 1, 1] }
+    ]
+  },
+  {
+    text: "Если бы завтра появилась небольшая группа людей с похожим путём — что бы ты почувствовал(а)?",
+    hint: "Позволь себе честный ответ.",
+    options: [
+      { text: "Облегчение — наконец есть с кем разобраться как двигаться", weights: [2, 0, 0] },
+      { text: "Огромное облегчение — именно этого не хватало всё это время", weights: [0, 2, 0] },
+      { text: "Тревогу — снова придётся показывать себя и свои слабости", weights: [0, 0, 2] },
+      { text: "Интерес, но и скептицизм — а вдруг опять пустая трата времени", weights: [1, 1, 0] }
+    ]
+  },
+  {
+    text: "Когда идея «стоит на месте», ты чаще говоришь себе...",
+    hint: "Та фраза, которая звучит в голове буквально.",
+    options: [
+      { text: "«Ещё немного разберусь как — и начну по-настоящему»", weights: [2, 0, 0] },
+      { text: "«Нет рядом людей, с которыми это вообще имеет смысл делать»", weights: [0, 2, 0] },
+      { text: "«А вдруг это не то, а вдруг не справлюсь, а вдруг осудят»", weights: [0, 0, 2] },
+      { text: "«Надо ещё подождать — момент пока не тот»", weights: [1, 1, 1] }
+    ]
+  },
+  {
+    text: "Что тебе нужно прямо сейчас больше всего?",
+    hint: "Не думай долго — первый импульс точнее любых размышлений.",
+    options: [
+      { text: "Чёткую структуру и сопровождение: от идеи до конкретного результата", weights: [3, 0, 0] },
+      { text: "Живую среду: реальных людей рядом, которые делают и поддерживают", weights: [0, 3, 0] },
+      { text: "Безопасное пространство, где можно сделать первые шаги без страха", weights: [0, 0, 3] },
+      { text: "Честно — всего понемногу, но что-то одно выбрать не могу", weights: [1, 1, 1] }
+    ]
+  }
+];
+
+var results = [
+  {
+    eyebrow: "твой результат",
+    title: "Знаешь куда —<br><em>не знаешь как</em>",
+    tagline: "Идея есть. Направление понятно. Шагов нет.",
+    quote: "Ты не застрял(а) из-за лени или слабости. Ты застрял(а) потому что у тебя есть идея — но нет структуры, которая превращает её в конкретные действия. Это решаемо. Быстро.",
+    insights: [
+      "Знаний достаточно — не хватает плана и живого сопровождения до результата",
+      "Фокус-группа — это 4 недели: от твоей идеи до готового продукта с поддержкой",
+      "5–8 человек, камерно, безопасно — ты не один(одна) в этом процессе"
+    ],
+    cta: "Фокус-группа НАШ КЛУБ создана именно для тебя. 4 недели — от идеи до продукта. Небольшая группа, живое сопровождение, конкретный результат.",
+    btn: "Узнать о фокус-группе →",
+    barLabels: ["Знаешь куда — не знаешь как", "Есть энергия, нет среды", "Тормозит изнутри"],
+    activeBar: 0
+  },
+  {
+    eyebrow: "твой результат",
+    title: "Есть энергия —<br><em>нет среды</em>",
+    tagline: "Всё есть. Кроме людей рядом.",
+    quote: "Ты двигаешься — но в одиночестве это мучительно медленно. Не потому что ты слабый(ая). А потому что человек раскрывается через других людей. Это нейробиология, не метафора.",
+    insights: [
+      "В одиночестве энергия утекает — в правильной среде она умножается",
+      "Рядом с людьми, которые делают, ты начинаешь делать — это работает само",
+      "НАШ КЛУБ: живые встречи, нетворкинг, спринты, люди в твоём городе"
+    ],
+    cta: "НАШ КЛУБ — это именно та среда, которой тебе не хватает. Живые встречи по городам, онлайн с экспертами, нетворкинг. От 1 000 ₽ в месяц.",
+    btn: "Вступить в клуб →",
+    barLabels: ["Знаешь куда — не знаешь как", "Есть энергия, нет среды", "Тормозит изнутри"],
+    activeBar: 1
+  },
+  {
+    eyebrow: "твой результат",
+    title: "Тормозит —<br><em>изнутри</em>",
+    tagline: "Не снаружи. Изнутри. Это важно понять.",
+    quote: "Тебя останавливает не отсутствие знаний и не обстоятельства. Тебя останавливает страх — быть видимым, ошибиться, оказаться недостаточно хорошим(ей). Это один из самых распространённых блоков у умных, глубоких людей.",
+    insights: [
+      "Страх видимости — это нейробиология, не характер. Он поддаётся работе",
+      "Первые шаги в безопасном, маленьком пространстве меняют всё",
+      "Лидер клуба — живой человек с опытом. Одна встреча сдвигает то, что стоит годами"
+    ],
+    cta: "Встреча с лидером клуба — это не коуч-сессия и не продажа. Это живой разговор с человеком, который понимает. Бесплатно. Без обязательств.",
+    btn: "Записаться на встречу с лидером →",
+    barLabels: ["Знаешь куда — не знаешь как", "Есть энергия, нет среды", "Тормозит изнутри"],
+    activeBar: 2
+  }
+];
+
+var currentQ = 0;
+var answers = [];
+var selectedOption = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  answers = new Array(questions.length).fill(null);
+  currentQ = 0;
+  selectedOption = null;
+  showScreen('screen-question');
+  renderQuestion(0);
+}
+
+function renderQuestion(idx) {
+  var q = questions[idx];
+  var total = questions.length;
+
+  document.getElementById('q-count').textContent = (idx + 1) + ' / ' + total;
+  document.getElementById('q-label').textContent = 'Вопрос ' + (idx + 1);
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-hint').textContent = q.hint;
+  document.getElementById('progress-fill').style.width = Math.round((idx / total) * 100) + '%';
+
+  var backBtn = document.getElementById('btn-back');
+  if (idx === 0) {
+    backBtn.classList.add('hidden');
+  } else {
+    backBtn.classList.remove('hidden');
+  }
+
+  selectedOption = answers[idx];
+  var nextBtn = document.getElementById('btn-next');
+  if (selectedOption !== null) {
+    nextBtn.classList.add('ready');
+  } else {
+    nextBtn.classList.remove('ready');
+  }
+
+  var isLast = idx === questions.length - 1;
+  nextBtn.innerHTML = isLast
+    ? 'Узнать результат <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg>'
+    : 'Дальше <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg>';
+
+  var optsContainer = document.getElementById('q-opts');
+  optsContainer.innerHTML = '';
+  var letters = ['А', 'Б', 'В', 'Г'];
+
+  q.options.forEach(function(opt, i) {
+    var btn = document.createElement('button');
+    btn.className = 'opt' + (selectedOption === i ? ' selected' : '');
+    btn.innerHTML = '<div class="opt-letter">' + letters[i] + '</div><div class="opt-text">' + opt.text + '</div>';
+    btn.addEventListener('click', function() {
+      optsContainer.querySelectorAll('.opt').forEach(function(o) {
+        o.classList.remove('selected');
+      });
+      btn.classList.add('selected');
+      selectedOption = i;
+      answers[idx] = i;
+      document.getElementById('btn-next').classList.add('ready');
+    });
+    optsContainer.appendChild(btn);
+  });
+}
+
+function goNext() {
+  if (selectedOption === null) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    selectedOption = answers[currentQ];
+    renderQuestion(currentQ);
+  } else {
+    showResult();
+  }
+}
+
+function goBack() {
+  if (currentQ > 0) {
+    currentQ--;
+    selectedOption = answers[currentQ];
+    renderQuestion(currentQ);
+  }
+}
+
+function showResult() {
+  var scores = [0, 0, 0];
+  answers.forEach(function(a, qi) {
+    if (a === null) return;
+    var w = questions[qi].options[a].weights;
+    scores[0] += w[0];
+    scores[1] += w[1];
+    scores[2] += w[2];
+  });
+
+  var total = scores[0] + scores[1] + scores[2];
+  if (total === 0) total = 1;
+  var pct = scores.map(function(s) { return Math.round(s / total * 100); });
+
+  var maxScore = Math.max(scores[0], scores[1], scores[2]);
+  var resultIdx = scores.indexOf(maxScore);
+  var r = results[resultIdx];
+
+  var html = '<div class="res-header">' +
+    '<div class="res-eyebrow">' + r.eyebrow + '</div>' +
+    '<div class="res-title">' + r.title + '</div>' +
+    '<div class="res-tagline">' + r.tagline + '</div>' +
+    '</div>' +
+    '<div class="res-body">' +
+    '<div class="res-bars" id="res-bars">';
+
+  r.barLabels.forEach(function(lbl, i) {
+    var isActive = i === r.activeBar;
+    html += '<div class="bar-item' + (isActive ? ' active' : '') + '">' +
+      '<div class="bar-meta' + (isActive ? ' active' : '') + '">' +
+      '<span>' + lbl + '</span><span>' + pct[i] + '%</span>' +
+      '</div>' +
+      '<div class="bar-track"><div class="bar-fill" data-width="' + pct[i] + '" style="width:0%"></div></div>' +
+      '</div>';
+  });
+
+  html += '</div>' +
+    '<div class="res-quote"><div class="res-quote-text">' + r.quote + '</div></div>' +
+    '<div class="res-insights">';
+
+  r.insights.forEach(function(ins) {
+    html += '<div class="insight"><div class="insight-dot"></div><div>' + ins + '</div></div>';
+  });
+
+  html += '</div>' +
+    '<div class="res-divider"></div>' +
+    '<div class="res-cta-label">следующий шаг</div>' +
+    '<div class="res-cta-text">' + r.cta + '</div>' +
+    '<button class="btn-cta" id="cta-btn">' + r.btn + '</button>' +
+    '<button class="btn-retry" onclick="resetQuiz()">Пройти тест заново</button>' +
+    '</div>';
+
+  document.getElementById('result-container').innerHTML = html;
+  showScreen('screen-result');
+
+  setTimeout(function() {
+    document.querySelectorAll('.bar-fill').forEach(function(fill) {
+      fill.style.width = fill.getAttribute('data-width') + '%';
+    });
+  }, 150);
+
+  document.getElementById('cta-btn').addEventListener('click', function() {
+    alert('Ссылка: вставьте URL вашей формы или страницы клуба здесь');
+  });
+}
+
+function resetQuiz() {
+  answers = new Array(questions.length).fill(null);
+  currentQ = 0;
+  selectedOption = null;
+  showScreen('screen-intro');
+}
+</script>
+</body>
+</html>
