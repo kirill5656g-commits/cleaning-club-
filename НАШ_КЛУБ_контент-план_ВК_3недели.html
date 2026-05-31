@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контент-план ВК · НАШ КЛУБ · 3 недели</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#09111F;--ink2:#0E1A2E;--ink3:#152236;--ink4:#1C2E47;
+  --gold:#C8973A;--gold2:#DDB05A;--gold3:#EDD080;
+  --cream:#F4EDDC;--cream2:#E8DEAD;
+  --fog:#8A9BB8;--fog2:#5A6F8F;
+  --gl:rgba(200,151,58,.30);--gd:rgba(200,151,58,.07);
+  --green:#1D9E75;--coral:#D85A30;--blue:#378ADD;--purple:#7F77DD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:'Geologica',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(9,17,31,.95);backdrop-filter:blur(12px);border-bottom:.75px solid var(--gl);padding:.75rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;color:var(--cream);white-space:nowrap}
+.nav-brand span{color:var(--gold2);font-style:italic}
+.nav-pills{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav-pill{font-size:11px;padding:4px 12px;border-radius:100px;border:.75px solid var(--gl);color:var(--fog);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
+.nav-pill:hover,.nav-pill.active{background:var(--gd);color:var(--gold);border-color:var(--gold)}
+
+/* HERO */
+.hero{padding:3.5rem 1.25rem 3rem;max-width:800px;margin:0 auto;text-align:center}
+.hero-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:500;line-height:1.1;color:var(--cream);margin-bottom:.75rem}
+.hero-title em{font-style:italic;color:var(--gold2)}
+.hero-sub{font-size:14px;color:var(--fog);line-height:1.75;max-width:500px;margin:0 auto 2rem}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);line-height:1}
+.stat-l{font-size:10px;color:var(--fog2);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+
+/* LEGEND */
+.legend{max-width:800px;margin:0 auto;padding:0 1.25rem 2.5rem;display:flex;flex-wrap:wrap;gap:8px}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--fog)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* WEEK HEADER */
+.week-header{max-width:800px;margin:0 auto;padding:0 1.25rem 1rem}
+.wh-inner{background:var(--ink2);border:.75px solid var(--gl);border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem}
+.wh-num{font-family:'Cormorant Garamond',serif;font-size:42px;color:rgba(200,151,58,.2);line-height:1;flex-shrink:0}
+.wh-right{}
+.wh-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.wh-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--cream);line-height:1.2}
+.wh-sub{font-size:12px;color:var(--fog);margin-top:3px}
+
+/* POST CARD */
+.posts-wrap{max-width:800px;margin:0 auto;padding:0 1.25rem;display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
+.post-card{background:var(--ink2);border:.75px solid rgba(200,151,58,.18);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.post-card:hover{border-color:var(--gl)}
+.post-card.open{border-color:var(--gold)}
+
+.pc-header{display:flex;align-items:center;gap:10px;padding:1rem 1.25rem;cursor:pointer;user-select:none}
+.pc-header:hover{background:rgba(200,151,58,.03)}
+.pc-date{font-size:11px;font-weight:500;color:var(--gold);min-width:90px;flex-shrink:0}
+.pc-type-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pc-title{font-size:13px;color:var(--cream);flex:1;line-height:1.4}
+.pc-tag{font-size:10px;padding:2px 8px;border-radius:100px;border:.75px solid;white-space:nowrap;flex-shrink:0}
+.pc-chev{font-size:10px;color:var(--fog);transition:transform .2s;flex-shrink:0}
+.post-card.open .pc-chev{transform:rotate(180deg)}
+
+.pc-body{display:none;border-top:.75px solid rgba(200,151,58,.1);padding:1.25rem 1.5rem}
+.post-card.open .pc-body{display:block}
+
+.pb-section{margin-bottom:1.1rem}
+.pb-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.pb-text{font-size:13px;color:var(--cream2);line-height:1.75;white-space:pre-wrap}
+.pb-text strong{color:var(--cream);font-weight:500}
+.pb-text em{font-style:italic;color:var(--fog)}
+
+.pb-cta{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 12px;border-radius:100px;background:rgba(29,158,117,.1);color:#1D9E75;border:.75px solid rgba(29,158,117,.3);margin-top:.5rem}
+.pb-visual{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 12px;border-radius:100px;background:var(--gd);color:var(--gold2);border:.75px solid var(--gl);margin-top:.5rem;margin-left:6px}
+
+/* TYPE COLORS */
+.t-people{background:#F472B61A;color:#F472B6;border-color:#F472B655}
+.t-use{background:#60A5FA1A;color:#60A5FA;border-color:#60A5FA55}
+.t-psy{background:#AFA9EC1A;color:#AFA9EC;border-color:#AFA9EC55}
+.t-sale{background:#FB923C1A;color:#FB923C;border-color:#FB923C55}
+.t-poll{background:#FBBF241A;color:#FBBF24;border-color:#FBBF2455}
+.t-case{background:#F472B61A;color:#F472B6;border-color:#F472B655}
+.t-back{background:#60A5FA1A;color:#378ADD;border-color:#378ADD55}
+.t-anti{background:#E24B4A1A;color:#E24B4A;border-color:#E24B4A55}
+.t-kino{background:#AFA9EC1A;color:#AFA9EC;border-color:#AFA9EC55}
+.t-health{background:#1D9E751A;color:#1D9E75;border-color:#1D9E7555}
+.t-lm{background:#FBBF241A;color:#FBBF24;border-color:#FBBF2455}
+
+.d-people{background:#F472B6}
+.d-use{background:#60A5FA}
+.d-psy{background:#AFA9EC}
+.d-sale{background:#FB923C}
+.d-poll{background:#FBBF24}
+.d-case{background:#F472B6}
+.d-back{background:#378ADD}
+.d-anti{background:#E24B4A}
+.d-kino{background:#AFA9EC}
+.d-health{background:#1D9E75}
+.d-lm{background:#FBBF24}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-brand">НАШ КЛУБ · <span>Контент-план</span></div>
+  <div class="nav-pills">
+    <a class="nav-pill" href="#w1">Неделя 1</a>
+    <a class="nav-pill" href="#w2">Неделя 2</a>
+    <a class="nav-pill" href="#w3">Неделя 3</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">ВКонтакте · Сообщество · 3 недели</div>
+  <div class="hero-title">Контент-план<br><em>НАШ КЛУБ</em></div>
+  <div class="hero-sub">21 пост. Живые тексты — без воды. Каждый лидер получает свой пост. Каждый день — конкретная цель: вовлечение, доверие, продажа.</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">21</div><div class="stat-l">пост</div></div>
+    <div class="stat"><div class="stat-n">7</div><div class="stat-l">лидеров</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">недели</div></div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot d-people"></div>Люди клуба</div>
+  <div class="leg"><div class="leg-dot d-use"></div>Польза</div>
+  <div class="leg"><div class="leg-dot d-psy"></div>Психология</div>
+  <div class="leg"><div class="leg-dot d-sale"></div>Продажа</div>
+  <div class="leg"><div class="leg-dot d-poll"></div>Вовлечение</div>
+  <div class="leg"><div class="leg-dot d-back"></div>Закулисье</div>
+  <div class="leg"><div class="leg-dot d-anti"></div>Провокация</div>
+  <div class="leg"><div class="leg-dot d-health"></div>Здоровье</div>
+  <div class="leg"><div class="leg-dot d-lm"></div>Лид-магнит</div>
+</div>
+
+<!-- ══════════════ WEEK 1 ══════════════ -->
+<div id="w1" class="week-header">
+  <div class="wh-inner">
+    <div class="wh-num">1</div>
+    <div class="wh-right">
+      <div class="wh-label">Неделя первая</div>
+      <div class="wh-title">Знакомство. Люди. Доверие.</div>
+      <div class="wh-sub">Показываем клуб через живых людей — лидеров, истории, честный разговор</div>
+    </div>
+  </div>
+</div>
+
+<div class="posts-wrap">
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пн · День 1</div>
+    <div class="pc-type-dot d-sale"></div>
+    <div class="pc-title">Пост-манифест. Почему мы существуем.</div>
+    <div class="pc-tag t-sale">Продажа</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Ты устал(а) от курсов, которые ничего не меняют.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Не потому что ты плохо стараешься.
+Не потому что тебе не хватает мотивации.
+
+А потому что знания без среды — мертвы.
+
+Ты можешь пройти ещё один курс. Сохранить ещё сто постов. Составить ещё один список задач.
+
+И снова оказаться в той же точке через три месяца.
+
+Это не провал. Это симптом. Симптом одиночества в развитии.
+
+— — —
+
+НАШ КЛУБ создан для людей, которые это поняли.
+
+Здесь не учат. Здесь создают среду.
+
+Живые встречи по городам. Онлайн с экспертами под запрос участников — не стандартная программа, а под то, что нужно тебе прямо сейчас. Мини-спринты с реальными результатами. Нетворкинг, где рождаются коллаборации. Люди, рядом с которыми ты снова начинаешь действовать.
+
+Ростов · Волгоград · Санкт-Петербург · Ставрополь · Батайск · Новочеркасск · Москва
+
+Вступление — от 1 000 ₽ в месяц. Это меньше, чем один бесполезный курс.
+
+→ Ссылка на вступление в описании сообщества.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Тёмный фон. Крупный текст: «Знания без среды — мертвы». Логотип клуба.</div>
+    </div>
+    <div class="pb-cta">📌 Закрепить. CTA: «Узнать о ближайшей встрече — пиши в сообщения»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вт · День 2</div>
+    <div class="pc-type-dot d-people"></div>
+    <div class="pc-title">Константин Лопатинский. Психолог, который создаёт пространство.</div>
+    <div class="pc-tag t-people">Люди клуба</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Знакомьтесь: человек, рядом с которым люди снова начинают верить в себя.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Константин Лопатинский.
+Психолог. Коуч. Лидер НАШ КЛУБ в Ростове-на-Дону.
+
+Но это только регалии.
+
+Вот что важнее: Константин из тех людей, рядом с которыми что-то меняется. Не потому что он говорит правильные слова. А потому что он умеет создавать пространство — где можно быть собой, говорить честно и наконец разрешить себе начать.
+
+На живых встречах в Ростове нет дистанции между «экспертом» и «участником». Есть люди и настоящий разговор.
+
+Константин знает: большинство людей не застряли из-за нехватки знаний или силы воли. Они застряли потому что рядом нет среды, где их идеи живут и дышат.
+
+Именно это он и строит. Встречу за встречей.
+
+— — —
+
+«Самое ценное — когда человек приходит с ощущением "у меня ничего не получится" — и уходит с конкретным следующим шагом. Это не магия. Это правильная среда.»
+— Константин Лопатинский
+
+Если ты из Ростова или Ростовской области — ближайшая встреча скоро. Напиши нам — расскажем детали.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Живое фото Константина. Не постановочное — с встречи или в работе. Цитата на карточке.</div>
+    </div>
+    <div class="pb-cta">CTA: «Узнать о встречах в Ростове → написать в сообщество»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Ср · День 3</div>
+    <div class="pc-type-dot d-psy"></div>
+    <div class="pc-title">Почему ты знаешь что делать — но не делаешь. Честный разбор.</div>
+    <div class="pc-tag t-psy">Психология</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">«Знаю что делать — но не делаю». Это не лень. Вот что это на самом деле.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Если это про тебя — читай до конца.
+
+Ты умный(ая). Ты читаешь нужные книги. Ты понимаешь, куда двигаться. Но снова и снова оказываешься в точке «потом».
+
+Это не слабость характера. Это нейробиология.
+
+Мозг блокирует действие тогда, когда:
+
+1. Видит угрозу в видимости
+Любое «заявить о себе» = стать уязвимым. Мозг интерпретирует это как опасность. Он не различает «меня могут осудить в соцсетях» и «на меня нападут». Инстинкт самосохранения работает одинаково.
+
+2. Не видит безопасной среды
+В одиночестве энергия утекает. Человек думает одним и тем же кругом мыслей. Движения нет. Это не лень — это физиология изоляции.
+
+3. Перегружен информацией
+Ещё один курс, ещё один вебинар — создают иллюзию движения. Псевдодействие успокаивает тревогу. Но к результату не приближает.
+
+— — —
+
+Что реально помогает:
+Не сила воли. Не самодисциплина. Не очередная система продуктивности.
+
+Правильная среда.
+
+Рядом с людьми, которые делают — ты начинаешь делать. Это не мотивация. Это зеркальные нейроны — буквально.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка с текстом «Это не лень. Это нейробиология.». Тёмный минимализм.</div>
+    </div>
+    <div class="pb-cta">CTA: «Сохрани пост. Что из трёх пунктов узнаёшь в себе?»</div>
+    <div class="pb-visual">🎯 Лид-магнит: тест на самоэффективность → ссылка в комментарии</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Чт · День 4</div>
+    <div class="pc-type-dot d-people"></div>
+    <div class="pc-title">Анна Павленко. Коуч, которая помогает выйти из выгорания.</div>
+    <div class="pc-tag t-people">Люди клуба</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Выгорание — это не усталость. Это сигнал. И у него есть конкретный выход.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Анна Павленко.
+Экспоненциальный коуч. Специалист ДПДГ. Креативный директор клуба. Лидер НАШ КЛУБ в Волгограде.
+
+Анна работает с теми, кого принято называть «сильными людьми».
+
+Теми, кто умеет держаться. Кто помогает другим. Кто всегда в деле — но внутри уже давно пусто.
+
+Выгорание — это не слабость. Это результат долгого движения без внутренней опоры. Когда делаешь — но не чувствуешь. Когда знаешь — но не можешь. Когда хочется просто остановиться и наконец выдохнуть.
+
+Анна помогает это пройти. Не «поработать над собой» в абстрактном смысле — а конкретно: выйти из состояния, найти путь к самореализации, снова почувствовать вкус к жизни и делу.
+
+«Сильный результат начинается с внутреннего состояния. Не с инструментов, не со стратегии — с того, как ты себя чувствуешь прямо сейчас.» — Анна Павленко
+
+Если ты из Волгограда — встречи с Анной проходят регулярно.
+Напиши нам — расскажем о ближайшей.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Живое фото Анны. Цитата крупно на тёмном фоне.</div>
+    </div>
+    <div class="pb-cta">CTA: «Узнать о встречах в Волгограде → написать нам»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пт · День 5</div>
+    <div class="pc-type-dot d-poll"></div>
+    <div class="pc-title">Пятничный вопрос. «Как начать говорить о себе, если внутри всё сопротивляется?»</div>
+    <div class="pc-tag t-poll">Вовлечение</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Пятничный вопрос от резидентов клуба.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Каждую пятницу — реальный вопрос от участника клуба. Анонимно. Без купюр.
+
+— — —
+
+«Я коуч с реальными результатами у клиентов. Но когда нужно написать пост о себе или снять видео — я буквально замираю. Как будто это другой мир, в который мне нельзя. Что с этим делать?»
+
+— — —
+
+Отвечает Константин Лопатинский, психолог, лидер клуба в Ростове:
+
+«Страх публичности — это не про публичность. Это про отношения с собственной ценностью.
+
+Когда работаешь один на один с клиентом — есть конкретный человек, которому ты помогаешь. Есть обратная связь. Есть безопасность. В публичности этого нет. Ты говоришь в пространство — и не знаешь, как тебя примут.
+
+Мозг интерпретирует это как угрозу. Особенно у людей с высокими стандартами. А у коучей они, как правило, очень высокие.
+
+Что реально помогает:
+
+→ Начни не с поста — начни с разговора. Расскажи о своей работе одному живому человеку, которому доверяешь. Не продавай — просто расскажи.
+
+→ Первые публичные шаги делай в малой группе. Именно для этого существуют встречи нашего клуба.
+
+→ Разреши себе быть несовершенным(ой). Первый пост не будет идеальным. Важно, что он будет.
+
+Публичность — это навык. Он приходит только через повторение.»
+
+— — —
+
+Есть вопрос, который крутится у тебя?
+Пиши в комментарии или в сообщения клуба — лучшие разбираем каждую пятницу.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка с вопросом + отдельная карточка с цитатой Константина. Фото Константина.</div>
+    </div>
+    <div class="pb-cta">CTA: «Задай свой вопрос в комментарии — разберём в следующую пятницу»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Сб · День 6</div>
+    <div class="pc-type-dot d-people"></div>
+    <div class="pc-title">Даниэль Атабекян. Риелтор, музыкант, астролог — и это не случайно.</div>
+    <div class="pc-tag t-people">Люди клуба</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Дом, музыка и звёзды. Почему это не три разных жизни — а одна.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Даниэль Атабекян.
+Риелтор с 15-летним опытом. Музыкант и практик звуковой терапии. Астролог. Лидер НАШ КЛУБ в Батайске.
+
+На первый взгляд — странное сочетание. На второй — абсолютно цельное.
+
+Даниэль из тех людей, которые видят связь там, где другие видят разрозненные части. Дом — это не просто квадратные метры. Это внутреннее состояние человека, выраженное в пространстве. Музыка — это не развлечение. Это инструмент, который меняет состояние тела и ума глубже, чем любые слова. Астрология — это не предсказания. Это карта — понять себя, свои периоды и направления.
+
+«Каждый человек, который приходит ко мне купить квартиру, рано или поздно начинает говорить о том, чего он на самом деле хочет от жизни. Жильё — это отражение внутреннего состояния. Дом снаружи и дом внутри связаны сильнее, чем кажется.»
+
+15 лет Даниэль помогает людям находить дом в буквальном смысле. И параллельно — помогает найти состояние, из которого хочется этот дом обустраивать.
+
+Если ты из Батайска или Ростовской области — встречи с Даниэлем проходят регулярно. Напиши нам.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Фото Даниэля. Цитата на карточке. Можно использовать образ «дом + звуки + звёзды» — коллаж или тёмный минимализм.</div>
+    </div>
+    <div class="pb-cta">CTA: «Узнать о встречах в Батайске → написать нам»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вс · День 7</div>
+    <div class="pc-type-dot d-back"></div>
+    <div class="pc-title">Закулисье. Что происходит на живых встречах клуба.</div>
+    <div class="pc-tag t-back">Закулисье</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Что происходит, когда люди приходят на встречу клуба. Изнутри.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Представь: ты приходишь. Не знаешь никого. В голове — «зачем я здесь».
+
+Через двадцать минут идёт разговор, которого ты давно хотел(а), но не знал(а) с кем.
+
+Это не случайность. Это то, что мы строим намеренно.
+
+— — —
+
+На встречах НАШ КЛУБ нет программы «послушай эксперта и уйди».
+
+Есть мозговые штурмы — берём реальную задачу кого-то из участников и разбираем вместе. Не советы в воздух — конкретные идеи, которые можно применить сегодня.
+
+Есть разборы проектов — живая обратная связь. Без оценки «нравится/не нравится» — только по делу.
+
+Есть нетворкинг, который работает. Не «раздай визитки» — а реальные знакомства с продолжением. Внутри клуба рождаются коллаборации, первые клиенты, партнёрства.
+
+Есть встречи «без погон» — где люди говорят то, что не скажут на официальных мероприятиях.
+
+— — —
+
+Города присутствия: Ростов-на-Дону, Волгоград, Санкт-Петербург, Ставрополь, Батайск, Новочеркасск, Москва.
+
+Иногда одна встреча меняет внутреннее состояние сильнее, чем годы планирования.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Коллаж из живых фото с встреч в разных городах. Подписи: город + имя лидера. Атмосфера, не постановка.</div>
+    </div>
+    <div class="pb-cta">CTA: «Написать и узнать о ближайшей встрече в твоём городе»</div>
+  </div>
+</div>
+
+</div><!-- /posts-wrap week1 -->
+
+<!-- ══════════════ WEEK 2 ══════════════ -->
+<div id="w2" class="week-header">
+  <div class="wh-inner">
+    <div class="wh-num">2</div>
+    <div class="wh-right">
+      <div class="wh-label">Неделя вторая</div>
+      <div class="wh-title">Экспертиза. Ценность. Глубина.</div>
+      <div class="wh-sub">Показываем, что происходит внутри — реальные истории, польза, провокация</div>
+    </div>
+  </div>
+</div>
+
+<div class="posts-wrap">
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пн · День 8</div>
+    <div class="pc-type-dot d-health"></div>
+    <div class="pc-title">Елена Навериани. 40 лет в медицине и один главный вывод о здоровье женщины.</div>
+    <div class="pc-tag t-health">Здоровье</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">40 лет в медицине. И один вывод, который меняет всё.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Елена Навериани.
+Психолог. Сексолог. Эксперт женского здоровья. 40 лет в медицине. Лидер НАШ КЛУБ в Новочеркасске. Ведущая рубрики «Про здоровье с Еленой Навериани».
+
+Вот что Елена знает точно:
+
+Большинство проблем, с которыми женщины приходят к ней — это не медицинские диагнозы. Это последствия долгого игнорирования себя.
+
+Когда ты 20 лет ставишь себя на последнее место — тело начинает говорить громко.
+
+Елена работает с женщинами 35+. Помогает войти в менопаузу — не как в катастрофу, а как в переход, который можно пройти достойно. Без гормонов по умолчанию. Без стресса. С пониманием того, что происходит с телом.
+
+Она автор методики «Здоровье груди в удовольствии» — подхода, который объединяет медицину и психологию тела.
+
+«Тело всегда честнее нас. Оно говорит то, что мы не решаемся сказать себе сами.»
+
+На встречах клуба Елена проводит живые разговоры о том, о чём принято молчать. Не лекции — настоящие разговоры. Туда можно приходить с вопросами, которые не задашь врачу за 12 минут приёма.
+
+Если ты из Новочеркасска или хочешь попасть на онлайн-встречу с Еленой — напиши нам.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Фото Елены. Тёплый, профессиональный тон. Карточка рубрики «Про здоровье с Еленой Навериани».</div>
+    </div>
+    <div class="pb-cta">CTA: «Задать вопрос Елене или узнать о ближайшей встрече → написать нам»</div>
+    <div class="pb-visual">🎯 Лид-магнит: «5 симптомов, которые женщина 35+ игнорирует — и зря» → в комментарии</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вт · День 9</div>
+    <div class="pc-type-dot d-anti"></div>
+    <div class="pc-title">Провокация. Ты купил(а) 5 курсов. Почему ничего не изменилось.</div>
+    <div class="pc-tag t-anti">Провокация</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Курс сам по себе ничего не меняет. Никогда. Вот почему.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Скажем вслух то, о чём молчат инфобизнесмены.
+
+Курс сам по себе ничего не меняет. Никогда.
+
+Меняет — действие. Но действие рождается не из информации. Оно рождается из состояния, окружения и среды.
+
+Почему курсы не работают:
+
+→ Ты смотришь видео в одиночестве. Нет никого, кто двигает тебя в процессе и даёт обратную связь прямо сейчас.
+
+→ После курса ты один(а) с домашним заданием. Тревога возвращается. Дедлайн куратора прошёл. Ты — сам(а) по себе.
+
+→ Нет среды, где твой результат — это ценность. Где тебя будут спрашивать: «Ну как?» через неделю.
+
+→ Нет живых людей рядом, которые делают похожее прямо сейчас.
+
+— — —
+
+Мы не против курсов.
+
+Мы против иллюзии, что информация = трансформация.
+
+Трансформация происходит в процессе. С людьми. В действии.
+
+Именно это мы строим в НАШ КЛУБ.
+
+Не очередной контент, который ты посмотришь «потом».
+А среду, в которой ты начинаешь делать — потому что рядом люди, которые делают.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка с контрастом «Курс vs Среда». Тёмный, жёсткий, без украшений.</div>
+    </div>
+    <div class="pb-cta">CTA: «Согласен(а) или нет? Напиши в комментарии — обсудим честно»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Ср · День 10</div>
+    <div class="pc-type-dot d-people"></div>
+    <div class="pc-title">Мануэла Дубровина. Про женскую энергию и жизнь, в которой хочется сиять.</div>
+    <div class="pc-tag t-people">Люди клуба</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Многие женщины живут «правильно» — и при этом не чувствуют себя живыми.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Мануэла Дубровина.
+Лидер НАШ КЛУБ в Санкт-Петербурге.
+
+Она работает в теме женской энергии, лёгкости и состояния.
+
+Но не в формате «медитируй и всё придёт». В формате живых встреч, где женщины разговаривают друг с другом честно. Без масок. Без «у меня всё хорошо».
+
+Мануэла видит одно и то же снова и снова:
+
+Женщины, которые всё делают правильно — работают, растят детей, развиваются, заботятся обо всех вокруг — при этом внутри чувствуют пустоту или постоянную усталость.
+
+Это не капризы. Это сигнал.
+
+Сигнал, что где-то по пути потерялась связь с собой. С тем, что приносит не успех — а настоящую жизнь.
+
+«Моя задача — помочь снова захотеть сиять. Не для других. Для себя.»
+
+На встречах в Петербурге есть место и смеху, и серьёзным разговорам. И каждая уходит с чем-то настоящим — не с конспектом.
+
+Если ты из Санкт-Петербурга — напиши нам. Расскажем о ближайшей встрече с Мануэлой.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Фото Мануэлы — тёплое, живое. Цитата на карточке. Женский, но не приторный тон.</div>
+    </div>
+    <div class="pb-cta">CTA: «Узнать о встречах в Петербурге → написать нам»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Чт · День 11</div>
+    <div class="pc-type-dot d-use"></div>
+    <div class="pc-title">Польза. Шаблон самопрезентации за 60 секунд.</div>
+    <div class="pc-tag t-use">Польза</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Самопрезентация за 60 секунд: структура, которая работает без скриптов.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">«Расскажи о себе» — и ты либо говоришь слишком долго, либо слишком коротко. Либо уходишь в детали, которые никому не нужны.
+
+Вот структура, которая решает это раз и навсегда:
+
+— — —
+
+Блок 1. Кто ты — 1 предложение
+«Я [роль/специализация] для [аудитория], которые [проблема или ситуация]»
+
+Пример: «Я коуч для предпринимателей, которые застряли в операционке и потеряли себя»
+
+— — —
+
+Блок 2. Что ты делаешь — результат, не процесс
+Не «помогаю развиваться» — а «за 8 недель выстраиваю систему, которая освобождает 15–20 часов в неделю»
+
+— — —
+
+Блок 3. Почему именно ты — одна личная деталь
+Одна деталь из опыта, которая создаёт доверие. Чем честнее — тем лучше.
+
+— — —
+
+Блок 4. Следующий шаг
+«Если это про тебя — давай поговорим / вот моя ссылка / напиши мне»
+
+— — —
+
+Итого: 5–7 предложений. 45–60 секунд.
+
+Работает на нетворкинге, в сторис, в описании профиля, на встречах клуба.
+
+Протестируй прямо сейчас: напиши свою версию в комментариях. Лучшие разберём на ближайшей встрече клуба.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">4 карточки-блока шаблона. Пример заполнения на финальной карточке. Тёмный фон, золото.</div>
+    </div>
+    <div class="pb-cta">CTA: «Напиши свою версию в комментарии — дадим обратную связь»</div>
+    <div class="pb-visual">🎯 Лид-магнит: воркшит «Упаковка себя за 30 минут» → ссылка в комментарии</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пт · День 12</div>
+    <div class="pc-type-dot d-poll"></div>
+    <div class="pc-title">Пятничный вопрос. «Как найти своё дело в 34 года, не бросая всё?»</div>
+    <div class="pc-tag t-poll">Вовлечение</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Пятничный вопрос #2. «Мне 34. Делаю не то. Как найти своё?»</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Анонимный вопрос от резидентки клуба:
+
+«Мне 34 года. Я хороший специалист в своей области. Но всё чаще ощущение, что делаю не то. Что "моё" — не понимаю. Как найти своё дело, не бросая всё и не уходя в монастырь?»
+
+— — —
+
+Отвечает Анна Павленко, коуч, лидер клуба в Волгограде:
+
+«Своё дело — это не откровение свыше. Это пересечение трёх вещей:
+
+→ Что тебе легко (и ты не считаешь это талантом — потому что "всем же так". Нет. Не всем.)
+
+→ Что тебя по-настоящему злит или трогает в мире — не абстрактно, а конкретно
+
+→ За что люди уже сейчас просят тебя — пусть неформально, без оплаты
+
+Твоё дело — это не то, кем ты хочешь стать. Это то, кем ты уже являешься. Просто ещё не разрешила себе назвать это делом.
+
+Первый шаг — не поиск. Это остановка.
+
+Замолчи на день и понаблюдай: что ты делаешь легко, с удовольствием, даже когда тебя не просят? Там есть подсказка.
+
+И ещё: "найти своё дело" в одиночестве — это очень медленно. Люди раскрываются в контакте. Именно поэтому среда важнее самоанализа.»
+
+— — —
+
+Что отзывается? Напиши в комментарии.
+Есть свой вопрос — пиши нам, разберём в следующую пятницу.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка с вопросом + цитата Анны отдельно. Фото Анны.</div>
+    </div>
+    <div class="pb-cta">CTA: «Напиши свой вопрос → разберём в следующую пятницу»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Сб · День 13</div>
+    <div class="pc-type-dot d-people"></div>
+    <div class="pc-title">Юлия Маяк. Про внутреннюю опору и жизнь без борьбы с собой.</div>
+    <div class="pc-tag t-people">Люди клуба</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Когда перестаёшь бороться с собой — появляется энергия на всё остальное.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Юлия Маяк.
+Интегративный психолог. Лидер НАШ КЛУБ в Ставрополе.
+
+Юлия работает с теми, кто устал. Не от работы — от себя.
+
+От внутренней борьбы, которая идёт постоянно. От ощущения, что нужно себя заставлять, убеждать, мотивировать. От хронического напряжения между «надо» и «хочу».
+
+Это называется отсутствием внутренней опоры. И это намного распространённее, чем кажется.
+
+Юлия работает как интегративный психолог — соединяет разные подходы под конкретного человека. Не «программа из 10 сессий для всех» — а работа с тем, что есть прямо сейчас.
+
+«Спокойствие — это не пассивность. Это когда ты действуешь из себя, а не против себя. Это принципиально разное количество энергии.»
+
+В Ставрополе Юлия создаёт пространство, где можно выдохнуть и найти эту опору — через живые встречи, честные разговоры и практику.
+
+Если ты из Ставрополя — ближайшая встреча уже скоро.
+Напиши нам — расскажем детали.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Фото Юлии. Цитата крупно. Тёплый, спокойный, но не мягкий тон — уверенный.</div>
+    </div>
+    <div class="pb-cta">CTA: «Узнать о встречах в Ставрополе → написать нам»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вс · День 14</div>
+    <div class="pc-type-dot d-case"></div>
+    <div class="pc-title">История участника. «Я 2 года собиралась. Одна встреча изменила всё».</div>
+    <div class="pc-tag t-case">Кейс</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">«Я 2 года собиралась запустить свой проект. Пришла на одну встречу — и через месяц он работал.»</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Это история Марины (имя изменено по её просьбе). Публикуем с разрешения.
+
+— — —
+
+«Я коуч. 7 лет работы. Хорошие клиенты — по рекомендациям. Но когда дело доходило до того, чтобы заявить о себе публично — я буквально замирала.
+
+Что-то внутри говорило: не время, недостаточно готова, кто вообще будет слушать.
+
+Подруга позвала на встречу клуба. Я пришла без ожиданий.
+
+На этой встрече я впервые рассказала о своём проекте вслух. Перед живыми людьми.
+
+Они не кивнули вежливо. Они реально зацепились. Стали спрашивать. Одна участница сказала: "Я сама искала именно такого специалиста последние полгода".
+
+Я не продавала. Я просто рассказывала. Это была принципиальная разница.
+
+Через две недели я записала первое видео. Через месяц — нашла первых клиентов прямо внутри клуба. Без рекламы. Просто потому что оказалась в правильном месте.
+
+Сейчас понимаю: меня держала не неготовность. Меня держало отсутствие среды, в которой можно начать.»
+
+— — —
+
+Такие истории у нас — не исключение. Это то, что происходит, когда человек оказывается в правильном месте.
+
+Среда не учит — она позволяет.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Цитата крупно на карточке. Фото с живой встречи (лица можно не показывать — атмосфера важнее).</div>
+    </div>
+    <div class="pb-cta">CTA: «Хочешь узнать, подойдёт ли клуб тебе? Напиши нам»</div>
+  </div>
+</div>
+
+</div><!-- /posts-wrap week2 -->
+
+<!-- ══════════════ WEEK 3 ══════════════ -->
+<div id="w3" class="week-header">
+  <div class="wh-inner">
+    <div class="wh-num">3</div>
+    <div class="wh-right">
+      <div class="wh-label">Неделя третья</div>
+      <div class="wh-title">Продажа. Конверсия. Финальный удар.</div>
+      <div class="wh-sub">Фокус-группа, тарифы, последний призыв к действию — всё работает на вступление</div>
+    </div>
+  </div>
+</div>
+
+<div class="posts-wrap">
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пн · День 15</div>
+    <div class="pc-type-dot d-sale"></div>
+    <div class="pc-title">Фокус-группа. От идеи до продукта за 4 недели.</div>
+    <div class="pc-tag t-sale">Продажа</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Ты давно хочешь создать продукт. Каждый раз что-то мешает. Мы знаем почему.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Фокус-группа НАШ КЛУБ — это не курс. Это сопровождение.
+
+4 недели. Камерная группа 5–8 человек. Конкретный результат.
+
+— — —
+
+Для кого:
+
+→ Ты хочешь создать продукт — но каждый раз что-то мешает: время, сомнения, «надо ещё подготовиться»
+→ Ты не знаешь, как упаковать то, что умеешь, в то, за что платят
+→ Ты начинаешь проекты и сливаешься на полпути — не потому что ленив(а), а потому что нет структуры и поддержки
+→ Ты хочешь выйти в публичность, но в одиночестве не получается
+
+— — —
+
+Что происходит внутри 4 недель:
+
+— Позиционирование: кто ты, для кого, в чём твоя реальная ценность
+— Кастдевы: разговоры с реальными потенциальными клиентами — проверяем идею до её создания
+— Создание продукта: от концепции до конкретного предложения с ценой
+— Работа с самосаботажем: разбираем конкретные блоки каждого участника
+— ИИ на уровне PRO: используем как ускоритель, не костыль
+— Поддержка между встречами: не остаёшься один(а) с домашним заданием
+
+Форматы: офлайн (Ростов-на-Дону) или онлайн.
+
+Мест мало намеренно. Группа камерная — у каждого должно быть внимание.
+
+Если это про тебя — напиши нам. Расскажем детали и условия.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Схема 4 недель на карточке. Список форматов. Акцент на «5–8 человек».</div>
+    </div>
+    <div class="pb-cta">CTA: «Написать и узнать подробности → сообщения сообщества»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вт · День 16</div>
+    <div class="pc-type-dot d-use"></div>
+    <div class="pc-title">Синдром самозванца. 5 признаков и что с ними делать.</div>
+    <div class="pc-tag t-use">Польза</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">«Кто я такой(ая), чтобы об этом говорить?» — разбираем честно.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Если хотя бы одна из этих фраз знакома — читай до конца.
+
+«Другие знают больше меня»
+«Мне просто повезло»
+«Я недостаточно готов(а)»
+«Кто вообще будет меня слушать»
+
+— — —
+
+5 признаков синдрома самозванца:
+
+1. Ты обесцениваешь свои результаты
+«Ну это же несложно, любой мог бы» — нет. Не любой. Ты сделал(а) — это факт.
+
+2. Ты откладываешь до «готовности»
+Готовности не будет. Порог будет подниматься всегда. Это работа мозга, который ищет безопасность через отсрочку.
+
+3. Ты боишься «разоблачения»
+Разоблачения в чём? В том, что ты живой человек, который не знает всего? Люди с реальной экспертизой страдают от этого страха чаще, чем те, кто знает мало.
+
+4. Ты сравниваешь свой черновик с чужим финальным результатом
+Нечестное и бессмысленное сравнение.
+
+5. Ты просишь меньше, чем стоишь
+Ценник как проекция самооценки.
+
+— — —
+
+Что реально помогает:
+
+→ Список из 10 конкретных результатов — запиши прямо сейчас. Не ощущений — фактов.
+→ Среда, где ошибки — это данность, а не приговор
+→ Первые шаги в публичность в безопасном контексте
+
+Третий пункт — это то, что мы строим каждый день.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">5 карточек-карусель с признаками. Финальная карточка — о среде клуба.</div>
+    </div>
+    <div class="pb-cta">CTA: «Сохрани пост. Что из пяти узнаёшь в себе — напиши в комментарии»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Ср · День 17</div>
+    <div class="pc-type-dot d-kino"></div>
+    <div class="pc-title">Киноклуб. Зачем смотреть кино вместе и какой фильм обсуждаем.</div>
+    <div class="pc-tag t-kino">Киноклуб</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Мы смотрим кино и обсуждаем не сюжет. Вот зачем.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">В НАШ КЛУБ есть киноклуб.
+
+Раз в месяц мы смотрим фильм и обсуждаем не «понравилось или нет». Мы обсуждаем смыслы.
+
+Потому что хорошее кино — это зеркало. Иногда оно показывает то, что ты давно избегал(а) видеть.
+
+— — —
+
+Как устроен киноклуб:
+
+Смотришь фильм самостоятельно до встречи. Приходишь на онлайн-обсуждение. Ведущий задаёт вопросы, которые двигают — не «как тебе фильм?», а «есть ли в твоей жизни момент, как у героя?»
+
+Именно здесь многие участники впервые начинают говорить вслух о том, что раньше оставалось внутри. В безопасном, маленьком контексте.
+
+— — —
+
+Вопрос этого месяца от ведущего:
+
+«Есть ли в твоей жизни момент — как у героя — когда ты стоишь перед выбором и не делаешь его? Что тебя удерживает?»
+
+Именно такие вопросы мы обсуждаем. Не ради красивого ответа — ради честного разговора с собой.
+
+Киноклуб доступен всем резидентам клуба.
+Ближайшее обсуждение — онлайн.
+
+Если ты ещё не внутри — это ещё один повод войти.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Кинематографичный тёмный визуал. Вопрос крупно на карточке. Атмосфера кино, не афиша.</div>
+    </div>
+    <div class="pb-cta">CTA: «Ответь в комментарии: какой фильм изменил твой взгляд на что-то важное?»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Чт · День 18</div>
+    <div class="pc-type-dot d-sale"></div>
+    <div class="pc-title">«1 000 рублей в месяц — за что?» Отвечаем честно.</div>
+    <div class="pc-tag t-sale">Продажа</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">«1 000 рублей в месяц — за что?» Отвечаем без прикрас.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Это вопрос, который мы слышим. И он правильный.
+
+Рынок перегрет предложениями, за которыми нет ничего. Поэтому — честно, по пунктам.
+
+— — —
+
+За что 1 000 рублей в месяц:
+
+За живые встречи — не записи
+Не «посмотри потом». Живые встречи, где что-то происходит прямо сейчас. Где ты задаёшь вопрос и получаешь ответ. Где рядом люди, а не экран.
+
+За спикеров под твой запрос
+Мы не берём «кто свободен». Участники говорят, что им нужно — мы приглашаем под это. Маркетолог, психолог, эксперт по ИИ, специалист по продажам — конкретно под запрос.
+
+За окружение
+Психологи, коучи, предприниматели, специалисты — без гордыни и без иерархии. Люди, рядом с которыми хочется расти. Это редкость — и это стоит денег.
+
+За лидеров
+Константин, Анна, Даниэль, Мануэла, Юлия, Елена — живые люди с реальным опытом, которые вкладываются в каждую встречу лично.
+
+За результат
+Люди внутри клуба находят первых клиентов. Запускают проекты. Записывают первые видео. Перестают тянуть всё в одиночку.
+
+— — —
+
+1 000 рублей — это меньше, чем один поход в кофейню на неделе.
+Но с принципиально другой отдачей.
+
+Сравни это с последним курсом, который ты купил(а) и не прошёл(а) до конца.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка «За что платишь» — 5 пунктов. Сравнение с ценой кофе (визуально). Тёмный, конкретный.</div>
+    </div>
+    <div class="pb-cta">CTA: «Вступить → от 1 000 ₽/мес [ссылка]. Вопросы — в комментарии»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Пт · День 19</div>
+    <div class="pc-type-dot d-poll"></div>
+    <div class="pc-title">Пятничный вопрос #3. «Как продавать себя без ощущения навязчивости?»</div>
+    <div class="pc-tag t-poll">Вовлечение</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Пятничный вопрос #3. «Как говорить о своих услугах без чувства, что навязываюсь?»</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Анонимный вопрос от резидента клуба:
+
+«Я хороший специалист с реальными результатами. Но когда нужно говорить о своих услугах — чувствую себя навязчивым(ой). Как будто вторгаюсь. Как работать с этим?»
+
+— — —
+
+Отвечает Юлия Маяк, интегративный психолог, лидер клуба в Ставрополе:
+
+«Ощущение "я навязываюсь" — это признак одной конкретной установки:
+
+"Мои услуги нужны не всем — значит, предлагая их, я нарушаю чужие границы."
+
+Но давай подумаем честно.
+
+Если у человека болит зуб, а ты стоматолог — ты навязываешься, когда предлагаешь помощь? Нет. Ты решаешь проблему.
+
+Разница между навязчивостью и предложением — не в том, что ты говоришь. В том, из какого состояния ты говоришь.
+
+Навязчивость — это "мне нужен этот клиент". Предложение — это "я знаю, что могу помочь — и говорю об этом".
+
+Ощущение навязчивости чаще всего приходит от внутренней неуверенности, а не от реального давления на другого человека.
+
+Практический шаг: сформулируй своё предложение как информацию, а не как просьбу. "Я работаю вот так. Если тебе это подходит — вот как связаться." Всё. Без допродажи, без давления.
+
+Кто хочет — отзовётся. Кто не хочет — пройдёт мимо. Это не отказ от тебя как человека.»
+
+— — —
+
+Узнаёшь себя? Напиши в комментарии.
+Есть свой вопрос — пиши нам.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Карточка с вопросом + цитата Юлии отдельно. Фото Юлии.</div>
+    </div>
+    <div class="pb-cta">CTA: «Напиши свой вопрос → разберём в пятницу»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Сб · День 20</div>
+    <div class="pc-type-dot d-sale"></div>
+    <div class="pc-title">Реальные слова участников. Что изменилось за первый месяц.</div>
+    <div class="pc-tag t-sale">Продажа / Кейс</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Мы спросили участников: «Что изменилось за первый месяц в клубе?» Публикуем без редактуры.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Реальные слова. Без приукрашивания.
+
+— — —
+
+«Нашла партнёра для совместного проекта прямо внутри клуба. Мы уже работаем вместе второй месяц.»
+— участница, коуч
+
+«Записала первое видео. Оно кривое и неловкое. Но оно есть — и это важнее, чем идеальное видео в голове.»
+— участница, психолог
+
+«Поняла, чем именно хочу заниматься. После двух лет "не знаю, не понимаю".»
+— участница, маркетолог
+
+«Просто стало легче. Когда знаешь, что ты не один с этим — внутреннее давление уходит.»
+— участник, предприниматель
+
+«Первый клиент из клуба появился на третьей встрече. Я ничего не продавал — просто рассказал о своём деле. Это другое ощущение.»
+— участник, консультант
+
+— — —
+
+Мы не обещаем, что у тебя будет именно это.
+
+Но мы знаем: когда человек оказывается в правильной среде — начинает происходить что-то настоящее.
+
+Единственное условие — войти.
+
+Вступление — от 1 000 ₽ в месяц.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">5 карточек с цитатами участников. Без фото — анонимность. Финальная карточка — CTA с ценой.</div>
+    </div>
+    <div class="pb-cta">CTA: «Вступить → [ссылка]. Ближайшая встреча в твоём городе — пиши нам»</div>
+  </div>
+</div>
+
+<div class="post-card" onclick="toggle(this)">
+  <div class="pc-header">
+    <div class="pc-date">Вс · День 21</div>
+    <div class="pc-type-dot d-sale"></div>
+    <div class="pc-title">Финальный пост. Личное слово от Ольги Зарумной.</div>
+    <div class="pc-tag t-sale">Продажа / Личное</div>
+    <div class="pc-chev">▼</div>
+  </div>
+  <div class="pc-body">
+    <div class="pb-section">
+      <div class="pb-label">Заголовок</div>
+      <div class="pb-text">Хочу написать тебе лично.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Полный текст поста</div>
+      <div class="pb-text">Когда я создавала этот клуб, у меня было одно желание.
+
+Чтобы человек, который чувствует внутреннюю силу — и одновременно внутреннюю усталость — нашёл здесь опору.
+
+Не очередной курс. Не список задач. А людей. Живых. Настоящих. Которые понимают.
+
+— — —
+
+За эти месяцы я видела, как люди впервые говорили в микрофон.
+
+Как находили своё дело после лет поиска.
+
+Как запускали то, что лежало в заметках годами.
+
+Как впервые позволяли себе сказать: «У меня есть идея — и я её запущу».
+
+— — —
+
+Каждый раз это было не про технику и не про стратегию.
+
+Это была среда. Правильные люди рядом. Момент, когда человек понимает: он не один.
+
+— — —
+
+Если ты читаешь это — что-то в этих словах резонирует.
+
+Какая-то часть тебя знает, что это про тебя.
+
+Я буду рада видеть тебя внутри.
+
+— Ольга Зарумная, основатель НАШ КЛУБ
+
+— — —
+
+Вступление — от 1 000 ₽ в месяц.
+Ссылка в описании сообщества.
+Или напиши нам — расскажем обо всём лично.</div>
+    </div>
+    <div class="pb-section">
+      <div class="pb-label">Визуал</div>
+      <div class="pb-text">Живое фото Ольги. Подпись от руки или имитация. Тёплый, настоящий — не рекламный визуал.</div>
+    </div>
+    <div class="pb-cta">CTA: «Вступить → [ссылка]. Написать Ольге лично → сообщения сообщества»</div>
+  </div>
+</div>
+
+</div><!-- /posts-wrap week3 -->
+
+<script>
+function toggle(card){
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
