@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Чек-лист · 12 признаков операционки · Светлана Логунова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#050A16;
+  --navy-900:#070D1E;
+  --navy-850:#0A1326;
+  --navy-800:#0D1830;
+  --navy-700:#12203F;
+  --navy-600:#1A2C52;
+  --line:rgba(176,193,224,.16);
+  --line-bright:rgba(196,212,240,.34);
+  --silver:#CBD6E8;
+  --silver-dim:#8A99B6;
+  --silver-faint:#5E6E8C;
+  --ink:#EEF3FB;
+  --accent:#5C8DF0;
+  --accent-soft:rgba(92,141,240,.16);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--navy-950);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  position:relative;
+  overflow-x:hidden;
+}
+/* atmosphere */
+.bg{position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(120% 80% at 50% -10%,#16264C 0%,#0A1326 42%,#050A16 100%),
+    radial-gradient(60% 50% at 85% 15%,rgba(92,141,240,.10),transparent 60%),
+    radial-gradient(50% 40% at 10% 85%,rgba(120,150,210,.08),transparent 60%);
+}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.wrap{max-width:680px;margin:0 auto;padding:clamp(2.2rem,6vw,4.5rem) clamp(1.1rem,4vw,2rem) 4.5rem}
+
+/* header */
+.brand{display:flex;align-items:center;gap:.7rem;margin-bottom:clamp(2.2rem,6vw,3.4rem);
+  opacity:0;animation:rise .8s .05s forwards}
+.crest{width:38px;height:38px;flex-shrink:0;border:1px solid var(--line-bright);border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(160deg,#1A2C52,#0A1326);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 18px rgba(0,0,0,.4)}
+.crest span{font-family:var(--serif);font-size:21px;font-weight:600;line-height:1;
+  background:linear-gradient(160deg,#fff,#9FB0C8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand-txt{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--silver-dim)}
+.brand-txt b{display:block;color:var(--silver);font-weight:600;letter-spacing:.18em;font-size:11.5px}
+
+.kicker{font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:1.1rem;display:flex;align-items:center;gap:.8rem;
+  opacity:0;animation:rise .8s .15s forwards}
+.kicker::before{content:'';width:34px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+
+h1{font-family:var(--serif);font-weight:600;letter-spacing:-.5px;line-height:1.04;
+  font-size:clamp(2.5rem,9vw,4.1rem);margin-bottom:1.2rem;
+  background:linear-gradient(176deg,#FFFFFF 0%,#DCE4F1 30%,#93A4C2 62%,#C6D2E6 82%,#7C8DAC 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 1px 30px rgba(150,175,225,.12);
+  opacity:0;animation:rise .9s .25s forwards}
+h1 em{font-style:italic;font-weight:500}
+
+.lede{font-size:clamp(1rem,2.6vw,1.12rem);color:var(--silver);max-width:54ch;font-weight:300;
+  opacity:0;animation:rise .9s .35s forwards}
+.lede b{color:var(--ink);font-weight:600}
+
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-bright),transparent);
+  margin:clamp(2rem,5vw,2.8rem) 0 clamp(1.4rem,4vw,1.9rem);
+  opacity:0;animation:fade 1s .5s forwards}
+
+.hint{font-size:12.5px;color:var(--silver-faint);text-align:center;letter-spacing:.04em;
+  margin-bottom:1.6rem;opacity:0;animation:fade 1s .55s forwards}
+.hint strong{color:var(--silver-dim)}
+
+/* checklist */
+.list{display:flex;flex-direction:column;gap:.55rem}
+.item{position:relative;display:flex;gap:.9rem;align-items:flex-start;
+  padding:1rem 1.1rem;border:1px solid var(--line);border-radius:14px;cursor:pointer;
+  background:linear-gradient(160deg,rgba(20,33,63,.55),rgba(10,19,38,.35));
+  transition:border-color .35s,transform .35s,background .35s,box-shadow .35s;
+  opacity:0;transform:translateY(14px);animation:rise .7s forwards;
+  -webkit-tap-highlight-color:transparent;user-select:none}
+.item:hover{border-color:var(--line-bright);transform:translateY(-1px);
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.item.on{border-color:rgba(92,141,240,.5);
+  background:linear-gradient(160deg,rgba(28,46,86,.7),rgba(14,26,52,.5));
+  box-shadow:0 0 0 1px rgba(92,141,240,.22),0 14px 34px -16px rgba(40,80,170,.45)}
+
+.num{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--silver-dim);
+  min-width:22px;padding-top:1px;transition:color .35s}
+.item.on .num{color:var(--accent)}
+
+.box{width:23px;height:23px;flex-shrink:0;border:1.5px solid var(--silver-faint);border-radius:7px;
+  display:grid;place-items:center;transition:.35s;margin-top:1px;background:rgba(5,10,22,.4)}
+.box svg{width:13px;height:13px;stroke:#fff;stroke-width:3;fill:none;
+  stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s .05s}
+.item.on .box{border-color:var(--accent);
+  background:linear-gradient(160deg,#5C8DF0,#3360C8);
+  box-shadow:0 0 14px rgba(92,141,240,.5)}
+.item.on .box svg{stroke-dashoffset:0}
+
+.txt{flex:1}
+.txt .t{font-size:15px;font-weight:500;color:var(--ink);line-height:1.42}
+.txt .d{font-size:12.5px;color:var(--silver-faint);margin-top:.25rem;font-weight:300;line-height:1.45}
+.item.on .txt .t{color:#fff}
+
+/* meter / verdict */
+.scorecard{margin-top:2.2rem;border:1px solid var(--line-bright);border-radius:18px;overflow:hidden;
+  background:linear-gradient(165deg,rgba(18,32,63,.7),rgba(8,15,30,.55));
+  box-shadow:0 24px 60px -28px rgba(0,0,0,.8);
+  opacity:0;animation:rise .8s .6s forwards}
+.score-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.2rem 1.4rem 1rem}
+.score-lab{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--silver-dim)}
+.score-val{font-family:var(--serif);font-size:clamp(2.1rem,7vw,2.8rem);line-height:1;font-weight:600;
+  background:linear-gradient(176deg,#fff,#9FB0C8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-val small{font-size:.42em;color:var(--silver-faint);-webkit-text-fill-color:var(--silver-faint);font-family:var(--sans);font-weight:400}
+.track{height:6px;background:rgba(5,10,22,.6);margin:0 1.4rem;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,#3360C8,#5C8DF0,#9FB7EE);
+  box-shadow:0 0 12px rgba(92,141,240,.6);transition:width .6s cubic-bezier(.4,0,.2,1)}
+.verdict{padding:1.2rem 1.4rem 1.4rem;font-size:14px;color:var(--silver);min-height:10px;
+  border-top:1px solid var(--line);margin-top:1.2rem;font-weight:300;transition:.3s}
+.verdict b{color:#fff;font-weight:600}
+.verdict .vh{display:block;font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink);margin-bottom:.4rem;font-weight:500}
+
+/* CTA */
+.cta{margin-top:2.4rem;text-align:center;opacity:0;animation:rise .8s .7s forwards}
+.cta-pre{font-size:13px;color:var(--silver-dim);max-width:46ch;margin:0 auto 1.3rem;font-weight:300}
+.cta-pre b{color:var(--silver)}
+.btn{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;
+  padding:1.15rem 2.2rem;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:600;
+  color:#08122a;letter-spacing:.01em;position:relative;
+  background:linear-gradient(168deg,#F2F6FC,#C3D0E6 55%,#90A2C4);
+  box-shadow:0 0 0 1px rgba(255,255,255,.4) inset,0 18px 40px -14px rgba(92,141,240,.55),0 4px 14px rgba(0,0,0,.4);
+  transition:transform .3s,box-shadow .3s;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;border-radius:100px;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);
+  transform:translateX(-120%);transition:transform .7s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(255,255,255,.5) inset,0 24px 50px -14px rgba(92,141,240,.7),0 6px 18px rgba(0,0,0,.45)}
+.btn:hover::after{transform:translateX(120%)}
+.btn:active{transform:translateY(0)}
+.btn svg{width:17px;height:17px;stroke:#08122a;stroke-width:2.4;fill:none}
+.cta-sub{font-size:11.5px;color:var(--silver-faint);margin-top:1rem;letter-spacing:.04em}
+
+.foot{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem;
+  font-size:11px;color:var(--silver-faint);letter-spacing:.08em;text-transform:uppercase;
+  opacity:0;animation:fade 1s .8s forwards}
+.foot b{color:var(--silver-dim);font-weight:600}
+
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+@keyframes fade{to{opacity:1}}
+
+@media (max-width:480px){
+  .item{padding:.85rem .9rem;gap:.7rem}
+  .txt .t{font-size:14px}
+  .btn{width:100%;justify-content:center;padding:1.1rem 1.4rem}
+}
+@media print{
+  body{background:#fff;color:#000}
+  .bg,.grain{display:none}
+  h1,.crest span,.score-val{-webkit-text-fill-color:#0A1326}
+  .item,.scorecard{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="grain"></div>
+
+<div class="wrap">
+
+  <div class="brand">
+    <div class="crest"><span>СЛ</span></div>
+    <div class="brand-txt">Светлана Логунова<b>Архитектор бизнес-систем</b></div>
+  </div>
+
+  <div class="kicker">Экспресс-диагностика · 2 минуты</div>
+  <h1>12 признаков, что вы застряли в <em>операционке</em></h1>
+  <p class="lede">Операционка — это не «много работы». Это когда вы — единственная деталь, без которой механизм встаёт. Отметьте всё, что про вас. <b>В конце — честный вердикт.</b></p>
+
+  <div class="rule"></div>
+  <p class="hint">Нажимайте на пункты, которые узнаёте. <strong>Только честно — это для вас, а не для отчёта.</strong></p>
+
+  <div class="list" id="list"></div>
+
+  <div class="scorecard">
+    <div class="score-top">
+      <div class="score-lab">Ваш результат</div>
+      <div class="score-val"><span id="count">0</span><small> / 12</small></div>
+    </div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="verdict" id="verdict">
+      <span class="vh">Отметьте пункты выше</span>
+      Вердикт появится здесь, как только вы начнёте отмечать признаки.
+    </div>
+  </div>
+
+  <div class="cta">
+    <p class="cta-pre">Чек-лист показывает <b>где болит</b>. Бесплатная диагностика показывает <b>почему и что делать</b>. 40 минут, ваша конкретная ситуация, карта узких мест — забираете, даже если не продолжим.</p>
+    <a class="btn" href="https://vk.com/im?sel=-236374734" target="_blank" rel="noopener">
+      Записаться на бесплатную диагностику
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="cta-sub">Провожу лично · мест немного · без обязательств</p>
+  </div>
+
+  <div class="foot">
+    <span><b>СЛ</b> · Бизнес и психология</span>
+    <span>Система · Финансы · Команда</span>
+  </div>
+
+</div>
+
+<script>
+const items=[
+  ["Без вашего решения работа застревает уже к обеду","Процессы ждут вашего «ок», а не идут сами."],
+  ["Не можете уехать в отпуск, не открыв чаты «на минутку»","И эта «минутка» каждый раз превращается в час."],
+  ["Ключевые процессы держатся в вашей голове","Нигде не записаны — поэтому вы незаменимы, в плохом смысле."],
+  ["Сотрудники бегут к вам с любым мелким вопросом","Вы — справочное бюро собственного бизнеса."],
+  ["Тушите пожары каждый день","И не помните, когда последний раз думали о стратегии."],
+  ["«Я сам быстрее сделаю» — ваша рабочая мантра","Сегодня быстрее. А через год вы всё ещё делаете это сами."],
+  ["Доход вырос, а свободного времени стало меньше","Вы купили себе не свободу, а более дорогую работу."],
+  ["Не знаете свои цифры наизусть","Прибыль, маржа, точка безубыточности — «где-то примерно»."],
+  ["Заболеете на неделю — бизнес встанет или просядет","Устойчивость держится на вашем личном здоровье."],
+  ["Перепроверяете за сотрудниками почти всё","Команда не растёт: зачем думать, если всё равно переделают."],
+  ["Нет регламентов — каждый работает «как привык»","Результат поэтому каждый раз непредсказуем."],
+  ["Давно не растёте — упёрлись в потолок","Этот потолок ровно ростом с одного человека. С вас."]
+];
+
+const verdicts=[
+  {min:0,max:0,h:"Пока чисто — но не расслабляйтесь",
+   t:"Ноль отметок — либо вы редкий системный собственник, либо были к себе слишком добры. Перечитайте пункты ещё раз, без скидок."},
+  {min:1,max:3,h:"Вы управляете, но точки утечки уже есть",
+   t:"Вы скорее ведёте бизнес, чем тонете в нём. Но <b>даже 1–2 признака — это утечка времени и денег</b>, которая со временем только разрастается. Закройте их, пока они маленькие."},
+  {min:4,max:7,h:"Вы наполовину в операционке",
+   t:"Бизнес держится на <b>вашем личном ресурсе</b>, а не на системе. Это и есть потолок — и он ближе, чем кажется. Хорошая новость: именно отсюда система даёт самый быстрый эффект."},
+  {min:8,max:12,h:"Вы не владелец. Вы самый загруженный сотрудник",
+   t:"Честно: сейчас у вас не бизнес, а <b>работа с самым требовательным начальником — вами</b>. Это лечится системой, и не за годы. Плохая новость — само собой это не рассосётся. Разберём на диагностике, с чего начать."}
+];
+
+const list=document.getElementById('list');
+let checked=0;
+items.forEach((it,i)=>{
+  const el=document.createElement('div');
+  el.className='item';
+  el.style.animationDelay=(.45+i*.045)+'s';
+  el.innerHTML=`<span class="num">${(i+1).toString().padStart(2,'0')}</span>
+    <span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>
+    <span class="txt"><span class="t">${it[0]}</span><span class="d">${it[1]}</span></span>`;
+  el.addEventListener('click',()=>{
+    el.classList.toggle('on');
+    checked=document.querySelectorAll('.item.on').length;
+    update();
+  });
+  list.appendChild(el);
+});
+
+const cEl=document.getElementById('count');
+const fEl=document.getElementById('fill');
+const vEl=document.getElementById('verdict');
+
+function update(){
+  cEl.textContent=checked;
+  fEl.style.width=(checked/12*100)+'%';
+  if(checked===0){
+    vEl.innerHTML='<span class="vh">Отметьте пункты выше</span>Вердикт появится здесь, как только вы начнёте отмечать признаки.';
+    return;
+  }
+  const v=verdicts.find(x=>checked>=x.min&&checked<=x.max);
+  vEl.style.opacity=0;
+  setTimeout(()=>{
+    vEl.innerHTML=`<span class="vh">${v.h}</span>${v.t}`;
+    vEl.style.opacity=1;
+  },150);
+}
+</script>
+</body>
+</html>
