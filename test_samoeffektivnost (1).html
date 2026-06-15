@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тест на самоэффективность · Наш клуб</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1F2A44;
+  --navy-deep:#101A2B;
+  --gold:#C6A75E;
+  --gold-bright:#D8BC77;
+  --bronze:#A77A32;
+  --milk:#E8DCC8;
+  --sand:#F4EBDD;
+  --white:#FFF8ED;
+  --text:#3B3527;
+  --muted:#7A7259;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(120% 80% at 50% -10%, #FBF4E6 0%, var(--sand) 38%, var(--milk) 100%);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  overflow-x:hidden;
+}
+/* warm paper grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:2.2rem 1.25rem 4rem}
+
+/* ── Emblem ── */
+.emblem{display:block;margin:0 auto 1.1rem;width:84px;height:84px;
+  filter:drop-shadow(0 6px 18px rgba(31,42,68,.18))}
+.slogan{font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center;
+  color:var(--bronze);font-size:1.02rem;line-height:1.4;letter-spacing:.2px;
+  max-width:340px;margin:0 auto 2rem}
+
+/* ── Screens ── */
+.screen{display:none;animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+.screen.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.kicker{display:flex;align-items:center;gap:.55rem;justify-content:center;margin-bottom:.6rem}
+.kicker .ln{height:1px;width:34px;background:linear-gradient(90deg,transparent,var(--gold))}
+.kicker .ln.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.kicker span{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
+  letter-spacing:3px;font-size:.66rem;color:var(--bronze)}
+
+h1{font-family:'Bebas Neue',sans-serif;color:var(--navy);text-align:center;
+  font-size:clamp(2.7rem,12vw,4.1rem);line-height:.92;letter-spacing:1px;margin-bottom:.5rem}
+.sub{text-align:center;font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
+  letter-spacing:2px;font-size:.74rem;color:var(--gold);margin-bottom:1.4rem}
+
+.lead-card{background:var(--white);border:1px solid rgba(198,167,94,.35);border-radius:18px;
+  padding:1.4rem 1.4rem;box-shadow:0 14px 40px rgba(31,42,68,.09);margin-bottom:1.6rem}
+.lead-card p{font-size:.96rem;line-height:1.65;color:var(--text)}
+.lead-card p+p{margin-top:.7rem}
+.lead-card b{color:var(--navy);font-weight:700}
+
+/* ── Route line ── */
+.route{display:flex;align-items:center;justify-content:center;gap:0;margin:1.6rem 0 1.9rem;flex-wrap:nowrap}
+.route .node{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex:0 0 auto}
+.route .dot{width:13px;height:13px;border-radius:50%;background:var(--white);
+  border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(198,167,94,.15)}
+.route .node:last-child .dot{background:var(--gold)}
+.route .lbl{font-family:'Oswald',sans-serif;font-size:.56rem;text-transform:uppercase;
+  letter-spacing:.5px;color:var(--muted);white-space:nowrap}
+.route .seg{height:2px;flex:1 1 auto;min-width:14px;
+  background-image:linear-gradient(90deg,var(--gold) 50%,transparent 50%);
+  background-size:7px 2px;opacity:.6;margin-bottom:1rem}
+
+/* ── Buttons ── */
+.btn{display:block;width:100%;border:none;cursor:pointer;font-family:'Oswald',sans-serif;
+  font-weight:600;text-transform:uppercase;letter-spacing:2px;font-size:.92rem;
+  padding:1.05rem;border-radius:14px;transition:.25s;text-decoration:none;text-align:center}
+.btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold) 55%,var(--bronze));
+  color:var(--navy-deep);box-shadow:0 10px 26px rgba(167,122,50,.32)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(167,122,50,.42)}
+.btn-gold:active{transform:translateY(0)}
+
+/* ── Progress ── */
+.prog-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.prog-top .q{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:2px;
+  font-size:.7rem;color:var(--bronze)}
+.prog-top .theme{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.92rem;color:var(--muted)}
+.bar{height:6px;background:rgba(31,42,68,.1);border-radius:100px;overflow:hidden;margin-bottom:1.8rem}
+.bar > i{display:block;height:100%;width:0;border-radius:100px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-bright));transition:width .45s cubic-bezier(.2,.7,.2,1)}
+
+/* ── Question ── */
+.statement{font-family:'Cormorant Garamond',serif;color:var(--navy);
+  font-size:clamp(1.45rem,5.8vw,1.85rem);line-height:1.28;font-weight:600;
+  margin-bottom:1.6rem;min-height:3.4em;display:flex;align-items:center}
+.opt{display:flex;align-items:center;gap:.85rem;width:100%;text-align:left;cursor:pointer;
+  background:var(--white);border:1.5px solid rgba(31,42,68,.12);border-radius:13px;
+  padding:.95rem 1.05rem;margin-bottom:.6rem;transition:.18s;font-size:.95rem;color:var(--text);
+  font-family:'Manrope',sans-serif;font-weight:500}
+.opt:hover{border-color:var(--gold);transform:translateX(3px)}
+.opt .mark{width:22px;height:22px;border-radius:50%;border:2px solid rgba(31,42,68,.2);
+  flex:0 0 auto;transition:.18s}
+.opt.sel{background:linear-gradient(135deg,rgba(198,167,94,.2),rgba(198,167,94,.08));
+  border-color:var(--gold)}
+.opt.sel .mark{background:var(--gold);border-color:var(--gold);
+  box-shadow:inset 0 0 0 3px var(--white)}
+.back{display:inline-block;margin-top:.4rem;background:none;border:none;cursor:pointer;
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;font-size:.66rem;
+  color:var(--muted)}
+.back:hover{color:var(--bronze)}
+
+/* ── Result ── */
+.ring-wrap{display:flex;justify-content:center;margin-bottom:1rem}
+.ring{position:relative;width:150px;height:150px}
+.ring svg{transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .num b{font-family:'Bebas Neue',sans-serif;font-size:2.7rem;color:var(--navy);line-height:1}
+.ring .num small{font-family:'Oswald',sans-serif;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--bronze)}
+.res-title{font-family:'Bebas Neue',sans-serif;color:var(--navy);text-align:center;
+  font-size:clamp(1.9rem,7vw,2.6rem);line-height:1;letter-spacing:.5px;margin:.3rem 0 .9rem}
+.res-card{background:var(--white);border:1px solid rgba(198,167,94,.35);border-radius:18px;
+  padding:1.3rem 1.35rem;box-shadow:0 14px 40px rgba(31,42,68,.09);margin-bottom:1.1rem}
+.res-card p{font-size:.96rem;line-height:1.65}
+.avoid{background:linear-gradient(135deg,rgba(198,167,94,.16),rgba(198,167,94,.05));
+  border:1px dashed var(--gold);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.2rem}
+.avoid .h{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:2px;
+  font-size:.66rem;color:var(--bronze);margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.avoid p{font-size:.95rem;line-height:1.55;color:var(--navy)}
+
+.themes{margin-bottom:1.4rem}
+.theme-row{margin-bottom:.85rem}
+.theme-row .tl{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem}
+.theme-row .tl .nm{font-weight:600;color:var(--navy)}
+.theme-row .tl .vl{font-family:'Oswald',sans-serif;color:var(--bronze)}
+.tbar{height:7px;background:rgba(31,42,68,.09);border-radius:100px;overflow:hidden}
+.tbar > i{display:block;height:100%;width:0;border-radius:100px;
+  background:linear-gradient(90deg,var(--bronze),var(--gold));transition:width .9s cubic-bezier(.2,.7,.2,1)}
+
+.mic-line{display:flex;align-items:center;gap:.7rem;justify-content:center;margin:1.6rem 0 1.4rem}
+.mic-line svg{flex:0 0 auto}
+.mic-line span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--navy)}
+
+/* ── CTA (navy velvet) ── */
+.cta{background:
+    radial-gradient(120% 120% at 80% 0%, #283656 0%, var(--navy) 45%, var(--navy-deep) 100%);
+  border-radius:22px;padding:1.8rem 1.5rem;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 20px 50px rgba(16,26,43,.35)}
+.cta::after{content:"";position:absolute;inset:0;border-radius:22px;
+  border:1px solid rgba(198,167,94,.35);pointer-events:none}
+.cta .ck{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:3px;
+  font-size:.66rem;color:var(--gold);margin-bottom:.5rem}
+.cta h2{font-family:'Bebas Neue',sans-serif;color:var(--white);font-size:2.3rem;
+  line-height:.95;letter-spacing:1px;margin-bottom:.7rem}
+.cta p{color:#D8D2C2;font-size:.92rem;line-height:1.6;max-width:380px;margin:0 auto 1.3rem}
+.window{display:inline-flex;align-items:center;gap:.5rem;background:rgba(198,167,94,.13);
+  border:1px solid rgba(198,167,94,.4);border-radius:100px;padding:.5rem 1rem;margin-bottom:1.2rem;
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;
+  font-size:.7rem;color:var(--gold-bright)}
+.cta .slg{font-family:'Cormorant Garamond',serif;font-style:italic;color:#B9B097;
+  font-size:.95rem;margin-top:1.1rem;line-height:1.4}
+.restart{display:block;margin:1.5rem auto 0;background:none;border:none;cursor:pointer;
+  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:2px;font-size:.66rem;color:var(--muted)}
+.restart:hover{color:var(--bronze)}
+
+.foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:2rem;line-height:1.5}
+@media(max-width:380px){.route .lbl{font-size:.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Emblem -->
+  <svg class="emblem" viewBox="0 0 100 100" aria-label="Знак клуба">
+    <circle cx="50" cy="50" r="47" fill="#1F2A44"/>
+    <circle cx="50" cy="50" r="47" fill="none" stroke="#C6A75E" stroke-width="2"/>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#C6A75E" stroke-width="1" opacity=".45"/>
+    <!-- light -->
+    <circle cx="50" cy="33" r="3.4" fill="#D8BC77"/>
+    <!-- horizon -->
+    <line x1="22" y1="62" x2="78" y2="62" stroke="#C6A75E" stroke-width="1.4" opacity=".8"/>
+    <!-- skyline -->
+    <g fill="#C6A75E" opacity=".9">
+      <rect x="34" y="52" width="4" height="10"/>
+      <rect x="40" y="47" width="5" height="15"/>
+      <rect x="47" y="50" width="4" height="12"/>
+      <rect x="53" y="44" width="5" height="18"/>
+      <rect x="60" y="53" width="4" height="9"/>
+    </g>
+    <!-- route arc -->
+    <path d="M26 70 Q50 80 74 70" fill="none" stroke="#C6A75E" stroke-width="1.2"
+      stroke-dasharray="2 3" opacity=".7"/>
+  </svg>
+  <p class="slogan">«Клуб людей, где рождаются<br>и реализовываются твои идеи»</p>
+
+  <!-- ════════ INTRO ════════ -->
+  <section class="screen on" id="s-intro">
+    <div class="kicker"><i class="ln"></i><span>Лид-магнит · 2 минуты</span><i class="ln r"></i></div>
+    <h1>Тест на<br>самоэффективность</h1>
+    <p class="sub">9 вопросов · твоя точка А</p>
+
+    <div class="lead-card">
+      <p>Этот тест покажет <b>две вещи</b>: насколько ты веришь в свою способность доводить начатое до конца — и <b>где именно включается избегание</b>, то самое «потом», «не сейчас», «ещё не готов».</p>
+      <p>Здесь нет правильных ответов и нет приговора. Это просто <b>честная точка А</b> — место, из которого начинается путь. А путь обычно выглядит так:</p>
+    </div>
+
+    <div class="route">
+      <div class="node"><div class="dot"></div><div class="lbl">идея</div></div>
+      <div class="seg"></div>
+      <div class="node"><div class="dot"></div><div class="lbl">голос</div></div>
+      <div class="seg"></div>
+      <div class="node"><div class="dot"></div><div class="lbl">действие</div></div>
+      <div class="seg"></div>
+      <div class="node"><div class="dot"></div><div class="lbl">проект</div></div>
+      <div class="seg"></div>
+      <div class="node"><div class="dot"></div><div class="lbl">результат</div></div>
+    </div>
+
+    <button class="btn btn-gold" onclick="start()">Пройти тест →</button>
+  </section>
+
+  <!-- ════════ QUESTION ════════ -->
+  <section class="screen" id="s-q">
+    <div class="prog-top">
+      <span class="q" id="qcount">Вопрос 1 из 9</span>
+      <span class="theme" id="qtheme"></span>
+    </div>
+    <div class="bar"><i id="qbar"></i></div>
+    <div class="statement" id="qtext"></div>
+    <div id="qopts"></div>
+    <button class="back" id="qback" onclick="back()">← назад</button>
+  </section>
+
+  <!-- ════════ RESULT ════════ -->
+  <section class="screen" id="s-res">
+    <div class="kicker"><i class="ln"></i><span>Твоя точка А</span><i class="ln r"></i></div>
+
+    <div class="ring-wrap">
+      <div class="ring">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="66" fill="none" stroke="rgba(31,42,68,.1)" stroke-width="9"/>
+          <circle id="ringfill" cx="75" cy="75" r="66" fill="none" stroke="#C6A75E" stroke-width="9"
+            stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="414.7"
+            style="transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1)"/>
+        </svg>
+        <div class="num"><b id="scoreNum">0</b><small>из 36</small></div>
+      </div>
+    </div>
+
+    <h2 class="res-title" id="resTitle"></h2>
+    <div class="res-card"><p id="resText"></p></div>
+
+    <div class="avoid">
+      <div class="h">🎯 Где у тебя включается избегание</div>
+      <p id="avoidText"></p>
+    </div>
+
+    <div class="themes" id="themes"></div>
+
+    <div class="mic-line">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <rect x="9" y="2" width="6" height="11" rx="3" fill="#C6A75E"/>
+        <path d="M6 11a6 6 0 0 0 12 0" stroke="#1F2A44" stroke-width="1.6" fill="none"/>
+        <line x1="12" y1="17" x2="12" y2="21" stroke="#1F2A44" stroke-width="1.6"/>
+        <line x1="8" y1="21" x2="16" y2="21" stroke="#1F2A44" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Точка А отмечена. Дальше — твой первый шаг.</span>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <div class="ck">Дальше — точка Б</div>
+      <h2>Заходи в клуб</h2>
+      <p>Наш клуб — это люди, рядом с которыми идеи перестают жить в заметках. Здесь твой первый шаг встретят поддержкой, а не оценкой. Тебе не нужно быть готовым на 100% — нужно просто зайти.</p>
+      <a class="btn btn-gold" href="https://t.me/NashKlub1_bot" target="_blank" rel="noopener">Вход в клуб →</a>
+      <div class="window" style="margin:1.1rem auto 0">🚪 Вход в клуб открыт с 20 по 30 июня</div>
+      <div class="slg">«Здесь есть структура. Здесь безопасно.<br>Здесь тебя увидят».</div>
+    </div>
+
+    <button class="restart" onclick="restart()">↺ пройти заново</button>
+  </section>
+
+  <p class="foot">Тест носит ориентировочный характер и не является психодиагностикой.<br>Наш клуб · клуб людей, которые запускают свои идеи.</p>
+
+</div>
+
+<script>
+const QS = [
+  {t:"Доведение до конца", q:"Когда я ставлю себе цель, я обычно довожу её до конца."},
+  {t:"Доведение до конца", q:"Когда становится трудно, я не бросаю начатое на полпути."},
+  {t:"Доведение до конца", q:"Я не откладываю важное «на потом» снова и снова."},
+  {t:"Смелость проявиться", q:"Я начинаю задуманное, даже если волнуюсь и не уверен в себе."},
+  {t:"Смелость проявиться", q:"Я могу заявить о себе и своих идеях, даже когда боюсь оценки."},
+  {t:"Смелость проявиться", q:"Я довожу идею хотя бы до первого реального шага — видео, поста, разговора, продукта."},
+  {t:"Стойкость к трудностям", q:"Если что-то идёт не по плану, я нахожу способ справиться."},
+  {t:"Стойкость к трудностям", q:"Сталкиваясь с препятствием, я ищу решение, а не повод остановиться."},
+  {t:"Стойкость к трудностям", q:"Я верю, что смогу освоить то, что мне нужно для моей цели."}
+];
+const OPTS = [
+  {l:"Совсем не про меня", v:1},
+  {l:"Скорее нет", v:2},
+  {l:"Скорее да", v:3},
+  {l:"Это точно про меня", v:4}
+];
+const AVOID = {
+  "Доведение до конца":"Чаще всего тебя тормозит финиш. Идеи стартуют легко, но гаснут у самого порога результата. В клубе спринты с дедлайнами и поддержкой как раз закрывают этот разрыв — доводить вместе проще.",
+  "Смелость проявиться":"Избегание включается на проявлении: заявить о себе, снять первое видео, сказать вслух «у меня есть идея». Это лечится не знаниями, а средой, где первый шаг встречают аплодисментами, а не оценкой.",
+  "Стойкость к трудностям":"Тебя останавливает первое препятствие — и оно превращается в повод отложить всё. Рядом с людьми, которые уже проходили это, трудность перестаёт быть стеной и становится просто этапом."
+};
+const answers = new Array(QS.length).fill(0);
+let cur = 0;
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+function start(){cur=0;render();show('s-q');}
+
+function render(){
+  const it=QS[cur];
+  document.getElementById('qcount').textContent=`Вопрос ${cur+1} из ${QS.length}`;
+  document.getElementById('qtheme').textContent=it.t;
+  document.getElementById('qbar').style.width=((cur)/QS.length*100)+'%';
+  document.getElementById('qtext').textContent=it.q;
+  document.getElementById('qback').style.visibility = cur===0 ? 'hidden':'visible';
+  const box=document.getElementById('qopts');box.innerHTML='';
+  OPTS.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='opt'+(answers[cur]===o.v?' sel':'');
+    b.innerHTML=`<span class="mark"></span><span>${o.l}</span>`;
+    b.onclick=()=>choose(o.v,b);
+    box.appendChild(b);
+  });
+}
+function choose(v,el){
+  answers[cur]=v;
+  document.querySelectorAll('#qopts .opt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('qbar').style.width=((cur+1)/QS.length*100)+'%';
+  setTimeout(()=>{ cur<QS.length-1 ? (cur++,render()) : finish(); },240);
+}
+function back(){if(cur>0){cur--;render();}}
+
+function finish(){
+  const total=answers.reduce((a,b)=>a+b,0);
+  // bands
+  let title,text;
+  if(total<=18){title="Сейчас тебя держит страх, а не лень";
+    text="Избегание включается часто — и это не приговор, а сигнал. Скорее всего, ты слишком долго был с этим один на один. Когда рядом появляется поддерживающая среда, «не могу заставить себя» меняется куда быстрее, чем кажется. Тебе не нужно становиться другим человеком. Тебе нужны люди рядом.";}
+  else if(total<=27){title="Ты умеешь действовать — но застреваешь у порога";
+    text="Ты доводишь до конца многое, но на самом важном — на проявлении — включается тормоз. Это очень частая история сильных людей: знаний хватает, не хватает сцены и людей, рядом с которыми сделать первый видимый шаг не страшно. Именно это даёт клуб.";}
+  else{title="У тебя сильная внутренняя опора";
+    text="Ты веришь в себя и умеешь доводить начатое. Вопрос уже не в способности, а в окружении и масштабе. Рядом с людьми, которые сами двигаются вперёд, ты пойдёшь заметно быстрее — и, скорее всего, потянешь за собой других. Тебе — в круг, где растут вместе.";}
+  document.getElementById('resTitle').textContent=title;
+  document.getElementById('resText').textContent=text;
+
+  // weakest theme
+  const themes={};
+  QS.forEach((it,i)=>{(themes[it.t]=themes[it.t]||[]).push(answers[i]);});
+  const avg=t=>themes[t].reduce((a,b)=>a+b,0)/themes[t].length;
+  let weakest=Object.keys(themes)[0];
+  Object.keys(themes).forEach(t=>{if(avg(t)<avg(weakest))weakest=t;});
+  document.getElementById('avoidText').textContent=AVOID[weakest];
+
+  // theme bars
+  const tb=document.getElementById('themes');tb.innerHTML='';
+  Object.keys(themes).forEach(t=>{
+    const pct=Math.round(avg(t)/4*100);
+    const row=document.createElement('div');row.className='theme-row';
+    row.innerHTML=`<div class="tl"><span class="nm">${t}</span><span class="vl">${pct}%</span></div>
+      <div class="tbar"><i></i></div>`;
+    tb.appendChild(row);
+    requestAnimationFrame(()=>{row.querySelector('i').style.width=pct+'%';});
+  });
+
+  // ring
+  show('s-res');
+  const C=2*Math.PI*66;
+  const pct=total/36;
+  const ring=document.getElementById('ringfill');
+  ring.style.strokeDashoffset=C;
+  let n=0;const num=document.getElementById('scoreNum');
+  setTimeout(()=>{ring.style.strokeDashoffset=C*(1-pct);},120);
+  const step=()=>{if(n<total){n++;num.textContent=n;setTimeout(step,Math.max(20,800/total));}};
+  setTimeout(step,200);
+}
+function restart(){answers.fill(0);cur=0;show('s-intro');}
+</script>
+</body>
+</html>
