@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Упаковка ВК · Кадровый и воинский учёт · Ирина Синельникова</title>
+<style>
+:root{
+  --bg:#0E0A0C;--card:#17111400;--card:#171114;--card2:#1F171B;--border:#2A2026;
+  --text:#F0E9EC;--muted:#6B5560;--muted2:#9A8089;
+  --rose:#E07AA0;--rose2:#D96B92;--rose-dim:#D96B9222;
+  --choco:#C08A5E;--choco-dim:#C08A5E1A;
+  --yellow:#EBC04E;--yellow-dim:#EBC04E18;
+  --green:#52C28C;--green-dim:#52C28C18;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;padding:1.5rem 1rem 5rem;max-width:920px;margin:0 auto}
+h1{font-size:24px;font-weight:700;margin-bottom:4px;background:linear-gradient(120deg,#E07AA0,#D96B92,#C08A5E,#EBC04E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px;line-height:1.2}
+.sub{color:var(--muted2);font-size:12px;margin-bottom:1.5rem}
+.lead{color:var(--text);font-size:13px;line-height:1.65;margin-bottom:1.5rem;padding:.85rem 1rem;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--rose);border-radius:8px}
+.lead b{color:var(--rose)}
+
+/* tabs */
+.platnav{display:flex;gap:6px;margin-bottom:1.25rem;padding:6px;background:var(--card);border:1px solid var(--border);border-radius:14px;flex-wrap:wrap}
+.pb{padding:9px 14px;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--muted2);font-size:12.5px;font-weight:500;cursor:pointer;transition:.18s;flex:1 1 auto;white-space:nowrap}
+.pb.on{background:linear-gradient(120deg,#D96B9222,#C08A5E14);color:var(--rose);border:1px solid #D96B9255}
+.pb:not(.on):hover{color:var(--text)}
+.platform{display:none}.platform.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* section headings */
+.sec{margin:0 0 1.4rem}
+.sec-h{font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sec-h .ic{font-size:18px}
+.sec-d{font-size:12px;color:var(--muted2);margin-bottom:.9rem;line-height:1.5}
+
+/* variant cards */
+.vcard{border:1px solid var(--border);border-radius:12px;background:var(--card);margin-bottom:10px;overflow:hidden}
+.vcard-hd{display:flex;align-items:center;gap:10px;padding:.7rem .95rem;border-bottom:1px solid var(--border);background:var(--card2)}
+.vnum{font-size:11px;font-weight:700;color:var(--rose);background:var(--rose-dim);border:1px solid #D96B9255;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.vlabel{font-size:11px;color:var(--muted2);flex:1}
+.vbody{padding:.85rem .95rem}
+.vtext{font-size:13px;color:#E4DCDF;line-height:1.7;white-space:pre-wrap}
+.vtext b{color:var(--text)}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--yellow);background:var(--yellow-dim);border:1px solid #EBC04E33;padding:6px 12px;border-radius:8px;display:inline-block}
+
+/* labelled rows (covers) */
+.frow{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border);flex-wrap:wrap}
+.frow:last-child{border-bottom:none}
+.fk{font-size:10.5px;color:var(--choco);text-transform:uppercase;letter-spacing:.4px;font-weight:600;min-width:140px;flex-shrink:0;padding-top:2px}
+.fv{font-size:13px;color:#E4DCDF;line-height:1.55;flex:1;min-width:200px}
+.plashki{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.pl{font-size:11px;color:var(--yellow);background:var(--yellow-dim);border:1px solid #EBC04E33;padding:3px 9px;border-radius:100px}
+
+/* generic list items */
+.item{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:.75rem .9rem;margin-bottom:8px}
+.item-t{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.item-d{font-size:12px;color:var(--muted2);line-height:1.6}
+.item-d b{color:#E4DCDF}
+.price{font-size:12.5px;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid #52C28C33;padding:2px 10px;border-radius:100px;white-space:nowrap;margin-left:auto}
+
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 9px;border-radius:100px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.t-rose{background:var(--rose-dim);color:var(--rose)}
+.t-yellow{background:var(--yellow-dim);color:var(--yellow)}
+.t-green{background:var(--green-dim);color:var(--green)}
+.t-choco{background:var(--choco-dim);color:var(--choco)}
+
+.tip{font-size:11.5px;color:var(--choco);background:var(--choco-dim);border-left:2px solid var(--choco);border-radius:4px;padding:7px 11px;margin-top:8px;line-height:1.55}
+.tip b{color:var(--text)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+
+.stats{display:flex;gap:.8rem;margin-top:1.5rem;flex-wrap:wrap}
+.stat{flex:1;min-width:120px;padding:.7rem .9rem;background:var(--card);border:1px solid var(--border);border-radius:10px}
+.stat-n{font-size:18px;font-weight:700;background:linear-gradient(120deg,#E07AA0,#EBC04E);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-l{font-size:11px;color:var(--muted2);margin-top:2px}
+.foot{font-size:11px;color:var(--muted);margin-top:1.5rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+
+<h1>Упаковка ВК-сообщества · Кадровый и воинский учёт</h1>
+<p class="sub">Эксперт: Ирина Синельникова · Ниша: кадровый аудит и восстановление учёта для малого и среднего бизнеса · Палитра: шоколадно-розовый + жёлтый акцент + зелёный</p>
+
+<div class="lead">
+  <b>Как пользоваться.</b> По каждому ключевому блоку — <b>5 вариантов</b> на выбор (имя, название, описание, статус, обложка, лид-магниты). Бери понравившийся целиком или миксуй. Ниже — готовая структура: меню, виджеты, моменты, обсуждения и услуги с ценами. <b>Главный акцент</b> — на воинском учёте: это сейчас самая «горячая» боль бизнеса и лучший вход в воронку.
+</div>
+
+<div class="platnav">
+  <button class="pb on" onclick="sp('brand',this)">Имя + Название</button>
+  <button class="pb" onclick="sp('desc',this)">Описание</button>
+  <button class="pb" onclick="sp('status',this)">Статус</button>
+  <button class="pb" onclick="sp('cover',this)">Обложка</button>
+  <button class="pb" onclick="sp('lm',this)">Лид-магниты</button>
+  <button class="pb" onclick="sp('struct',this)">Меню · Виджеты · Моменты · Обсуждения</button>
+  <button class="pb" onclick="sp('services',this)">Услуги</button>
+</div>
+
+<!-- ═══════════ ИМЯ + НАЗВАНИЕ ═══════════ -->
+<div id="brand" class="platform on">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🔗</span> Имя сообщества (короткий @адрес)</div>
+    <div class="sec-d">Это адрес страницы (vk.com/...). Короткий, латиницей, легко диктовать. Бери первый свободный.</div>
+
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Имя 1</span><span class="vlabel">Бенефит — главная боль в адресе</span></div><div class="vbody"><span class="mono">@kadry_bez_shtrafov</span></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Имя 2</span><span class="vlabel">Нейтрально-экспертный</span></div><div class="vbody"><span class="mono">@kadrovyi_uchet_pro</span></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Имя 3</span><span class="vlabel">Главный оффер «с нуля»</span></div><div class="vbody"><span class="mono">@kadry_s_nulya</span></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Имя 4</span><span class="vlabel">Акцент на воинский учёт</span></div><div class="vbody"><span class="mono">@hr_i_voinskiy_uchet</span></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Имя 5</span><span class="vlabel">Личный бренд</span></div><div class="vbody"><span class="mono">@kadrovik_sinelnikova</span></div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">📛</span> Название сообщества (отображаемое)</div>
+    <div class="sec-d">Видно в поиске ВК и в шапке. Формула: <b>ФИ + ниша</b>. Имя в начале строит личный бренд эксперта, ниша после — даёт поисковый трафик внутри ВК.</div>
+
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Название 1</span><span class="tag t-rose">рекомендую</span><span class="vlabel">ФИ + кадровый и воинский учёт</span></div><div class="vbody"><div class="vtext">Ирина Синельникова | Кадровый и воинский учёт</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Название 2</span><span class="vlabel">ФИ + оффер «с нуля»</span></div><div class="vbody"><div class="vtext">Ирина Синельникова | Кадровый учёт с нуля</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Название 3</span><span class="vlabel">ФИ + аудит</span></div><div class="vbody"><div class="vtext">Ирина Синельникова · Аудит кадрового и воинского учёта</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Название 4</span><span class="vlabel">ФИ + ниша для бизнеса</span></div><div class="vbody"><div class="vtext">Ирина Синельникова | Кадры и воинский учёт для бизнеса</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Название 5</span><span class="vlabel">ФИ + восстановление</span></div><div class="vbody"><div class="vtext">Ирина Синельникова — восстановление кадрового учёта</div></div></div>
+
+    <div class="tip"><b>Совет:</b> в названии оставь словосочетания «кадровый учёт» и «воинский учёт» — по ним люди ищут эксперта внутри ВК. Это бесплатный поисковый трафик.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ ОПИСАНИЕ ═══════════ -->
+<div id="desc" class="platform">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">📝</span> Описание сообщества — 5 вариантов</div>
+    <div class="sec-d">Первые 1–2 строки видны без раскрытия — туда выносим суть. В конце каждого — один призыв с кодовым словом «АУДИТ».</div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Описание 1</span><span class="tag t-rose">экспертное, полное</span></div>
+      <div class="vbody"><div class="vtext">Кадровый и воинский учёт для малого и среднего бизнеса 🔒
+
+Меня зовут Ирина Синельникова. 25+ лет в кадровом делопроизводстве, аудитор по трудовому законодательству (диплом).
+
+Прихожу туда, где «всё потерялось» или учёт не вёлся никогда — и навожу порядок до прихода проверки.
+
+❓ Это про вас, если:
+• боитесь проверки ГИТ или военкомата и штрафов
+• кадры ведутся «как-нибудь» или не ведутся вообще
+• нет своего кадровика, а документы нужны «вчера»
+• достался хаос в наследство от прежнего сотрудника
+
+✅ Что я делаю:
+🔍 Аудит кадровых документов и воинского учёта
+📂 Восстановление учёта с нуля (личные дела, приказы, ЛНА, должностные)
+🎖 Восстановление воинского учёта + постановка организации на учёт
+🧰 Готовые шаблоны для 1С, Word, Excel
+🤝 Ведение учёта: полное, частичное, абонемент или разово
+
+Опыт не на словах: восстановила учёт «с нуля» в 4 организациях — знаю каждый подводный камень. Работаю в 1С.
+
+📩 Напишите в сообщения слово «АУДИТ» — пришлю чек-лист самопроверки в подарок.</div></div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Описание 2</span><span class="tag t-yellow">короткое, цепкое</span></div>
+      <div class="vbody"><div class="vtext">Кадровый и воинский учёт для малого и среднего бизнеса.
+
+Прихожу туда, где «всё потерялось» или учёт не вёлся никогда — и навожу порядок до проверки.
+
+🔍 Аудит · 📂 Восстановление с нуля · 🤝 Ведение
+Аудитор по ТК · 25+ лет опыта · работаю в 1С
+
+📩 Пишите «АУДИТ» — чек-лист самопроверки в подарок.</div></div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Описание 3</span><span class="tag t-choco">через боль клиента</span></div>
+      <div class="vbody"><div class="vtext">Боитесь проверки ГИТ или военкомата? Кадровые документы в хаосе — или их нет вообще?
+
+Я знаю, как это исправить. Даже если учёт не вёлся никогда.
+
+Меня зовут Ирина, я аудитор по трудовому законодательству. Восстановила кадровый и воинский учёт «с нуля» в 4 организациях — без штрафов, нарушений и «отмашек».
+
+Найду риски до проверки → закрою их → передам вам порядок, в котором легко работать.
+
+📩 Хотите узнать слабые места своего учёта? Напишите «АУДИТ» — пришлю чек-лист самопроверки бесплатно.</div></div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Описание 4</span><span class="tag t-green">через результат / оффер</span></div>
+      <div class="vbody"><div class="vtext">Наведу порядок в кадрах и воинском учёте под ключ — от аудита до полного восстановления.
+
+Что вы получаете:
+✅ документы, готовые к любой проверке
+✅ личные дела, приказы, ЛНА, должностные инструкции
+✅ воинский учёт по всем требованиям + постановку организации
+✅ настройки и шаблоны в 1С, чтобы дальше всё работало само
+
+Аудитор по ТК, 25+ лет в профессии, реальный опыт восстановления «с нуля» в 4 компаниях.
+
+📩 Напишите «АУДИТ» — и я пришлю чек-лист самопроверки в подарок.</div></div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Описание 5</span><span class="tag t-rose">акцент на воинский учёт</span></div>
+      <div class="vbody"><div class="vtext">Воинский учёт обязателен почти для всех организаций — а ответственность за его отсутствие выросла. Многие об этом узнают уже от военкомата.
+
+Помогу избежать этого:
+🎖 поставлю организацию на воинский учёт
+🎖 заведу журналы, карточки военнообязанных, план мероприятий, отчётность
+🔍 проведу аудит — покажу, что не так, до проверки
+
+А заодно приведу в порядок и кадровый учёт: личные дела, приказы, ЛНА.
+
+Я Ирина — аудитор по ТК, восстановила учёт «с нуля» в 4 компаниях.
+
+📩 Пишите «АУДИТ» — пришлю чек-лист по воинскому учёту в подарок.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ СТАТУС ═══════════ -->
+<div id="status" class="platform">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">⚡</span> Статус сообщества — 5 вариантов</div>
+    <div class="sec-d">Строка под названием, до ~160 знаков. Главное правило — в начале выгода, в конце призыв с кодовым словом.</div>
+
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Статус 1</span><span class="tag t-rose">рекомендую</span></div><div class="vbody"><div class="vtext">🔒 Восстановлю кадровый и воинский учёт там, где его не было. Аудитор по ТК. Пишите «АУДИТ» → чек-лист в подарок</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Статус 2</span></div><div class="vbody"><div class="vtext">Кадры и воинский учёт без штрафов и хаоса · Аудит • Восстановление с нуля • Ведение</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Статус 3</span></div><div class="vbody"><div class="vtext">Навожу порядок в кадрах до прихода проверки · 25+ лет опыта · «АУДИТ» — чек-лист бесплатно</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Статус 4</span></div><div class="vbody"><div class="vtext">Ваш кадровый и воинский учёт под защитой · Работаю в 1С · Без нарушений и «отмашек»</div></div></div>
+    <div class="vcard"><div class="vcard-hd"><span class="vnum">Статус 5</span></div><div class="vbody"><div class="vtext">Помогу, даже если «всё потерялось» или учёт не вёлся никогда · Пишите «АУДИТ» 📩</div></div></div>
+  </div>
+
+</div>
+
+<!-- ═══════════ ОБЛОЖКА ═══════════ -->
+<div id="cover" class="platform">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🖼️</span> Тексты для обложки — 5 вариантов</div>
+    <div class="sec-d">Под поля генератора: <b>Главная надпись · Дополнительная надпись · до 4 плашек.</b> Размер обложки 1920×768 px. Гамма: фон — шоколадно-розовый градиент, заголовок — кремовый, ключевые слова — жёлтым, плашки с галочками — зелёным.</div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Обложка 1</span><span class="tag t-rose">база, рекомендую</span></div>
+      <div class="vbody">
+        <div class="frow"><span class="fk">Главная надпись</span><span class="fv">КАДРОВЫЙ И ВОИНСКИЙ УЧЁТ БЕЗ ШТРАФОВ</span></div>
+        <div class="frow"><span class="fk">Доп. надпись</span><span class="fv">Восстановлю учёт там, где его не было</span></div>
+        <div class="frow"><span class="fk">Плашки</span><span class="fv"><span class="plashki"><span class="pl">Аудитор по ТК</span><span class="pl">25+ лет в кадрах</span><span class="pl">Восстановила учёт в 4 компаниях</span><span class="pl">Работаю в 1С</span></span></span></div>
+      </div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Обложка 2</span><span class="tag t-yellow">упор на «до проверки»</span></div>
+      <div class="vbody">
+        <div class="frow"><span class="fk">Главная надпись</span><span class="fv">НАВЕДУ ПОРЯДОК В КАДРАХ ДО ПРОВЕРКИ</span></div>
+        <div class="frow"><span class="fk">Доп. надпись</span><span class="fv">Аудит · Восстановление с нуля · Ведение учёта</span></div>
+        <div class="frow"><span class="fk">Плашки</span><span class="fv"><span class="plashki"><span class="pl">Найду риски заранее</span><span class="pl">Кадры + воинский учёт</span><span class="pl">Опыт 25+ лет</span><span class="pl">Чек-лист в подарок</span></span></span></div>
+      </div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Обложка 3</span><span class="tag t-choco">«под ключ»</span></div>
+      <div class="vbody">
+        <div class="frow"><span class="fk">Главная надпись</span><span class="fv">КАДРЫ И ВОИНСКИЙ УЧЁТ ПОД КЛЮЧ</span></div>
+        <div class="frow"><span class="fk">Доп. надпись</span><span class="fv">Для малого и среднего бизнеса</span></div>
+        <div class="frow"><span class="fk">Плашки</span><span class="fv"><span class="plashki"><span class="pl">Аудит</span><span class="pl">Восстановление с нуля</span><span class="pl">Ведение и абонемент</span><span class="pl">Шаблоны 1С</span></span></span></div>
+      </div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Обложка 4</span><span class="tag t-rose">через боль</span></div>
+      <div class="vbody">
+        <div class="frow"><span class="fk">Главная надпись</span><span class="fv">«ВСЁ ПОТЕРЯЛОСЬ»? ВОССТАНОВЛЮ С НУЛЯ</span></div>
+        <div class="frow"><span class="fk">Доп. надпись</span><span class="fv">Кадровый и воинский учёт без хаоса и штрафов</span></div>
+        <div class="frow"><span class="fk">Плашки</span><span class="fv"><span class="plashki"><span class="pl">Даже если учёт не вёлся</span><span class="pl">Аудитор по ТК</span><span class="pl">4 компании с нуля</span><span class="pl">«АУДИТ» — подарок</span></span></span></div>
+      </div>
+    </div>
+
+    <div class="vcard">
+      <div class="vcard-hd"><span class="vnum">Обложка 5</span><span class="tag t-green">упор на воинский учёт</span></div>
+      <div class="vbody">
+        <div class="frow"><span class="fk">Главная надпись</span><span class="fv">ВОИНСКИЙ УЧЁТ БЕЗ ШТРАФОВ</span></div>
+        <div class="frow"><span class="fk">Доп. надпись</span><span class="fv">Поставлю организацию на учёт и восстановлю документы</span></div>
+        <div class="frow"><span class="fk">Плашки</span><span class="fv"><span class="plashki"><span class="pl">Журналы и карточки</span><span class="pl">Постановка на учёт</span><span class="pl">+ кадровый учёт</span><span class="pl">Работаю в 1С</span></span></span></div>
+      </div>
+    </div>
+
+    <div class="tip"><b>ПК vs телефон.</b> На ПК фото Ирины ставь справа, текст — слева (иначе аватар перекроет). На мобильной версии текст держи по центру и короче: аватар и название перекрывают центр и правый низ. Для мобайла из любого варианта оставляй только главную надпись + кодовое слово.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ ЛИД-МАГНИТЫ ═══════════ -->
+<div id="lm" class="platform">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🎁</span> Полезные лид-магниты — 5 штук</div>
+    <div class="sec-d">Выдаются по кодовому слову «АУДИТ» в сообщения / в закрепе / в рассылке. Задача — собрать контакт и завести диалог, который перейдёт в продажу аудита.</div>
+
+    <div class="item"><div class="item-t"><span class="tag t-rose">основной</span> Чек-лист самопроверки кадрового учёта</div><div class="item-d">15–20 пунктов, которые проверяет ГИТ: трудовые договоры, приказы, доп. соглашения, ЛНА. Человек сам видит дыры → хочет аудит. <b>Главный магнит воронки.</b></div></div>
+
+    <div class="item"><div class="item-t"><span class="tag t-green">горячий</span> Чек-лист по воинскому учёту: что должно быть в организации</div><div class="item-d">Самая болезненная тема сейчас. Список обязательных документов, журналов и карточек. Отдельный сильный вход для холодного трафика.</div></div>
+
+    <div class="item"><div class="item-t"><span class="tag t-yellow">экспертность</span> Гайд «7 нарушений, за которые штрафуют чаще всего»</div><div class="item-d">Короткий PDF: ошибка → чем грозит → как закрыть за 1 день. Демонстрирует глубину и закрывает страх «а вдруг у меня так же».</div></div>
+
+    <div class="item"><div class="item-t"><span class="tag t-choco">демо продукта</span> Шаблон личной карточки + приказа о приёме</div><div class="item-d">Реальный рабочий шаблон. Показывает качество платных наработок и мягко ведёт к покупке пакета шаблонов.</div></div>
+
+    <div class="item"><div class="item-t"><span class="tag t-rose">для возврата</span> «Календарь кадровика»: что и когда сдавать</div><div class="item-d">Годовой календарь отчётности и сроков. Повод подписаться и возвращаться в сообщество — работает на удержание, а не только на захват.</div></div>
+
+    <div class="tip"><b>Механика:</b> закрепи пост «Получи чек-лист → напиши АУДИТ». В приветственном сообщении сообщества настрой автоответ с выдачей файла и вопросом «Сколько у вас сотрудников и что беспокоит?» — это запускает диалог.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ СТРУКТУРА ═══════════ -->
+<div id="struct" class="platform">
+
+  <!-- МЕНЮ -->
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🧭</span> Кнопки меню (плитки)</div>
+    <div class="sec-d">Оптимум 6–7 пунктов. Иконки — в шоколадно-розовой гамме.</div>
+    <div class="grid2">
+      <div class="item"><div class="item-t">🎁 Чек-лист в подарок</div><div class="item-d">Лид-магнит — первым, самый кликабельный</div></div>
+      <div class="item"><div class="item-t">💰 Услуги и цены</div><div class="item-d">Ведёт в раздел «Услуги»</div></div>
+      <div class="item"><div class="item-t">🔍 Заказать аудит</div><div class="item-d">В сообщения с заготовкой «АУДИТ»</div></div>
+      <div class="item"><div class="item-t">⭐️ Отзывы и кейсы</div><div class="item-d">Обсуждение с отзывами</div></div>
+      <div class="item"><div class="item-t">👩‍💼 Обо мне</div><div class="item-d">Статья-знакомство с экспертом</div></div>
+      <div class="item"><div class="item-t">🧰 Шаблоны для кадровика</div><div class="item-d">Карточки платных наработок</div></div>
+      <div class="item"><div class="item-t">📩 Связаться</div><div class="item-d">Личные сообщения сообщества</div></div>
+    </div>
+  </div>
+
+  <!-- ВИДЖЕТЫ -->
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🧩</span> Виджеты (в шапке сообщества)</div>
+    <div class="sec-d">Располагаются сразу под обложкой — это вторая по важности зона после обложки.</div>
+    <div class="item"><div class="item-t">1. Виджет-приветствие (текстовый)</div><div class="item-d">«Здравствуйте! Я Ирина — помогу навести порядок в кадрах и воинском учёте. Напишите “АУДИТ” — пришлю чек-лист самопроверки бесплатно» + кнопка <b>«Получить чек-лист»</b>.</div></div>
+    <div class="item"><div class="item-t">2. Виджет «Услуги» (3 карточки)</div><div class="item-d">Аудит · Восстановление с нуля · Ведение учёта — с ценами и кнопкой «Подробнее».</div></div>
+    <div class="item"><div class="item-t">3. Виджет-акция / таймер</div><div class="item-d">«До конца месяца — аудит кадровых документов со скидкой». Создаёт срочность.</div></div>
+    <div class="item"><div class="item-t">4. Виджет-анкета (заявка)</div><div class="item-d">Короткая форма: имя · сколько сотрудников · что беспокоит. Собирает тёплые заявки.</div></div>
+    <div class="item"><div class="item-t">5. Обложка для сообщений</div><div class="item-d">«Отвечаю лично, обычно в течение часа 👋» — снимает барьер перед первым сообщением.</div></div>
+  </div>
+
+  <!-- МОМЕНТЫ -->
+  <div class="sec">
+    <div class="sec-h"><span class="ic">⭕</span> Моменты / актуальное (обложки-кружки)</div>
+    <div class="sec-d">Оформить в единой шоколадно-розовой гамме с иконками.</div>
+    <div class="grid2">
+      <div class="item"><div class="item-t">👋 Кто я</div></div>
+      <div class="item"><div class="item-t">🎁 Чек-лист (лид-магнит)</div></div>
+      <div class="item"><div class="item-t">🔍 Аудит</div></div>
+      <div class="item"><div class="item-t">📂 Восстановление</div></div>
+      <div class="item"><div class="item-t">🎖 Воинский учёт</div></div>
+      <div class="item"><div class="item-t">⭐️ Кейсы «до / после»</div></div>
+      <div class="item"><div class="item-t">💬 Отзывы</div></div>
+      <div class="item"><div class="item-t">💰 Цены</div></div>
+    </div>
+  </div>
+
+  <!-- ОБСУЖДЕНИЯ -->
+  <div class="sec">
+    <div class="sec-h"><span class="ic">💬</span> Обсуждения</div>
+    <div class="sec-d">Закрепи «Отзывы» первым. Тему «Частые ошибки» используй как контент-повод и доказательство экспертизы.</div>
+    <div class="item"><div class="item-t">⭐️ Отзывы клиентов</div><div class="item-d">Закрепить, наполнить первыми отзывами до старта рекламы</div></div>
+    <div class="item"><div class="item-t">❓ Вопрос — ответ</div><div class="item-d">По кадрам и воинскому учёту</div></div>
+    <div class="item"><div class="item-t">💰 Услуги и цены</div><div class="item-d">Полный прайс текстом для поиска</div></div>
+    <div class="item"><div class="item-t">⚠️ Ошибки, за которые штрафуют</div><div class="item-d">Польза + экспертность в одном</div></div>
+    <div class="item"><div class="item-t">📚 Полезные материалы и шаблоны</div></div>
+    <div class="item"><div class="item-t">🎁 Как получить чек-лист</div><div class="item-d">Инструкция + призыв «АУДИТ»</div></div>
+  </div>
+
+</div>
+
+<!-- ═══════════ УСЛУГИ ═══════════ -->
+<div id="services" class="platform">
+
+  <div class="sec">
+    <div class="sec-h"><span class="ic">🛒</span> Услуги (раздел «Товары/Услуги»)</div>
+    <div class="sec-d">Каждую — отдельной карточкой с фото-плашкой в гамме. В конце описания каждой — призыв «Напишите “АУДИТ” → чек-лист в подарок».</div>
+
+    <div class="item"><div class="item-t">🔍 Аудит кадровой документации <span class="price">2 600 ₽</span></div><div class="item-d">Проверю трудовые договоры, приказы о приёме/переводе/увольнении, доп. соглашения. Найду риски до проверки.</div></div>
+
+    <div class="item"><div class="item-t">🎖 Аудит документов по воинскому учёту <span class="price">1 700 ₽</span></div><div class="item-d">Наличие всех документов по рекомендациям ВУ, проверка карточек ф. 10.</div></div>
+
+    <div class="item"><div class="item-t">📂 Восстановление кадрового учёта с нуля <span class="price">17 000 ₽</span></div><div class="item-d">До 30 сотрудников: личные дела, приказы, ЛНА, должностные инструкции, регистрация трудовых книжек.</div></div>
+
+    <div class="item"><div class="item-t">🎖 Восстановление воинского учёта + постановка <span class="price">8 000 ₽</span></div><div class="item-d">Журналы, карточки военнообязанных, план мероприятий, отчётность + постановка организации на воинский учёт.</div></div>
+
+    <div class="item"><div class="item-t">🧰 Шаблоны документов (1С, Word, Excel) <span class="price">от 1 500 ₽</span></div><div class="item-d">Готовые рабочие формы, которые экономят часы.</div></div>
+
+    <div class="item"><div class="item-t">📑 Личные наработки (таблицы, чек-листы, алгоритмы) <span class="price">800 ₽</span></div></div>
+
+    <div class="item"><div class="item-t">🎓 Разовая консультация по сложному вопросу <span class="price">800 ₽</span></div></div>
+
+    <div class="item"><div class="item-t">🤝 Ведение кадрового и воинского учёта <span class="price">договорная</span></div><div class="item-d">На выбор: полное · частичное · абонемент · разово.</div></div>
+
+    <div class="tip"><b>Перед стартом рекламы</b> собери 3–5 отзывов и 1–2 кейса «до / после» в обсуждениях. Без соцдоказательства конверсия в эксперта по деньгам проседает.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════ STATS ═══════════ -->
+<div class="stats">
+  <div class="stat"><div class="stat-n">5×6</div><div class="stat-l">Вариантов по 6 блокам</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">Лид-магнитов</div></div>
+  <div class="stat"><div class="stat-n">8</div><div class="stat-l">Услуг в прайсе</div></div>
+  <div class="stat"><div class="stat-n">7</div><div class="stat-l">Кнопок меню</div></div>
+</div>
+
+<div class="foot">Упаковка ВК · Ирина Синельникова — кадровый и воинский учёт «с нуля» · подготовлено для запуска сообщества</div>
+
+<script>
+function sp(id,btn){
+  document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.platform').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
