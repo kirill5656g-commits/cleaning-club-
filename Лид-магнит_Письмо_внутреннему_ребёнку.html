@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Письмо своему внутреннему ребёнку · бережный гид</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito+Sans:wght@300;400;600;700&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F8F2E9;
+  --paper-deep:#EFE4D4;
+  --card:#FDFAF4;
+  --blush:#F4DEDC;
+  --rose:#E3B4B6;
+  --rose-deep:#C98A8E;
+  --sage:#AFC0A4;
+  --sage-deep:#869B7A;
+  --ink:#574C42;
+  --ink-soft:#8E8273;
+  --line:#E7D9C6;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Nunito Sans',system-ui,-apple-system,sans-serif;
+  --hand:'Caveat','Comic Sans MS',cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:
+    radial-gradient(120% 90% at 12% 0%, #F7E7E4 0%, rgba(247,231,228,0) 42%),
+    radial-gradient(120% 90% at 92% 100%, #E4EDDC 0%, rgba(228,237,220,0) 46%),
+    var(--paper);
+  min-height:100vh;
+  line-height:1.65;
+  padding:clamp(1rem,4vw,3rem) 1rem 4rem;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── shell ── */
+.shell{max-width:680px;margin:0 auto}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:clamp(1.6rem,5vw,3rem);
+  box-shadow:0 30px 60px -40px rgba(120,90,70,.45), 0 2px 0 rgba(255,255,255,.6) inset;
+  position:relative;
+  overflow:hidden;
+  animation:rise .9s ease both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.eyebrow{
+  font-family:var(--body);
+  text-transform:uppercase;
+  letter-spacing:.34em;
+  font-size:.66rem;
+  font-weight:700;
+  color:var(--rose-deep);
+  display:flex;align-items:center;gap:.6rem;justify-content:center;
+}
+.eyebrow::before,.eyebrow::after{content:"";height:1px;width:30px;background:linear-gradient(90deg,transparent,var(--rose))}
+.eyebrow::after{background:linear-gradient(90deg,var(--rose),transparent)}
+
+h1{font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.01em;color:var(--ink)}
+h2{font-family:var(--display);font-weight:600;line-height:1.08;color:var(--ink)}
+.serif-em{font-style:italic;color:var(--rose-deep)}
+
+/* ── progress ── */
+.progress{display:flex;align-items:center;justify-content:center;gap:.95rem;margin-bottom:1.6rem}
+.progress.hidden{display:none}
+.pdot{width:9px;height:9px;border-radius:50%;background:var(--paper-deep);position:relative;transition:.45s}
+.pdot.done{background:var(--rose)}
+.pdot.now{background:transparent;box-shadow:0 0 0 2px var(--sage-deep);transform:scale(1.25)}
+.pstage{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+
+/* ── steps ── */
+.step{display:none}
+.step.active{display:block;animation:fade .6s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── welcome ── */
+.welcome{text-align:center}
+.welcome h1{font-size:clamp(2.3rem,8.5vw,3.5rem);margin:1rem 0 .4rem}
+.welcome .lede{font-family:var(--display);font-size:clamp(1.15rem,3.6vw,1.45rem);color:var(--ink-soft);font-style:italic;max-width:30ch;margin:0 auto 1.6rem}
+.breath{
+  width:172px;height:172px;margin:1.4rem auto 1rem;border-radius:50%;
+  display:grid;place-items:center;position:relative;
+  background:radial-gradient(circle at 50% 42%, #FBEFEC 0%, #F1E2D2 70%);
+  box-shadow:0 18px 40px -22px rgba(190,140,140,.6);
+}
+.breath::before,.breath::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--rose);opacity:.5;animation:breathe 7s ease-in-out infinite}
+.breath::after{border-color:var(--sage);animation-delay:.4s;opacity:.4}
+@keyframes breathe{0%,100%{transform:scale(.82);opacity:.18}50%{transform:scale(1.12);opacity:.55}}
+.breath span{font-family:var(--hand);font-size:1.5rem;color:var(--rose-deep)}
+.who{font-size:.82rem;color:var(--ink-soft);margin-top:1.4rem}
+.who b{color:var(--ink);font-weight:700}
+
+/* ── content blocks ── */
+.kicker{font-family:var(--hand);font-size:1.5rem;color:var(--sage-deep);line-height:1;margin-bottom:.2rem}
+.step h2{font-size:clamp(1.7rem,5.5vw,2.3rem);margin-bottom:1rem}
+.lead-p{font-size:1.02rem;color:var(--ink);margin-bottom:1.2rem;max-width:54ch}
+.note{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--rose-deep);text-align:center;margin:1.6rem 0;line-height:1.4}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin:.4rem 0 1.2rem}
+.checklist li{display:flex;gap:.85rem;align-items:flex-start;font-size:.98rem;padding:.85rem 1rem;background:var(--paper);border:1px solid var(--line);border-radius:16px}
+.checklist .ic{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--blush);color:var(--rose-deep);font-size:.85rem;margin-top:1px}
+.checklist li.sage .ic{background:#E2EAD9;color:var(--sage-deep)}
+
+.prompts{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.1rem 0 .4rem}
+.prompts .q{font-size:.9rem;padding:.5rem .95rem;background:#fff;border:1px solid var(--line);border-radius:100px;color:var(--ink-soft)}
+
+/* ── letter ── */
+.letter-wrap{margin:1rem 0 .4rem}
+.openers{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:.9rem}
+.chip{
+  font-family:var(--body);font-size:.84rem;font-weight:600;cursor:pointer;
+  padding:.5rem .9rem;border-radius:100px;border:1px solid var(--rose);
+  background:#fff;color:var(--rose-deep);transition:.2s;
+}
+.chip:hover{background:var(--blush);transform:translateY(-2px)}
+.chip.sage{border-color:var(--sage);color:var(--sage-deep)}
+.chip.sage:hover{background:#E6EEDD}
+
+.paper{
+  position:relative;border-radius:18px;border:1px solid var(--line);
+  background:
+    linear-gradient(transparent 0px, transparent 37px, #EFE0CE 38px),
+    linear-gradient(135deg,#FCF7EE,#F8F0E2);
+  background-size:100% 38px,100% 100%;
+  padding:14px 20px 18px;
+  box-shadow:0 14px 34px -26px rgba(150,110,90,.6);
+}
+.paper::after{content:"❀";position:absolute;top:10px;right:16px;color:var(--rose);opacity:.4;font-size:1.1rem}
+textarea#letter{
+  width:100%;min-height:230px;border:none;background:transparent;resize:vertical;
+  font-family:var(--hand);font-size:1.42rem;line-height:38px;color:#5b4b40;
+  outline:none;display:block;
+}
+textarea#letter::placeholder{color:#bcaa92}
+
+.phrase-h{font-family:var(--display);font-style:italic;font-size:1.12rem;color:var(--ink);margin:1.5rem 0 .7rem;text-align:center}
+.phrases{display:flex;flex-direction:column;gap:.55rem}
+.phrase{
+  text-align:left;cursor:pointer;border:1px solid var(--line);background:var(--paper);
+  border-radius:14px;padding:.8rem 1rem;font-family:var(--hand);font-size:1.2rem;color:var(--ink);
+  display:flex;align-items:center;gap:.7rem;transition:.2s;
+}
+.phrase:hover{border-color:var(--rose);background:#fff;transform:translateX(3px)}
+.phrase .plus{font-family:var(--body);font-size:.7rem;font-weight:700;color:var(--rose-deep);border:1px solid var(--rose);border-radius:100px;padding:.15rem .5rem;flex-shrink:0;letter-spacing:.05em}
+.tiny{font-size:.82rem;color:var(--ink-soft);text-align:center;margin-top:.9rem}
+
+/* ── closing ── */
+.signature{font-family:var(--hand);font-size:1.7rem;color:var(--rose-deep);text-align:center;margin:.4rem 0 1.4rem}
+.cta-box{
+  background:linear-gradient(135deg,#F6E5E2,#EAF0E1);
+  border:1px solid var(--line);border-radius:20px;padding:1.4rem 1.4rem;text-align:center;margin:1.4rem 0;
+}
+.cta-box p{font-size:.98rem;color:var(--ink);max-width:46ch;margin:0 auto .4rem}
+.cta-box .ls{font-family:var(--display);font-style:italic;font-size:1.2rem;color:var(--rose-deep)}
+.brand{display:flex;align-items:center;gap:.8rem;justify-content:center;margin-top:1.6rem;flex-wrap:wrap;text-align:center}
+.brand .nm{font-family:var(--display);font-size:1.25rem;color:var(--ink)}
+.brand .rl{font-size:.74rem;color:var(--ink-soft);letter-spacing:.06em}
+
+/* ── buttons / nav ── */
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:1.2rem}
+.btn{
+  font-family:var(--body);font-weight:700;font-size:.95rem;cursor:pointer;border:none;
+  padding:.85rem 1.7rem;border-radius:100px;transition:.22s;letter-spacing:.01em;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-primary{background:var(--rose-deep);color:#fff;box-shadow:0 12px 24px -14px rgba(180,110,110,.9)}
+.btn-primary:hover{background:#bd7d80;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--rose);background:#fff}
+.btn-sage{background:var(--sage-deep);color:#fff}
+.btn-sage:hover{background:#76896b;transform:translateY(-2px)}
+.btn:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.8rem;padding-top:1.3rem;border-top:1px dashed var(--line)}
+.nav.hidden{display:none}
+.link-back{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-family:var(--body);font-size:.9rem;font-weight:600;padding:.4rem}
+.link-back:hover{color:var(--rose-deep)}
+.link-back:focus-visible,.chip:focus-visible,.phrase:focus-visible,.link-back:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+
+.foot{text-align:center;font-size:.72rem;color:var(--ink-soft);margin-top:1.6rem;opacity:.8}
+
+@media (max-width:480px){
+  .breath{width:144px;height:144px}
+  textarea#letter{font-size:1.3rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ── print: only the written letter ── */
+#printArea{display:none}
+@media print{
+  body{background:#fff;padding:0}
+  .shell *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{display:block;position:absolute;inset:0;padding:2.5cm 2cm;color:#000}
+  #printArea h3{font-family:var(--display);font-size:24pt;font-weight:600;margin-bottom:1.2cm;text-align:center}
+  #printArea .ptext{font-family:var(--hand);font-size:18pt;line-height:1.9;white-space:pre-wrap}
+  #printArea .psig{margin-top:1.4cm;font-family:var(--display);font-style:italic;text-align:center;font-size:12pt;color:#555}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="card">
+
+    <div class="progress hidden" id="progress" aria-hidden="true">
+      <span class="pstage" id="pstage"></span>
+    </div>
+
+    <!-- 0 · WELCOME -->
+    <section class="step active welcome" data-step="0">
+      <p class="eyebrow">бережная практика</p>
+      <h1>Письмо своему<br><span class="serif-em">внутреннему ребёнку</span></h1>
+      <p class="lede">Тихий разговор с той маленькой, что живёт внутри и давно вас ждёт.</p>
+      <div class="breath" aria-hidden="true"><span>вдох…</span></div>
+      <p class="lead-p" style="text-align:center;margin:0 auto 0;max-width:42ch;color:var(--ink-soft)">
+        Это не задание и не тест. Просто 20 минут тепла - для вас двоих. Мы пройдём пять мягких шагов, и вы напишете своё письмо прямо здесь.
+      </p>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="go(1)">Начать, не спеша →</button>
+      </div>
+      <p class="who">гид от <b>Светланы Поповой</b> · психолог, гипно- и ЭОТ-терапевт</p>
+    </section>
+
+    <!-- 1 · PREPARE -->
+    <section class="step" data-step="1">
+      <p class="kicker">шаг первый</p>
+      <h2>Подготовьте тёплое пространство</h2>
+      <p class="lead-p">К себе маленькой нельзя прийти на бегу. Сначала создайте бережную обстановку - так, чтобы внутри стало безопасно.</p>
+      <ul class="checklist">
+        <li><span class="ic">✿</span><span>Найдите 20-30 минут, когда вас точно не потревожат. Телефон - в тишину.</span></li>
+        <li class="sage"><span class="ic">✿</span><span>Сделайте уютно: плед, тёплый чай, мягкий свет. Тело должно почувствовать - здесь хорошо.</span></li>
+        <li><span class="ic">✿</span><span>Сделайте несколько медленных вдохов и выдохов. Выдох длиннее вдоха.</span></li>
+        <li class="sage"><span class="ic">✿</span><span>Положите ладонь на сердце. Это знак себе: «я здесь, я с тобой, я никуда не ухожу».</span></li>
+      </ul>
+      <p class="note">Это время - только для вас двоих.</p>
+      <div class="nav" id="nav1"></div>
+    </section>
+
+    <!-- 2 · MEET -->
+    <section class="step" data-step="2">
+      <p class="kicker">шаг второй</p>
+      <h2>Встретьтесь с ней</h2>
+      <p class="lead-p">Прикройте на минуту глаза и позвольте образу прийти самому. Не нужно ничего выдумывать - просто посмотрите, кто появится.</p>
+      <div class="prompts">
+        <span class="q">Сколько ей лет - 3, 5, 7?</span>
+        <span class="q">Во что она одета?</span>
+        <span class="q">Где она, что вокруг?</span>
+        <span class="q">Что она сейчас чувствует?</span>
+      </div>
+      <p class="lead-p" style="margin-top:1.2rem">Когда увидите её - мысленно поздоровайтесь. Посмотрите ей в глаза. И когда будете готовы, перейдите дальше: пора писать ей письмо.</p>
+      <p class="note">Какой бы она ни пришла - она уже рада, что вы наконец смотрите на неё.</p>
+      <div class="nav" id="nav2"></div>
+    </section>
+
+    <!-- 3 · WRITE -->
+    <section class="step" data-step="3">
+      <p class="kicker">шаг третий</p>
+      <h2>Напишите ей письмо</h2>
+      <p class="lead-p">Пишите как идёт - без правок, без «красиво», без оценок. Можно начать с обращения. Нажмите на фразу ниже, и она мягко ляжет в письмо.</p>
+
+      <div class="letter-wrap">
+        <div class="openers" id="openers">
+          <button class="chip" onclick="insertText('Моя маленькая, ')">Моя маленькая…</button>
+          <button class="chip" onclick="insertText('Милая моя девочка, ')">Милая моя девочка…</button>
+          <button class="chip sage" onclick="insertText('Привет. Это я - взрослая ты. ')">Привет, это я, взрослая ты…</button>
+        </div>
+
+        <div class="paper">
+          <label for="letter" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Текст письма</label>
+          <textarea id="letter" placeholder="Моя маленькая, я наконец пришла к тебе…"></textarea>
+        </div>
+
+        <p class="phrase-h">Фразы, которых она ждала всю жизнь</p>
+        <div class="phrases" id="phrases">
+          <button class="phrase" onclick="addPhrase('Ты ни в чём не виновата.')"><span class="plus">+ вложить</span> Ты ни в чём не виновата.</button>
+          <button class="phrase" onclick="addPhrase('Ты хорошая просто потому, что ты есть.')"><span class="plus">+ вложить</span> Ты хорошая просто потому, что ты есть.</button>
+          <button class="phrase" onclick="addPhrase('Тебе можно чувствовать всё, что ты чувствуешь.')"><span class="plus">+ вложить</span> Тебе можно чувствовать всё, что ты чувствуешь.</button>
+          <button class="phrase" onclick="addPhrase('Я больше не оставлю тебя одну. Я рядом.')"><span class="plus">+ вложить</span> Я больше не оставлю тебя одну. Я рядом.</button>
+          <button class="phrase" onclick="addPhrase('Я горжусь тобой. И я очень тебя люблю.')"><span class="plus">+ вложить</span> Я горжусь тобой. И я очень тебя люблю.</button>
+        </div>
+        <p class="tiny">Можно закончить письмо подписью: <i>«С любовью - взрослая ты».</i></p>
+      </div>
+      <div class="nav" id="nav3"></div>
+    </section>
+
+    <!-- 4 · FEELINGS -->
+    <section class="step" data-step="4">
+      <p class="kicker">шаг четвёртый</p>
+      <h2>Побудьте с тем, что поднялось</h2>
+      <p class="lead-p">После письма внутри может стать тепло, грустно, светло - или всё сразу. Не спешите возвращаться в дела.</p>
+      <ul class="checklist">
+        <li><span class="ic">♡</span><span>Если пришли слёзы - это хорошо. Так тепло идёт туда, где его когда-то не хватило.</span></li>
+        <li class="sage"><span class="ic">♡</span><span>Посидите несколько минут. Ладонь на сердце, медленное дыхание. Просто побудьте рядом с собой.</span></li>
+        <li><span class="ic">♡</span><span>Это не разовая встреча. Письмо можно перечитывать и писать новые - столько, сколько нужно.</span></li>
+        <li class="sage"><span class="ic">♡</span><span>Если поднялось слишком много и одной тяжело - это не «сломалось». Это просто знак, что рядом стоит побыть не в одиночку.</span></li>
+      </ul>
+      <p class="note">Вы сегодня сделали то, чего она ждала очень долго.</p>
+      <div class="nav" id="nav4"></div>
+    </section>
+
+    <!-- 5 · CLOSE -->
+    <section class="step" data-step="5">
+      <p class="kicker">с теплом</p>
+      <h2>Сохраните своё письмо</h2>
+      <p class="lead-p">Пусть оно останется с вами - чтобы перечитать в трудный вечер и вспомнить: у вас внутри уже есть тот, кто на вашей стороне.</p>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveLetter()">↓ Сохранить письмо</button>
+        <button class="btn btn-sage" onclick="printLetter()">⎙ Распечатать</button>
+      </div>
+      <p class="tiny" id="saveHint">&nbsp;</p>
+
+      <div class="cta-box">
+        <p>Если письмо подняло много и хочется пройти глубже, чем может бумага - вы не обязаны идти туда одна.</p>
+        <p>В работе мы встречаемся с вашей внутренней девочкой бережно, через образы, и возвращаем ей то, чего не хватило.</p>
+        <p class="ls">Напишите мне - и мы начнём. ЛС открыты 🤍</p>
+      </div>
+
+      <p class="signature">С теплом, Светлана</p>
+      <div class="brand">
+        <div>
+          <div class="nm">Светлана Попова</div>
+          <div class="rl">психолог · гипно- и ЭОТ-терапевт · ICF-коуч</div>
+        </div>
+      </div>
+
+      <div class="nav" id="nav5"></div>
+    </section>
+
+    <p class="foot">Эта практика - мягкая поддержка, а не замена терапии.</p>
+  </div>
+</div>
+
+<!-- print target -->
+<div id="printArea">
+  <h3>Письмо моему внутреннему ребёнку</h3>
+  <div class="ptext" id="ptext"></div>
+  <div class="psig">— написано с теплом, для себя самой</div>
+</div>
+
+<script>
+var TOTAL = 5; // content steps 1..5
+var cur = 0;
+var steps = document.querySelectorAll('.step');
+var progress = document.getElementById('progress');
+var pstage = document.getElementById('pstage');
+var stageNames = ['','Подготовка','Встреча','Письмо','Чувства','Завершение'];
+
+// build nav for steps 1..5
+for(var i=1;i<=TOTAL;i++){
+  var nav = document.getElementById('nav'+i);
+  var back = document.createElement('button');
+  back.className='link-back';
+  back.textContent='← назад';
+  back.setAttribute('aria-label','Предыдущий шаг');
+  (function(idx){back.onclick=function(){go(idx-1)}})(i);
+
+  var fwd = document.createElement('button');
+  fwd.className='btn btn-primary';
+  if(i<TOTAL){ fwd.textContent='Дальше →'; (function(idx){fwd.onclick=function(){go(idx+1)}})(i); }
+  else { fwd.textContent='Вернуться к началу ↺'; fwd.className='btn btn-ghost'; fwd.onclick=function(){go(0)}; }
+
+  nav.appendChild(back);
+  nav.appendChild(fwd);
+}
+
+function go(n){
+  cur=n;
+  steps.forEach(function(s){ s.classList.toggle('active', parseInt(s.dataset.step)===n); });
+  // progress
+  if(n===0){ progress.classList.add('hidden'); }
+  else{
+    progress.classList.remove('hidden');
+    var dots='';
+    for(var i=1;i<=TOTAL;i++){
+      var cls = i<n ? 'done' : (i===n ? 'now' : '');
+      dots += '<span class="pdot '+cls+'"></span>';
+    }
+    progress.innerHTML = '<span class="pstage">'+n+' из '+TOTAL+' · '+stageNames[n]+'</span>';
+    var wrap=document.createElement('span');
+    wrap.style.display='flex';wrap.style.gap='.6rem';wrap.style.alignItems='center';
+    wrap.innerHTML=dots;
+    progress.appendChild(wrap);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// letter helpers
+var ta = document.getElementById('letter');
+function insertText(t){
+  // openers replace if letter is basically empty, else prepend on new line
+  if(ta.value.trim()===''){ ta.value=t; }
+  else { ta.value = t + (ta.value.startsWith('\n')?'':'\n') + ta.value; }
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+}
+function addPhrase(t){
+  var v=ta.value;
+  if(v.trim()!=='' && !/\n\s*$/.test(v)) v += '\n';
+  ta.value = v + t + '\n';
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+  ta.scrollTop = ta.scrollHeight;
+}
+
+function saveLetter(){
+  var text = ta.value.trim();
+  var hint=document.getElementById('saveHint');
+  if(text===''){ hint.textContent='Сначала напишите хотя бы пару строк - и письмо можно будет сохранить 🤍'; return; }
+  var full = 'Письмо моему внутреннему ребёнку\n\n' + text + '\n\n— написано с теплом, для себя самой';
+  var blob = new Blob([full], {type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='Письмо-моему-внутреннему-ребёнку.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  hint.textContent='Готово. Письмо сохранилось 🤍 Перечитайте его, когда будет нужно.';
+}
+function printLetter(){
+  var text = ta.value.trim();
+  var hint=document.getElementById('saveHint');
+  if(text===''){ hint.textContent='Напишите хотя бы пару строк, и письмо можно будет распечатать 🤍'; return; }
+  document.getElementById('ptext').textContent = text;
+  window.print();
+}
+</script>
+</body>
+</html>
