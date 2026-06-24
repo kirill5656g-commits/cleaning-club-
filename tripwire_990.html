@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Коробка владельца · 990 ₽ · Школа клининга «Чистолюб»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#07142E; --navy-850:#0A1A3C; --navy-800:#0A1E45; --navy-700:#103063;
+  --blue-600:#2566B8; --blue-500:#2F86D8; --blue-400:#54A6EE; --sky-300:#8FCDF7;
+  --platinum:#CFE3F6; --white:#FFFFFF; --ink:#EAF2FB; --ink-soft:#9FB5D6; --ink-dim:#6E84A8;
+  --line:rgba(143,205,247,.16); --glass:rgba(255,255,255,.04); --glass-2:rgba(255,255,255,.06);
+  --display:'Unbounded',sans-serif; --body:'Inter',-apple-system,sans-serif; --maxw:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body); color:var(--ink); background:var(--navy-900); -webkit-font-smoothing:antialiased; line-height:1.6; overflow-x:hidden}
+body::before{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1100px 600px at 22% -8%, rgba(47,134,216,.26), transparent 60%),
+    radial-gradient(900px 700px at 96% 14%, rgba(16,48,99,.55), transparent 55%),
+    radial-gradient(1000px 900px at 50% 122%, rgba(47,134,216,.12), transparent 60%),
+    linear-gradient(180deg, var(--navy-900), var(--navy-850) 45%, var(--navy-900))}
+#stars{position:fixed; inset:0; z-index:-1; pointer-events:none}
+.spark{position:absolute; color:var(--sky-300); opacity:0; filter:drop-shadow(0 0 6px rgba(143,205,247,.7))}
+@media (prefers-reduced-motion:no-preference){.spark{animation:tw var(--d,4s) ease-in-out var(--delay,0s) infinite}}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:.9;transform:scale(1)}}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+.eyebrow{font-family:var(--body); font-weight:600; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--sky-300); display:inline-flex; align-items:center; gap:9px}
+.eyebrow::before{content:""; width:26px; height:1px; background:linear-gradient(90deg,transparent,var(--sky-300))}
+
+header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:linear-gradient(180deg,rgba(7,20,46,.86),rgba(7,20,46,.55)); border-bottom:1px solid var(--line)}
+.bar{display:flex; align-items:center; justify-content:space-between; height:68px}
+.brand{display:flex; align-items:center; gap:13px}
+.brand .lab{display:flex; flex-direction:column; line-height:1.05}
+.brand .lab b{font-family:var(--display); font-weight:700; font-size:15px; color:var(--white)}
+.brand .lab span{font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px}
+.mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 12px rgba(47,134,216,.45))}
+.bar .top-cta{font-family:var(--body); font-weight:600; font-size:13.5px; color:var(--navy-900); background:linear-gradient(180deg,#EaF4FF,var(--platinum)); padding:9px 18px; border-radius:100px; text-decoration:none; border:1px solid rgba(255,255,255,.5); white-space:nowrap; transition:.2s}
+.bar .top-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px rgba(47,134,216,.35)}
+
+.hero{padding:70px 0 38px}
+.step-pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--sky-300); background:rgba(47,134,216,.1); border:1px solid var(--line); padding:6px 13px; border-radius:100px; margin-bottom:20px}
+.step-pill b{color:var(--white)}
+.hero-grid{display:grid; grid-template-columns:1.12fr .88fr; gap:48px; align-items:center}
+.hero h1{font-family:var(--display); font-weight:800; line-height:1.02; letter-spacing:-.01em; font-size:clamp(36px,5.6vw,62px); color:var(--white); margin:6px 0 0}
+.hero h1 .glow{background:linear-gradient(120deg,#BFE2FF,var(--blue-400) 55%,#BFE2FF); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+.hero .lede{font-size:17px; color:var(--ink-soft); max-width:42ch; margin:22px 0 30px}
+.hero .lede b{color:var(--ink); font-weight:600}
+.price-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:26px}
+.price-now{font-family:var(--display); font-weight:700; font-size:46px; color:var(--white); line-height:1}
+.price-now small{font-size:22px; opacity:.7}
+.price-old{display:flex; flex-direction:column}
+.price-old s{color:var(--ink-dim); font-size:18px; text-decoration-thickness:1.5px}
+.price-old em{font-style:normal; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--sky-300)}
+.cta{display:inline-flex; align-items:center; gap:11px; font-family:var(--body); font-weight:700; font-size:16px; color:var(--navy-900); text-decoration:none; padding:16px 30px; border-radius:100px; position:relative; overflow:hidden; background:linear-gradient(180deg,#7FC0F5,var(--blue-500)); border:1px solid rgba(191,226,255,.6); box-shadow:0 12px 34px rgba(47,134,216,.45), inset 0 1px 0 rgba(255,255,255,.5); transition:transform .2s}
+.cta::after{content:""; position:absolute; top:0; left:-120%; width:60%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-18deg)}
+@media (prefers-reduced-motion:no-preference){.cta:hover::after{animation:sheen .9s}}
+@keyframes sheen{to{left:130%}}
+.cta:hover{transform:translateY(-2px)}
+.cta .arr{font-size:18px}
+.hero .micro{font-size:12.5px; color:var(--ink-dim); margin-top:14px; display:flex; align-items:center; gap:8px}
+.dot-ok{width:7px;height:7px;border-radius:50%;background:var(--blue-400);box-shadow:0 0 9px var(--blue-400)}
+
+.hero-art{position:relative; aspect-ratio:1/1.05; border-radius:26px; overflow:hidden; background:linear-gradient(180deg,#0C2350,#081634); border:1px solid var(--line); box-shadow:0 30px 80px rgba(2,10,28,.6), inset 0 1px 0 rgba(143,205,247,.12)}
+.hero-art .ribbon{position:absolute; top:18px; left:18px; z-index:3; font-family:var(--body); font-weight:700; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--navy-900); background:linear-gradient(180deg,#EAF4FF,var(--platinum)); padding:7px 13px; border-radius:100px}
+.hero-art .emblem{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+.hero-art .floor{position:absolute; left:0; right:0; bottom:0; height:34%; background:linear-gradient(180deg,transparent,rgba(47,134,216,.12)); border-top:1px solid rgba(143,205,247,.15)}
+
+section{padding:60px 0}
+.sec-head{max-width:680px; margin-bottom:38px}
+.sec-head h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.4vw,38px); color:var(--white); line-height:1.08; letter-spacing:-.01em; margin:14px 0 0}
+.sec-head p{color:var(--ink-soft); font-size:15.5px; margin-top:12px}
+
+/* pain → fix */
+.pf{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.pf .col h3{font-size:14px; letter-spacing:.04em; text-transform:uppercase; margin-bottom:14px; font-weight:700}
+.pf .pain h3{color:#E78C8C}
+.pf .fix h3{color:var(--sky-300)}
+.pf .row{display:flex; gap:11px; align-items:flex-start; padding:13px 15px; border:1px solid var(--line); border-radius:13px; margin-bottom:10px; background:var(--glass); font-size:14.5px; color:var(--ink)}
+.pf .ic{flex:none; width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:1px}
+.pf .pain .ic{background:rgba(231,140,140,.14); color:#E78C8C; border:1px solid rgba(231,140,140,.3)}
+.pf .fix .ic{background:linear-gradient(180deg,rgba(84,166,238,.35),rgba(47,134,216,.2)); color:#EAF6FF; border:1px solid rgba(84,166,238,.5)}
+
+/* inside grid */
+.inside{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+.icard{background:var(--glass); border:1px solid var(--line); border-radius:16px; padding:22px; transition:.22s}
+.icard:hover{border-color:rgba(143,205,247,.34); background:var(--glass-2); transform:translateY(-2px)}
+.icard .ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:14px; background:linear-gradient(180deg,#10336B,#0A1E45); border:1px solid var(--line)}
+.icard h4{font-family:var(--display); font-weight:600; font-size:16px; color:var(--white); margin-bottom:7px}
+.icard p{font-size:13.5px; color:var(--ink-soft)}
+.icard .tag{display:inline-block; margin-top:12px; font-size:11px; color:var(--sky-300); letter-spacing:.04em; border:1px solid var(--line); padding:3px 9px; border-radius:100px}
+
+/* interactive docs explorer */
+.docs{display:grid; grid-template-columns:.9fr 1.1fr; gap:0; border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:0 30px 80px rgba(2,10,28,.5)}
+.docs-list{background:linear-gradient(180deg,#0B2150,#0A1A3C); padding:14px}
+.docrow{display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:12px; cursor:pointer; transition:.16s; color:var(--ink-soft)}
+.docrow:hover{background:rgba(143,205,247,.06); color:var(--white)}
+.docrow.on{background:linear-gradient(180deg,rgba(84,166,238,.24),rgba(47,134,216,.14)); color:var(--white); border:1px solid rgba(84,166,238,.4)}
+.docrow .n{font-family:var(--display); font-size:12px; color:var(--sky-300); width:26px;height:26px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px}
+.docrow .nm{font-size:14px; font-weight:600}
+.docs-view{background:linear-gradient(180deg,#0E2A5E,#0B1E47); padding:30px 32px; position:relative}
+.docpanel{display:none}
+.docpanel.on{display:block; animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.docpanel .lbl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.docpanel h4{font-family:var(--display); font-weight:600; font-size:21px; color:var(--white); margin:7px 0 12px}
+.docpanel p{font-size:14.5px; color:var(--ink-soft); margin-bottom:16px}
+.docpanel ul{list-style:none; display:grid; gap:9px}
+.docpanel li{padding-left:24px; position:relative; font-size:14px; color:var(--ink)}
+.docpanel li::before{content:""; position:absolute; left:0; top:7px; width:9px;height:9px;border-radius:50%; background:radial-gradient(circle at 35% 30%,#EAF6FF,var(--blue-400)); box-shadow:0 0 8px rgba(84,166,238,.7)}
+
+/* savings calc */
+.calc-shell{display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:24px; overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px rgba(2,10,28,.5)}
+.calc-in{padding:36px; background:linear-gradient(180deg,#0B2150,#0A1A3C)}
+.calc-out{padding:36px; background:linear-gradient(180deg,#0E2A5E,#0B1E47); position:relative}
+.calc-out::before{content:""; position:absolute; left:0; top:18%; bottom:18%; width:1px; background:linear-gradient(180deg,transparent,var(--line),transparent)}
+.field{margin-bottom:24px}
+.field label{display:flex; justify-content:space-between; align-items:baseline; font-size:13px; color:var(--ink-soft); margin-bottom:10px; font-weight:500}
+.field label b{font-family:var(--display); font-weight:600; color:var(--white); font-size:16px}
+input[type=range]{-webkit-appearance:none; width:100%; height:5px; border-radius:5px; outline:none; background:linear-gradient(90deg,var(--blue-500) var(--p,40%), rgba(143,205,247,.18) var(--p,40%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#EAF6FF,var(--blue-400)); border:2px solid #fff; cursor:pointer; box-shadow:0 4px 14px rgba(47,134,216,.6)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue-400);border:2px solid #fff;cursor:pointer}
+.calc-out .lbl{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.big{font-family:var(--display); font-weight:700; color:var(--white); line-height:1; margin:8px 0 4px; font-variant-numeric:tabular-nums}
+.big.one{font-size:46px}
+.big.two{font-size:34px; background:linear-gradient(120deg,#BFE2FF,var(--blue-400));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.calc-out .sub{font-size:13px; color:var(--ink-dim)}
+.calc-div{height:1px; background:var(--line); margin:24px 0}
+.calc-note{margin-top:24px; padding:14px 16px; border:1px dashed rgba(143,205,247,.3); border-radius:12px; font-size:13px; color:var(--ink-soft); background:rgba(47,134,216,.06)}
+.calc-note b{color:var(--white)}
+
+/* offer */
+.offer{position:relative; border-radius:26px; padding:46px 44px; overflow:hidden; background:linear-gradient(160deg,#0E2A5E,#081634); border:1px solid rgba(143,205,247,.28); box-shadow:0 40px 100px rgba(2,10,28,.6), inset 0 1px 0 rgba(143,205,247,.18)}
+.offer::before{content:""; position:absolute; width:360px; height:360px; left:-90px; top:-120px; border-radius:50%; background:radial-gradient(circle,rgba(47,134,216,.4),transparent 65%); pointer-events:none}
+.offer-grid{display:grid; grid-template-columns:1.25fr .9fr; gap:40px; align-items:center; position:relative}
+.offer h3{font-family:var(--display); font-weight:700; font-size:26px; color:var(--white); margin-bottom:18px}
+.olist{display:grid; gap:13px}
+.olist div{display:flex; gap:12px; align-items:flex-start; font-size:15px; color:var(--ink)}
+.olist .ck{flex:none; width:24px; height:24px; border-radius:7px; display:grid; place-items:center; margin-top:1px; background:linear-gradient(180deg,rgba(84,166,238,.35),rgba(47,134,216,.2)); border:1px solid rgba(84,166,238,.5); color:#EAF6FF; font-size:12px; font-weight:700}
+.buy{background:linear-gradient(180deg,#0B2150,#0A1A3C); border:1px solid var(--line); border-radius:20px; padding:30px; text-align:center}
+.buy .now{font-family:var(--display); font-weight:800; font-size:54px; color:var(--white); line-height:1}
+.buy .now small{font-size:24px; opacity:.7}
+.buy .anchor{color:var(--ink-dim); font-size:14px; margin:4px 0 18px}
+.buy .anchor s{text-decoration-thickness:1.5px}
+.buy .cta{width:100%; justify-content:center; font-size:17px}
+.buy .guarantee{margin-top:14px; font-size:12px; color:var(--ink-dim); line-height:1.5}
+
+.faq{display:grid; gap:10px; max-width:780px}
+.item{background:var(--glass); border:1px solid var(--line); border-radius:14px; overflow:hidden; transition:.25s}
+.item:hover{border-color:rgba(143,205,247,.32)}
+.item.open{border-color:rgba(84,166,238,.5)}
+.it-hd{display:flex; align-items:center; gap:14px; padding:17px 20px; cursor:pointer; user-select:none}
+.it-ti{font-weight:600; font-size:15.5px; color:var(--white); flex:1}
+.it-chev{color:var(--ink-soft); transition:.25s; font-size:13px}
+.item.open .it-chev{transform:rotate(180deg); color:var(--sky-300)}
+.it-bd{max-height:0; overflow:hidden; transition:max-height .3s ease}
+.it-bd .in{padding:0 20px 18px 20px; color:var(--ink-soft); font-size:14.5px; line-height:1.7}
+
+footer{padding:56px 0 70px; border-top:1px solid var(--line); margin-top:30px}
+.next{display:flex; gap:16px; flex-wrap:wrap; margin:26px 0 40px}
+.step{flex:1; min-width:230px; background:var(--glass); border:1px solid var(--line); border-radius:16px; padding:20px 22px}
+.step .s-no{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.step h5{font-family:var(--display); font-weight:600; font-size:16px; color:var(--white); margin:8px 0 6px}
+.step p{font-size:13.5px; color:var(--ink-soft)}
+.step.cur{border-color:rgba(84,166,238,.55); background:linear-gradient(180deg,rgba(47,134,216,.14),transparent)}
+.step.done{opacity:.62}
+.foot-brand{display:flex; align-items:center; gap:13px; color:var(--ink-dim); font-size:12.5px}
+.foot-brand .lab b{color:var(--ink); font-family:var(--display); font-weight:600; font-size:14px; display:block}
+
+.sticky{position:fixed; left:0; right:0; bottom:0; z-index:60; display:none; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); backdrop-filter:blur(14px); background:linear-gradient(180deg,rgba(7,20,46,.4),rgba(7,20,46,.92)); border-top:1px solid var(--line)}
+.sticky .cta{width:100%; justify-content:center}
+
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr; gap:34px}
+  .hero-art{max-width:420px; margin:0 auto; width:100%}
+  .pf,.inside,.docs,.calc-shell,.offer-grid{grid-template-columns:1fr}
+  .docs{border-radius:18px}
+  .calc-out::before{display:none}
+  .offer{padding:34px 24px}
+  .bar .top-cta{display:none}
+  .sticky{display:block}
+  body{padding-bottom:84px}
+}
+@media (max-width:480px){ .wrap{padding:0 18px} .calc-in,.calc-out,.docs-view{padding:26px 22px} .big.one{font-size:38px} }
+:focus-visible{outline:2px solid var(--sky-300); outline-offset:3px; border-radius:6px}
+</style>
+</head>
+<body>
+<div id="stars" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FD8FB"/><stop offset="1" stop-color="#2566B8"/></linearGradient>
+  <linearGradient id="gWhite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CFE3F6"/></linearGradient>
+</defs></svg>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" aria-label="Школа клининга Чистолюб">
+        <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+        <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+        <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+        <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+        <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+        <path d="M32 40 L32 52" stroke="#2566B8" stroke-width="1.4" opacity=".5"/>
+        <path d="M49 11 L50 15 L54 16 L50 17 L49 21 L48 17 L44 16 L48 15 Z" fill="#8FCDF7"/>
+      </svg>
+      <div class="lab"><b>Чистолюб</b><span>Школа клининга</span></div>
+    </div>
+    <a class="top-cta" href="#buy">Забрать за 990 ₽</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="step-pill">Шаг 2 воронки · <b>после первых клиентов</b></span>
+        <span class="eyebrow">Трипваер · Коробка владельца</span>
+        <h1>Документы и&nbsp;деньги <span class="glow">под ключ</span></h1>
+        <p class="lede">У тебя пошли заказы — пора работать как бизнес, а не как подработка. Внутри — <b>готовые договоры, акты и калькулятор себестоимости</b>. Защищаешься юридически и впервые видишь свою настоящую прибыль.</p>
+        <div class="price-row">
+          <div class="price-now">990 <small>₽</small></div>
+          <div class="price-old"><s>от 15 000 ₽</s><em>У юриста и бухгалтера</em></div>
+        </div>
+        <a class="cta" href="#buy">Забрать коробку <span class="arr">→</span></a>
+        <div class="micro"><span class="dot-ok"></span> Мгновенный доступ в боте · все документы редактируемые</div>
+      </div>
+      <div class="hero-art">
+        <div class="ribbon">Окупается одной закрытой претензией</div>
+        <div class="emblem">
+          <svg width="60%" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+            <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+            <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+            <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+            <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+            <path d="M32 40 L32 52" stroke="#2566B8" stroke-width="1.4" opacity=".5"/>
+            <path d="M49 11 L50 15 L54 16 L50 17 L49 21 L48 17 L44 16 L48 15 Z" fill="#8FCDF7"/>
+          </svg>
+        </div>
+        <div class="floor"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -> FIX -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Зачем это нужно</span>
+      <h2>Первые клиенты есть. А защиты и цифр — нет</h2>
+      <p>Самые дорогие ошибки начинаются не на старте, а когда заказы уже пошли: работа без договора и без понимания, где прибыль, а где убыток.</p>
+    </div>
+    <div class="pf">
+      <div class="col pain">
+        <h3>Без коробки</h3>
+        <div class="row"><span class="ic">✕</span> Работаешь без договора — любая претензия бьёт по твоему карману.</div>
+        <div class="row"><span class="ic">✕</span> Клиент «передумал» платить — доказать нечем.</div>
+        <div class="row"><span class="ic">✕</span> Считаешь цену на глаз и не знаешь, где работаешь в ноль.</div>
+        <div class="row"><span class="ic">✕</span> Испортили вещь — нет акта, платишь полную стоимость.</div>
+      </div>
+      <div class="col fix">
+        <h3>С коробкой</h3>
+        <div class="row"><span class="ic">✓</span> Каждый заказ закрыт договором и актом — ты защищён.</div>
+        <div class="row"><span class="ic">✓</span> Спорные ситуации решаются бумагой за минуту, а не скандалом.</div>
+        <div class="row"><span class="ic">✓</span> Видишь себестоимость и прибыль по каждому заказу.</div>
+        <div class="row"><span class="ic">✓</span> Опись и акт об ущербе снимают риск «вы испортили».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Что внутри</span>
+      <h2>Полная система документов и финансов</h2>
+      <p>Всё редактируемое, в твоих файлах. Открыл, подставил данные, применил.</p>
+    </div>
+    <div class="inside">
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div>
+        <h4>9 документов под клининг</h4>
+        <p>Договоры с физлицом и бизнесом, акт выполненных работ, опись имущества, акт об ущербе, расписка, согласие на данные, счёт на оплату (B2B) и договор субподряда.</p>
+        <span class="tag">DOCX · редактируемые</span>
+      </div>
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg></div>
+        <h4>Калькулятор себестоимости</h4>
+        <p>Себестоимость по статьям, точка безубыточности, маржа по типам уборки и сводка за месяц. Управленческий расчёт прибыли — не цена заказа (она в наборе за 490 ₽).</p>
+        <span class="tag">XLSX · 3 листа</span>
+      </div>
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+        <h4>Прайс-лист и 3 пакета услуг</h4>
+        <p>Готовый шаблон прайса и три собранных пакета — разовый, регулярный, генеральный. Остаётся подставить свои цены.</p>
+        <span class="tag">шаблон</span>
+      </div>
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg></div>
+        <h4>Регламент контроля качества</h4>
+        <p>Чек-лист уборки по зонам и система фотоотчётов до/после — стабильное качество и защита от претензий.</p>
+        <span class="tag">PDF</span>
+      </div>
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h4>Видео-инструкция по внедрению</h4>
+        <p>Короткое видео: как заполнить договоры и калькулятор и внедрить всё за один вечер. Без воды.</p>
+        <span class="tag">видео · 20–30 мин</span>
+      </div>
+      <div class="icard">
+        <div class="ico"><svg width="20" viewBox="0 0 24 24" fill="none" stroke="#8FCDF7" stroke-width="1.6"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/></svg></div>
+        <h4>Памятка по налогам и оформлению</h4>
+        <p>Простыми словами: самозанятость или ИП, что выбрать на старте, как принимать оплату легально.</p>
+        <span class="tag">PDF</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DOC EXPLORER -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Загляни внутрь</span>
+      <h2>Что именно в пакете документов</h2>
+      <p>Выбери документ слева — посмотри, от чего он тебя защищает.</p>
+    </div>
+    <div class="docs">
+      <div class="docs-list" id="docs-list">
+        <div class="docrow on" data-d="0"><span class="n">01</span><span class="nm">Договор с физлицом</span></div>
+        <div class="docrow" data-d="1"><span class="n">02</span><span class="nm">Договор с бизнесом (B2B)</span></div>
+        <div class="docrow" data-d="2"><span class="n">03</span><span class="nm">Акт выполненных работ</span></div>
+        <div class="docrow" data-d="3"><span class="n">04</span><span class="nm">Опись имущества</span></div>
+        <div class="docrow" data-d="4"><span class="n">05</span><span class="nm">Акт об ущербе</span></div>
+        <div class="docrow" data-d="5"><span class="n">06</span><span class="nm">Согласие на данные</span></div>
+        <div class="docrow" data-d="6"><span class="n">07</span><span class="nm">Счёт на оплату (B2B)</span></div>
+        <div class="docrow" data-d="7"><span class="n">08</span><span class="nm">Договор субподряда</span></div>
+      </div>
+      <div class="docs-view" id="docs-view">
+        <div class="docpanel on" data-d="0">
+          <div class="lbl">Документ 01</div><h4>Договор оказания услуг (физлицо)</h4>
+          <p>База для работы с частными клиентами. Фиксирует, что и за сколько ты делаешь, и снимает споры «мы так не договаривались».</p>
+          <ul><li>Чёткий перечень работ и стоимость</li><li>Сроки, ответственность сторон, порядок оплаты</li><li>Защита, если клиент отказывается платить после уборки</li></ul>
+        </div>
+        <div class="docpanel" data-d="1">
+          <div class="lbl">Документ 02</div><h4>Договор с юрлицом (B2B)</h4>
+          <p>Для офисов, ТЦ и регулярного обслуживания. Превращает разовые заказы в стабильный контракт.</p>
+          <ul><li>Условия абонентского обслуживания</li><li>График, объёмы, порядок приёмки работ</li><li>Реквизиты и условия для безналичной оплаты</li></ul>
+        </div>
+        <div class="docpanel" data-d="2">
+          <div class="lbl">Документ 03</div><h4>Акт выполненных работ</h4>
+          <p>Подтверждает, что работа принята. Без него клиент может оспорить и качество, и сам факт уборки.</p>
+          <ul><li>Фиксирует приёмку и отсутствие претензий</li><li>Основание требовать оплату</li><li>Подходит и для частников, и для бизнеса</li></ul>
+        </div>
+        <div class="docpanel" data-d="3">
+          <div class="lbl">Документ 04</div><h4>Опись имущества</h4>
+          <p>Фиксирует состояние объекта и ценных вещей до уборки. Твоя защита от обвинений в пропаже.</p>
+          <ul><li>Снимает риск «у нас что-то пропало»</li><li>Особенно важна для генеральных уборок и B2B</li><li>Заполняется за пару минут на объекте</li></ul>
+        </div>
+        <div class="docpanel" data-d="4">
+          <div class="lbl">Документ 05</div><h4>Акт об ущербе</h4>
+          <p>Если что-то всё же повредили — фиксирует ситуацию цивилизованно, по правилам, а не на эмоциях.</p>
+          <ul><li>Понятный порядок компенсации</li><li>Защищает от завышенных требований клиента</li><li>Сохраняет отношения и репутацию</li></ul>
+        </div>
+        <div class="docpanel" data-d="5">
+          <div class="lbl">Документ 06</div><h4>Согласие на обработку данных</h4>
+          <p>Ты собираешь имена, адреса и телефоны клиентов — по закону на это нужно согласие. Документ закрывает этот вопрос.</p>
+          <ul><li>Соответствие требованиям по персональным данным</li><li>Защита от штрафов и претензий</li><li>Готовый текст — просто используешь</li></ul>
+        </div>
+        <div class="docpanel" data-d="6">
+          <div class="lbl">Документ 07</div><h4>Счёт на оплату (B2B)</h4>
+          <p>Для безналичной оплаты от компаний. Без счёта бизнес часто просто не может тебе заплатить.</p>
+          <ul><li>Готовая форма с реквизитами и таблицей услуг</li><li>Оплата счёта подтверждает согласие с условиями</li><li>Открывает работу с юрлицами «вбелую»</li></ul>
+        </div>
+        <div class="docpanel" data-d="7">
+          <div class="lbl">Документ 08</div><h4>Договор субподряда</h4>
+          <p>Чтобы передавать заказы другим исполнителям и брать чужие — без риска, что у тебя уведут клиента.</p>
+          <ul><li>Условия передачи заказа и расчётов</li><li>Защита клиента: запрет переманивания + штраф</li><li>Основа для работы в связке и в клубе</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAVINGS CALCULATOR -->
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Посчитай выгоду</span>
+      <h2>Сколько ты теряешь без документов и расчётов</h2>
+      <p>Подвигай ползунки — увидишь, как быстро коробка за 990 ₽ окупается.</p>
+    </div>
+    <div class="calc-shell">
+      <div class="calc-in">
+        <div class="field">
+          <label>Заказов в месяц <b><span id="orders">25</span></b></label>
+          <input type="range" id="orders-r" min="5" max="80" step="1" value="25">
+        </div>
+        <div class="field">
+          <label>Средний чек заказа <b><span id="check">3 500</span> ₽</b></label>
+          <input type="range" id="check-r" min="1500" max="12000" step="500" value="3500">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Работаешь «вслепую» по цене <b><span id="blind">10</span>%</b></label>
+          <input type="range" id="blind-r" min="0" max="25" step="1" value="10">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="lbl">Теряешь на занижении цены (в месяц)</div>
+        <div class="big one">~ <span id="lostprice">8 750</span> ₽</div>
+        <div class="sub">когда считаешь «на глаз» и продаёшь дешевле, чем нужно</div>
+        <div class="calc-div"></div>
+        <div class="lbl">Риск одной непокрытой претензии</div>
+        <div class="big two">от <span id="claim">10 000</span> ₽</div>
+        <div class="sub">испорченная вещь без акта и описи — из твоего кармана</div>
+        <div class="calc-note">Коробка за <b>990 ₽</b> окупается, как только ты перестал занижать цену или закрыл одну претензию документом. Дальше — чистая экономия и порядок в финансах.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="buy">
+  <div class="wrap">
+    <div class="offer">
+      <div class="offer-grid">
+        <div>
+          <span class="eyebrow">Коробка владельца клининга</span>
+          <h3 style="margin-top:14px">Забираешь всё сразу</h3>
+          <div class="olist">
+            <div><span class="ck">✓</span> Пакет из 9 документов: договоры, счёт, субподряд, акты</div>
+            <div><span class="ck">✓</span> Excel-калькулятор себестоимости и прибыли</div>
+            <div><span class="ck">✓</span> Шаблон прайс-листа + 3 готовых пакета услуг</div>
+            <div><span class="ck">✓</span> Регламент контроля качества и фотоотчётов</div>
+            <div><span class="ck">✓</span> Памятка по налогам и оформлению</div>
+            <div><span class="ck">✓</span> Видео-инструкция по внедрению за вечер</div>
+          </div>
+        </div>
+        <div class="buy">
+          <div class="now">990 <small>₽</small></div>
+          <div class="anchor"><s>от 15 000 ₽</s> · у юриста и бухгалтера</div>
+          <a class="cta" href="#" onclick="return false">Получить доступ <span class="arr">→</span></a>
+          <div class="guarantee">Доступ открывается мгновенно в боте.<br>Если не подойдёт — вернём оплату.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Частые вопросы</span><h2>Коротко о главном</h2></div>
+    <div class="faq" id="faq-acc">
+      <div class="item open"><div class="it-hd"><span class="it-ti">Я только начал, мне уже нужны документы?</span><span class="it-chev">▼</span></div><div class="it-bd"><div class="in">Да. Как только пошёл первый платный заказ, ты несёшь ответственность. Договор и акт нужны не «когда-нибудь», а с первого клиента — именно тогда они и спасают.</div></div></div>
+      <div class="item"><div class="it-hd"><span class="it-ti">Документы точно рабочие и законные?</span><span class="it-chev">▼</span></div><div class="it-bd"><div class="in">Это готовые шаблоны под услуги клининга, которые остаётся заполнить своими данными. Они закрывают типовые ситуации с клиентами и претензиями.</div></div></div>
+      <div class="item"><div class="it-hd"><span class="it-ti">Чем это отличается от набора за 490 ₽?</span><span class="it-chev">▼</span></div><div class="it-bd"><div class="in">Набор за 490 ₽ — про то, как получить первых клиентов (план, объявления, скрипт, расчёт цены заказа). Коробка за 990 ₽ — про то, как работать как бизнес: договоры, счёт и субподряд, себестоимость и точка безубыточности. Содержимое не повторяется.</div></div></div>
+      <div class="item"><div class="it-hd"><span class="it-ti">990 ₽ окупятся?</span><span class="it-chev">▼</span></div><div class="it-bd"><div class="in">Одна закрытая претензия или один заказ, проданный по правильной цене вместо заниженной, окупает коробку многократно. Посчитай в калькуляторе выше.</div></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="eyebrow">Где ты в маршруте</span>
+    <div class="next">
+      <div class="step done"><div class="s-no">Шаг 1 · пройден</div><h5>Стартовый набор · 490 ₽</h5><p>Первые клиенты и заявки.</p></div>
+      <div class="step cur"><div class="s-no">Шаг 2 · сейчас</div><h5>Коробка владельца · 990 ₽</h5><p>Документы, финансы, защита. Работаешь как бизнес.</p></div>
+      <div class="step"><div class="s-no">Шаг 3</div><h5>Курс «Чистый старт»</h5><p>Персонал, B2B, маркетинг, масштаб — с поддержкой куратора.</p></div>
+    </div>
+    <div class="foot-brand">
+      <svg class="mark" style="width:34px;height:34px" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+        <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+        <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+        <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+        <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+      </svg>
+      <div class="lab"><b>Школа клининга «Чистолюб»</b>Коробка владельца клининга · 990 ₽</div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky"><a class="cta" href="#buy">Забрать коробку за 990 ₽ <span class="arr">→</span></a></div>
+
+<script>
+(function(){
+  const box=document.getElementById('stars'); const N=window.innerWidth<600?22:40;
+  for(let i=0;i<N;i++){const s=document.createElement('div'); s.className='spark';
+    const sz=4+Math.random()*12; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+    s.style.width=sz+'px'; s.style.height=sz+'px'; s.style.setProperty('--d',(3+Math.random()*4)+'s');
+    s.style.setProperty('--delay',(Math.random()*5)+'s');
+    s.innerHTML='<svg viewBox="0 0 24 24" width="'+sz+'" height="'+sz+'" fill="currentColor"><path d="M12 0 L14 9 L24 12 L14 15 L12 24 L10 15 L0 12 L10 9 Z"/></svg>';
+    box.appendChild(s);}
+})();
+
+document.querySelectorAll('#faq-acc .item .it-hd').forEach(hd=>{
+  hd.addEventListener('click',()=>{
+    const it=hd.parentElement, bd=it.querySelector('.it-bd'), open=it.classList.contains('open');
+    document.querySelectorAll('#faq-acc .item').forEach(x=>{x.classList.remove('open');x.querySelector('.it-bd').style.maxHeight=null;});
+    if(!open){it.classList.add('open'); bd.style.maxHeight=bd.scrollHeight+'px';}
+  });
+});
+const fo=document.querySelector('#faq-acc .item.open .it-bd'); if(fo) fo.style.maxHeight=fo.scrollHeight+'px';
+
+document.querySelectorAll('#docs-list .docrow').forEach(r=>{
+  r.addEventListener('click',()=>{
+    const d=r.dataset.d;
+    document.querySelectorAll('#docs-list .docrow').forEach(x=>x.classList.remove('on')); r.classList.add('on');
+    document.querySelectorAll('#docs-view .docpanel').forEach(p=>p.classList.toggle('on',p.dataset.d===d));
+  });
+});
+
+const fmt=n=>Math.round(n).toLocaleString('ru-RU');
+const oR=document.getElementById('orders-r'), cR=document.getElementById('check-r'), bR=document.getElementById('blind-r');
+function calc(){
+  const o=+oR.value, c=+cR.value, b=+bR.value;
+  document.getElementById('orders').textContent=o;
+  document.getElementById('check').textContent=fmt(c);
+  document.getElementById('blind').textContent=b;
+  document.getElementById('lostprice').textContent=fmt(o*c*(b/100));
+  document.getElementById('claim').textContent=fmt(Math.max(10000, c*3));
+  oR.style.setProperty('--p',((o-5)/(80-5)*100)+'%');
+  cR.style.setProperty('--p',((c-1500)/(12000-1500)*100)+'%');
+  bR.style.setProperty('--p',(b/25*100)+'%');
+}
+[oR,cR,bR].forEach(x=>x.addEventListener('input',calc)); calc();
+</script>
+</body>
+</html>

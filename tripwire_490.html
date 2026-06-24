@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Первые клиенты · Стартовый набор · Школа клининга «Чистолюб»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#07142E; --navy-850:#0A1A3C; --navy-800:#0A1E45; --navy-700:#103063;
+  --blue-600:#2566B8; --blue-500:#2F86D8; --blue-400:#54A6EE; --sky-300:#8FCDF7;
+  --platinum:#CFE3F6; --white:#FFFFFF; --ink:#EAF2FB; --ink-soft:#9FB5D6; --ink-dim:#6E84A8;
+  --line:rgba(143,205,247,.16); --glass:rgba(255,255,255,.04); --glass-2:rgba(255,255,255,.06);
+  --display:'Unbounded',sans-serif; --body:'Inter',-apple-system,sans-serif;
+  --maxw:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body); color:var(--ink); background:var(--navy-900);
+  -webkit-font-smoothing:antialiased; line-height:1.6; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1100px 600px at 78% -8%, rgba(47,134,216,.28), transparent 60%),
+    radial-gradient(900px 700px at 8% 12%, rgba(16,48,99,.55), transparent 55%),
+    radial-gradient(1000px 900px at 50% 120%, rgba(47,134,216,.12), transparent 60%),
+    linear-gradient(180deg, var(--navy-900), var(--navy-850) 45%, var(--navy-900));
+}
+#stars{position:fixed; inset:0; z-index:-1; pointer-events:none}
+.spark{position:absolute; color:var(--sky-300); opacity:0; filter:drop-shadow(0 0 6px rgba(143,205,247,.7))}
+@media (prefers-reduced-motion:no-preference){
+  .spark{animation:tw var(--d,4s) ease-in-out var(--delay,0s) infinite}
+}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:.9;transform:scale(1)}}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+.eyebrow{
+  font-family:var(--body); font-weight:600; font-size:12px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--sky-300); display:inline-flex; align-items:center; gap:9px;
+}
+.eyebrow::before{content:""; width:26px; height:1px; background:linear-gradient(90deg,transparent,var(--sky-300))}
+
+/* ---------- top bar ---------- */
+header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,rgba(7,20,46,.86),rgba(7,20,46,.55)); border-bottom:1px solid var(--line)}
+.bar{display:flex; align-items:center; justify-content:space-between; height:68px}
+.brand{display:flex; align-items:center; gap:13px}
+.brand .lab{display:flex; flex-direction:column; line-height:1.05}
+.brand .lab b{font-family:var(--display); font-weight:700; font-size:15px; letter-spacing:.01em; color:var(--white)}
+.brand .lab span{font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px}
+.bar .top-cta{font-family:var(--body); font-weight:600; font-size:13.5px; color:var(--navy-900);
+  background:linear-gradient(180deg,#EaF4FF,var(--platinum)); padding:9px 18px; border-radius:100px;
+  text-decoration:none; border:1px solid rgba(255,255,255,.5); white-space:nowrap; transition:.2s}
+.bar .top-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px rgba(47,134,216,.35)}
+
+/* logo mark */
+.mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 12px rgba(47,134,216,.45))}
+
+/* ---------- hero ---------- */
+.hero{padding:74px 0 40px; position:relative}
+.hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center}
+.hero h1{font-family:var(--display); font-weight:800; line-height:1.02; letter-spacing:-.01em;
+  font-size:clamp(38px,6vw,66px); color:var(--white); margin:18px 0 0}
+.hero h1 .glow{background:linear-gradient(120deg,#BFE2FF,var(--blue-400) 55%,#BFE2FF);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+.hero .lede{font-size:17px; color:var(--ink-soft); max-width:40ch; margin:22px 0 30px}
+.hero .lede b{color:var(--ink); font-weight:600}
+.price-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:26px}
+.price-now{font-family:var(--display); font-weight:700; font-size:46px; color:var(--white); line-height:1}
+.price-now small{font-size:22px; opacity:.7}
+.price-old{display:flex; flex-direction:column}
+.price-old s{color:var(--ink-dim); font-size:18px; text-decoration-thickness:1.5px}
+.price-old em{font-style:normal; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--sky-300)}
+.cta{display:inline-flex; align-items:center; gap:11px; font-family:var(--body); font-weight:700; font-size:16px;
+  color:var(--navy-900); text-decoration:none; padding:16px 30px; border-radius:100px; position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#7FC0F5,var(--blue-500)); border:1px solid rgba(191,226,255,.6);
+  box-shadow:0 12px 34px rgba(47,134,216,.45), inset 0 1px 0 rgba(255,255,255,.5); transition:transform .2s}
+.cta::after{content:""; position:absolute; top:0; left:-120%; width:60%; height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-18deg)}
+@media (prefers-reduced-motion:no-preference){.cta:hover::after{animation:sheen .9s}}
+@keyframes sheen{to{left:130%}}
+.cta:hover{transform:translateY(-2px)}
+.cta .arr{font-size:18px}
+.hero .micro{font-size:12.5px; color:var(--ink-dim); margin-top:14px; display:flex; align-items:center; gap:8px}
+.dot-ok{width:7px;height:7px;border-radius:50%;background:var(--blue-400);box-shadow:0 0 9px var(--blue-400)}
+
+/* hero card — skyline + emblem */
+.hero-art{position:relative; aspect-ratio:1/1.05; border-radius:26px; overflow:hidden;
+  background:linear-gradient(180deg,#0C2350,#081634); border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(2,10,28,.6), inset 0 1px 0 rgba(143,205,247,.12)}
+.hero-art .ribbon{position:absolute; top:18px; left:18px; z-index:3; font-family:var(--body); font-weight:700;
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--navy-900);
+  background:linear-gradient(180deg,#EAF4FF,var(--platinum)); padding:7px 13px; border-radius:100px}
+.hero-art .emblem{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+.hero-art .floor{position:absolute; left:0; right:0; bottom:0; height:34%;
+  background:linear-gradient(180deg,transparent,rgba(47,134,216,.12)); 
+  border-top:1px solid rgba(143,205,247,.15)}
+
+/* ---------- generic section ---------- */
+section{padding:62px 0}
+.sec-head{max-width:640px; margin-bottom:38px}
+.sec-head h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.4vw,38px); color:var(--white);
+  line-height:1.08; letter-spacing:-.01em; margin:14px 0 0}
+.sec-head p{color:var(--ink-soft); font-size:15.5px; margin-top:12px}
+
+/* inside list (accordion) */
+.acc{display:grid; gap:12px}
+.item{background:var(--glass); border:1px solid var(--line); border-radius:16px; overflow:hidden; transition:.25s}
+.item:hover{border-color:rgba(143,205,247,.32); background:var(--glass-2)}
+.item.open{border-color:rgba(84,166,238,.5)}
+.it-hd{display:flex; align-items:center; gap:16px; padding:18px 20px; cursor:pointer; user-select:none}
+.it-no{font-family:var(--display); font-weight:600; font-size:14px; color:var(--sky-300);
+  width:34px; height:34px; flex:none; display:grid; place-items:center; border:1px solid var(--line); border-radius:10px;
+  background:rgba(47,134,216,.1)}
+.it-ti{font-weight:600; font-size:16px; color:var(--white); flex:1}
+.it-tag{font-size:11px; color:var(--ink-dim); letter-spacing:.04em; white-space:nowrap}
+.it-chev{color:var(--ink-soft); transition:.25s; font-size:13px}
+.item.open .it-chev{transform:rotate(180deg); color:var(--sky-300)}
+.it-bd{max-height:0; overflow:hidden; transition:max-height .3s ease}
+.it-bd .in{padding:0 20px 20px 70px; color:var(--ink-soft); font-size:14.5px; line-height:1.7}
+
+/* ---------- calculator ---------- */
+.calc-shell{display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:24px; overflow:hidden;
+  border:1px solid var(--line); box-shadow:0 30px 80px rgba(2,10,28,.5)}
+.calc-in{padding:36px; background:linear-gradient(180deg,#0B2150,#0A1A3C)}
+.calc-out{padding:36px; background:linear-gradient(180deg,#0E2A5E,#0B1E47); position:relative}
+.calc-out::before{content:""; position:absolute; left:0; top:18%; bottom:18%; width:1px;
+  background:linear-gradient(180deg,transparent,var(--line),transparent)}
+.field{margin-bottom:24px}
+.field label{display:flex; justify-content:space-between; align-items:baseline; font-size:13px; color:var(--ink-soft); margin-bottom:10px; font-weight:500}
+.field label b{font-family:var(--display); font-weight:600; color:var(--white); font-size:16px}
+input[type=range]{-webkit-appearance:none; width:100%; height:5px; border-radius:5px; outline:none;
+  background:linear-gradient(90deg,var(--blue-500) var(--p,40%), rgba(143,205,247,.18) var(--p,40%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#EAF6FF,var(--blue-400)); border:2px solid #fff; cursor:pointer;
+  box-shadow:0 4px 14px rgba(47,134,216,.6)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue-400);border:2px solid #fff;cursor:pointer}
+.seg{display:flex; gap:8px}
+.seg button{flex:1; font-family:var(--body); font-weight:600; font-size:13px; color:var(--ink-soft);
+  background:rgba(143,205,247,.06); border:1px solid var(--line); border-radius:12px; padding:11px 8px; cursor:pointer; transition:.18s}
+.seg button:hover{color:var(--white)}
+.seg button.on{background:linear-gradient(180deg,rgba(84,166,238,.28),rgba(47,134,216,.18));
+  border-color:rgba(84,166,238,.6); color:var(--white)}
+.calc-out .lbl{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.big{font-family:var(--display); font-weight:700; color:var(--white); line-height:1; margin:8px 0 4px;
+  font-variant-numeric:tabular-nums}
+.big.one{font-size:48px}
+.big.two{font-size:34px; background:linear-gradient(120deg,#BFE2FF,var(--blue-400));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.calc-out .sub{font-size:13px; color:var(--ink-dim)}
+.calc-div{height:1px; background:var(--line); margin:26px 0}
+.calc-note{margin-top:26px; padding:14px 16px; border:1px dashed rgba(143,205,247,.3); border-radius:12px;
+  font-size:13px; color:var(--ink-soft); background:rgba(47,134,216,.06)}
+.calc-note b{color:var(--white)}
+
+/* ---------- 14 days ---------- */
+.days-tabs{display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap}
+.dtab{font-family:var(--body); font-weight:600; font-size:13.5px; color:var(--ink-soft); cursor:pointer;
+  padding:10px 18px; border-radius:100px; border:1px solid var(--line); background:var(--glass); transition:.18s}
+.dtab:hover{color:var(--white)}
+.dtab.on{color:var(--navy-900); background:linear-gradient(180deg,#EAF4FF,var(--platinum)); border-color:transparent}
+.dpanel{display:none; background:var(--glass); border:1px solid var(--line); border-radius:18px; padding:26px 28px}
+.dpanel.on{display:block; animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.dpanel h4{font-family:var(--display); font-weight:600; font-size:18px; color:var(--white); margin-bottom:6px}
+.dpanel .ph{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.dpanel ul{list-style:none; margin-top:16px; display:grid; gap:10px}
+.dpanel li{padding-left:26px; position:relative; color:var(--ink-soft); font-size:14.5px}
+.dpanel li::before{content:""; position:absolute; left:0; top:8px; width:9px; height:9px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#EAF6FF,var(--blue-400)); box-shadow:0 0 8px rgba(84,166,238,.7)}
+
+/* ---------- offer card ---------- */
+.offer{position:relative; border-radius:26px; padding:46px 44px; overflow:hidden;
+  background:linear-gradient(160deg,#0E2A5E,#081634); border:1px solid rgba(143,205,247,.28);
+  box-shadow:0 40px 100px rgba(2,10,28,.6), inset 0 1px 0 rgba(143,205,247,.18)}
+.offer::before{content:""; position:absolute; width:360px; height:360px; right:-90px; top:-120px; border-radius:50%;
+  background:radial-gradient(circle,rgba(47,134,216,.4),transparent 65%); pointer-events:none}
+.offer-grid{display:grid; grid-template-columns:1.25fr .9fr; gap:40px; align-items:center; position:relative}
+.offer h3{font-family:var(--display); font-weight:700; font-size:26px; color:var(--white); margin-bottom:18px}
+.olist{display:grid; gap:13px}
+.olist div{display:flex; gap:12px; align-items:flex-start; font-size:15px; color:var(--ink)}
+.olist .ck{flex:none; width:24px; height:24px; border-radius:7px; display:grid; place-items:center; margin-top:1px;
+  background:linear-gradient(180deg,rgba(84,166,238,.35),rgba(47,134,216,.2)); border:1px solid rgba(84,166,238,.5); color:#EAF6FF; font-size:12px; font-weight:700}
+.buy{background:linear-gradient(180deg,#0B2150,#0A1A3C); border:1px solid var(--line); border-radius:20px; padding:30px; text-align:center}
+.buy .now{font-family:var(--display); font-weight:800; font-size:54px; color:var(--white); line-height:1}
+.buy .now small{font-size:24px; opacity:.7}
+.buy .anchor{color:var(--ink-dim); font-size:14px; margin:4px 0 18px}
+.buy .anchor s{text-decoration-thickness:1.5px}
+.buy .cta{width:100%; justify-content:center; font-size:17px}
+.buy .guarantee{margin-top:14px; font-size:12px; color:var(--ink-dim); line-height:1.5}
+
+/* ---------- faq ---------- */
+.faq{display:grid; gap:10px; max-width:780px}
+.faq .item .it-hd{padding:17px 20px}
+.faq .it-ti{font-size:15.5px}
+.faq .it-bd .in{padding:0 20px 18px 20px}
+
+/* ---------- footer / next step ---------- */
+footer{padding:56px 0 70px; border-top:1px solid var(--line); margin-top:30px}
+.next{display:flex; gap:16px; flex-wrap:wrap; margin:26px 0 40px}
+.step{flex:1; min-width:230px; background:var(--glass); border:1px solid var(--line); border-radius:16px; padding:20px 22px}
+.step .s-no{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--sky-300); font-weight:600}
+.step h5{font-family:var(--display); font-weight:600; font-size:16px; color:var(--white); margin:8px 0 6px}
+.step p{font-size:13.5px; color:var(--ink-soft)}
+.step.cur{border-color:rgba(84,166,238,.55); background:linear-gradient(180deg,rgba(47,134,216,.14),transparent)}
+.foot-brand{display:flex; align-items:center; gap:13px; color:var(--ink-dim); font-size:12.5px}
+.foot-brand .lab b{color:var(--ink); font-family:var(--display); font-weight:600; font-size:14px; display:block}
+
+/* sticky mobile cta */
+.sticky{position:fixed; left:0; right:0; bottom:0; z-index:60; display:none;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom)); backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,rgba(7,20,46,.4),rgba(7,20,46,.92)); border-top:1px solid var(--line)}
+.sticky .cta{width:100%; justify-content:center}
+
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr; gap:34px}
+  .hero-art{max-width:420px; margin:0 auto; width:100%}
+  .calc-shell{grid-template-columns:1fr}
+  .calc-out::before{display:none}
+  .offer-grid{grid-template-columns:1fr; gap:28px}
+  .offer{padding:34px 24px}
+  .bar .top-cta{display:none}
+  .sticky{display:block}
+  body{padding-bottom:84px}
+}
+@media (max-width:480px){
+  .wrap{padding:0 18px}
+  .calc-in,.calc-out{padding:26px 22px}
+  .big.one{font-size:40px}
+}
+:focus-visible{outline:2px solid var(--sky-300); outline-offset:3px; border-radius:6px}
+</style>
+</head>
+<body>
+<div id="stars" aria-hidden="true"></div>
+
+<!-- SVG logo mark (reusable) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#9FD8FB"/><stop offset="1" stop-color="#2566B8"/>
+  </linearGradient>
+  <linearGradient id="gWhite" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CFE3F6"/>
+  </linearGradient>
+</defs></svg>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" aria-label="Школа клининга Чистолюб">
+        <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+        <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+        <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+        <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+        <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+        <path d="M32 40 L32 52" stroke="#2566B8" stroke-width="1.4" opacity=".5"/>
+        <path d="M48 12 L49 15 L52 16 L49 17 L48 20 L47 17 L44 16 L47 15 Z" fill="#8FCDF7"/>
+      </svg>
+      <div class="lab"><b>Чистолюб</b><span>Школа клининга</span></div>
+    </div>
+    <a class="top-cta" href="#buy">Забрать за 490 ₽</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Трипваер · Стартовый набор</span>
+      <h1>Первые клиенты<br><span class="glow">за 14 дней</span></h1>
+      <p class="lede">Готовый к запуску набор для тех, кто открывает клининг. Не теория — <b>план, шаблоны и скрипты</b>, с которыми приходят первые заявки. Без опыта и без бюджета на рекламу.</p>
+      <div class="price-row">
+        <div class="price-now">490 <small>₽</small></div>
+        <div class="price-old"><s>3 900 ₽</s><em>Ценность набора</em></div>
+      </div>
+      <a class="cta" href="#buy">Забрать набор <span class="arr">→</span></a>
+      <div class="micro"><span class="dot-ok"></span> Мгновенный доступ в боте сразу после оплаты</div>
+    </div>
+
+    <div class="hero-art">
+      <div class="ribbon">Окупается с 1-го заказа</div>
+      <div class="emblem">
+        <svg width="62%" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+          <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+          <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+          <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+          <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+          <path d="M32 40 L32 52" stroke="#2566B8" stroke-width="1.4" opacity=".5"/>
+          <path d="M49 11 L50 15 L54 16 L50 17 L49 21 L48 17 L44 16 L48 15 Z" fill="#8FCDF7"/>
+        </svg>
+      </div>
+      <div class="floor"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section id="inside">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Что внутри</span>
+      <h2>5 инструментов, а не 50 страниц теории</h2>
+      <p>Каждый элемент закрывает конкретный шаг запуска. Открываются один за другим — нажми, чтобы посмотреть.</p>
+    </div>
+    <div class="acc" id="inside-acc">
+      <div class="item open">
+        <div class="it-hd"><span class="it-no">01</span><span class="it-ti">План первых 14 дней</span><span class="it-tag">PDF · по шагам</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Что делать каждый день, чтобы за две недели дойти до первой оплаты. Без воды и «мотивации» — конкретные действия с понятным порядком. Открыл, сделал, отметил.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-no">02</span><span class="it-ti">Шаблон продающего объявления</span><span class="it-tag">+ 3 примера</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Готовый текст для Авито и Юлы, который приводит заявки, плюс три рабочих примера и подсказки по фото. Подставляешь свои данные — публикуешь.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-no">03</span><span class="it-ti">Скрипт первого разговора</span><span class="it-tag">как назвать цену</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Дословные формулировки: как ответить на «сколько стоит», назвать цену уверенно и закрыть на заказ, не сливаясь в скидку при первом же сомнении клиента.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-no">04</span><span class="it-ti">Калькулятор цены и прибыли</span><span class="it-tag">демо ниже ↓</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Вводишь метраж и тип уборки — видишь стоимость заказа и свою чистую прибыль. Перестаёшь считать «на глаз» и работать в ноль. Облегчённую версию можно попробовать прямо на этой странице.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-no">05</span><span class="it-ti">Чек-лист: 5 каналов первых клиентов</span><span class="it-tag">без бюджета</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Где брать заявки бесплатно: сарафан, площадки объявлений, карты, локальные чаты. По каждому каналу — что именно сделать сегодня.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE CALCULATOR -->
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Попробуй вживую</span>
+      <h2>Сколько ты заработаешь с одного заказа</h2>
+      <p>Это облегчённая версия калькулятора из набора. Подвигай ползунок и выбери тип уборки — цифры пересчитаются.</p>
+    </div>
+    <div class="calc-shell">
+      <div class="calc-in">
+        <div class="field">
+          <label>Площадь объекта <b><span id="area">50</span> м²</b></label>
+          <input type="range" id="area-r" min="20" max="200" step="5" value="50">
+        </div>
+        <div class="field">
+          <label>Тип уборки</label>
+          <div class="seg" id="seg">
+            <button data-rate="60" class="on">Поддерживающая</button>
+            <button data-rate="120">Генеральная</button>
+            <button data-rate="180">После ремонта</button>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Заказов в неделю <b><span id="cnt">5</span></b></label>
+          <input type="range" id="cnt-r" min="1" max="15" step="1" value="5">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="lbl">Стоимость одного заказа</div>
+        <div class="big one">~ <span id="price">3 000</span> ₽</div>
+        <div class="sub">средняя ставка за этот тип уборки</div>
+        <div class="calc-div"></div>
+        <div class="lbl">Твоя чистая прибыль с заказа</div>
+        <div class="big two">~ <span id="profit">1 650</span> ₽</div>
+        <div class="sub">после химии, зарплаты и налогов</div>
+        <div class="calc-note">При <b><span id="cnt2">5</span></b> заказах в неделю это около <b>~ <span id="month">35 750</span> ₽</b> в месяц. В наборе — как назвать эту цену клиенту, чтобы он сказал «да».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 DAYS -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Как устроен план</span>
+      <h2>От нуля до первого заказа — по фазам</h2>
+      <p>Набор ведёт тебя по трём этапам за две недели. Переключай, чтобы посмотреть каждый.</p>
+    </div>
+    <div class="days-tabs" id="dtabs">
+      <button class="dtab on" data-p="0">Дни 1–4 · Подготовка</button>
+      <button class="dtab" data-p="1">Дни 5–9 · Первые касания</button>
+      <button class="dtab" data-p="2">Дни 10–14 · Первые заказы</button>
+    </div>
+    <div class="dpanel on" data-p="0">
+      <div class="ph">Этап 1</div><h4>Готовим базу для запуска</h4>
+      <ul>
+        <li>Выбираешь нишу и формат, с которым стартуешь.</li>
+        <li>Собираешь стартовый набор и считаешь свою цену в калькуляторе.</li>
+        <li>Готовишь объявление и пару фото результата по шаблону.</li>
+      </ul>
+    </div>
+    <div class="dpanel" data-p="1">
+      <div class="ph">Этап 2</div><h4>Выходим к клиентам</h4>
+      <ul>
+        <li>Публикуешь объявление на площадках и в локальных чатах.</li>
+        <li>Запускаешь 5 бесплатных каналов из чек-листа.</li>
+        <li>Отвечаешь на первые заявки по скрипту разговора.</li>
+      </ul>
+    </div>
+    <div class="dpanel" data-p="2">
+      <div class="ph">Этап 3</div><h4>Закрываем на оплату</h4>
+      <ul>
+        <li>Называешь цену уверенно и закрываешь заказ без слива в скидку.</li>
+        <li>Выполняешь первую уборку и фиксируешь результат.</li>
+        <li>Просишь первый отзыв — он приведёт следующего клиента.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER / BUY -->
+<section id="buy">
+  <div class="wrap">
+    <div class="offer">
+      <div class="offer-grid">
+        <div>
+          <span class="eyebrow">Стартовый набор «Первые клиенты»</span>
+          <h3 style="margin-top:14px">Забираешь всё сразу</h3>
+          <div class="olist">
+            <div><span class="ck">✓</span> Пошаговый план первых 14 дней</div>
+            <div><span class="ck">✓</span> Шаблон продающего объявления + 3 примера</div>
+            <div><span class="ck">✓</span> Скрипт первого разговора с клиентом</div>
+            <div><span class="ck">✓</span> Калькулятор цены и прибыли уборки</div>
+            <div><span class="ck">✓</span> Чек-лист «5 каналов первых клиентов»</div>
+          </div>
+        </div>
+        <div class="buy">
+          <div class="now">490 <small>₽</small></div>
+          <div class="anchor"><s>3 900 ₽</s> · ценность набора</div>
+          <a class="cta" href="#" onclick="return false">Получить доступ <span class="arr">→</span></a>
+          <div class="guarantee">Доступ открывается мгновенно в боте.<br>Если набор не подойдёт — вернём оплату.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Частые вопросы</span>
+      <h2>Коротко о главном</h2>
+    </div>
+    <div class="faq acc" id="faq-acc">
+      <div class="item open">
+        <div class="it-hd"><span class="it-ti">Подойдёт, если у меня совсем нет опыта?</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Да, набор сделан именно для старта с нуля. Все шаги объяснены простым языком, а шаблоны и скрипты остаётся только применить.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-ti">Сколько времени это займёт?</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">План рассчитан на 14 дней при паре часов в день. Можно идти быстрее — порядок действий понятный, ничего не нужно придумывать самому.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-ti">Что происходит после оплаты?</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Доступ открывается сразу в боте. Все материалы — внутри, забираешь и начинаешь по плану первого дня.</div></div>
+      </div>
+      <div class="item">
+        <div class="it-hd"><span class="it-ti">490 ₽ точно окупятся?</span><span class="it-chev">▼</span></div>
+        <div class="it-bd"><div class="in">Один заказ на уборку в разы превышает стоимость набора. Цель этих 490 ₽ — чтобы ты получил первые заявки, а не «ещё один курс в закладки».</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER / NEXT STEP -->
+<footer>
+  <div class="wrap">
+    <span class="eyebrow">Это первый шаг</span>
+    <div class="next">
+      <div class="step cur"><div class="s-no">Шаг 1 · сейчас</div><h5>Стартовый набор — 490 ₽</h5><p>Получаешь первые заявки и запускаешься.</p></div>
+      <div class="step"><div class="s-no">Шаг 2</div><h5>Коробка владельца — 990 ₽</h5><p>Договоры, калькулятор себестоимости, регламенты. Работаешь вбелую и считаешь прибыль.</p></div>
+      <div class="step"><div class="s-no">Шаг 3</div><h5>Курс «Чистый старт»</h5><p>Полная система: персонал, B2B, маркетинг, масштаб. С поддержкой куратора.</p></div>
+    </div>
+    <div class="foot-brand">
+      <svg class="mark" style="width:34px;height:34px" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="url(#gWhite)"/>
+        <rect x="26" y="22" width="5" height="16" rx="1" fill="url(#gBlue)"/>
+        <rect x="32" y="17" width="6" height="21" rx="1" fill="url(#gBlue)"/>
+        <rect x="39" y="24" width="5" height="14" rx="1" fill="url(#gBlue)"/>
+        <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="url(#gWhite)"/>
+      </svg>
+      <div class="lab"><b>Школа клининга «Чистолюб»</b>Стартовый набор «Первые клиенты» · 490 ₽</div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky"><a class="cta" href="#buy">Забрать набор за 490 ₽ <span class="arr">→</span></a></div>
+
+<script>
+// sparkle field
+(function(){
+  const box=document.getElementById('stars'); const N=window.innerWidth<600?22:40;
+  const star='<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 0 L14 9 L24 12 L14 15 L12 24 L10 15 L0 12 L10 9 Z"/></svg>';
+  for(let i=0;i<N;i++){const s=document.createElement('div'); s.className='spark';
+    const sz=4+Math.random()*12; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+    s.style.width=sz+'px'; s.style.height=sz+'px'; s.style.setProperty('--d',(3+Math.random()*4)+'s');
+    s.style.setProperty('--delay',(Math.random()*5)+'s'); s.innerHTML=star;
+    s.querySelector('svg').setAttribute('width',sz); s.querySelector('svg').setAttribute('height',sz);
+    box.appendChild(s);}
+})();
+
+// accordions
+function bindAcc(id){
+  document.querySelectorAll('#'+id+' .item .it-hd').forEach(hd=>{
+    hd.addEventListener('click',()=>{
+      const it=hd.parentElement; const bd=it.querySelector('.it-bd');
+      const open=it.classList.contains('open');
+      it.parentElement.querySelectorAll('.item').forEach(x=>{x.classList.remove('open');x.querySelector('.it-bd').style.maxHeight=null;});
+      if(!open){it.classList.add('open'); bd.style.maxHeight=bd.scrollHeight+'px';}
+    });
+  });
+  // open default
+  const def=document.querySelector('#'+id+' .item.open .it-bd'); if(def) def.style.maxHeight=def.scrollHeight+'px';
+}
+bindAcc('inside-acc'); bindAcc('faq-acc');
+
+// days tabs
+document.querySelectorAll('#dtabs .dtab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    const p=t.dataset.p;
+    document.querySelectorAll('#dtabs .dtab').forEach(x=>x.classList.remove('on')); t.classList.add('on');
+    document.querySelectorAll('.dpanel').forEach(x=>x.classList.toggle('on',x.dataset.p===p));
+  });
+});
+
+// calculator
+const fmt=n=>Math.round(n).toLocaleString('ru-RU');
+let rate=60;
+const areaR=document.getElementById('area-r'), cntR=document.getElementById('cnt-r');
+function calc(){
+  const area=+areaR.value, cnt=+cntR.value;
+  const price=area*rate;
+  const profit=price*0.55;            // ~45% себестоимость
+  document.getElementById('area').textContent=area;
+  document.getElementById('cnt').textContent=cnt;
+  document.getElementById('cnt2').textContent=cnt;
+  document.getElementById('price').textContent=fmt(price);
+  document.getElementById('profit').textContent=fmt(profit);
+  document.getElementById('month').textContent=fmt(profit*cnt*4.33);
+  areaR.style.setProperty('--p',((area-20)/(200-20)*100)+'%');
+  cntR.style.setProperty('--p',((cnt-1)/(15-1)*100)+'%');
+}
+areaR.addEventListener('input',calc); cntR.addEventListener('input',calc);
+document.querySelectorAll('#seg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    rate=+b.dataset.rate; calc();
+  });
+});
+calc();
+</script>
+</body>
+</html>
