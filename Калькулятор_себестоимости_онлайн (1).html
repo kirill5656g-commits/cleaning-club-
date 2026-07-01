@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор себестоимости — Чистолюб</title>
+<style>
+:root{
+  --navy:#0A1E45; --navy2:#07142E; --blue:#2566B8; --blue2:#2F86D8;
+  --sky:#8FCDF7; --light:#EAF4FB; --plat:#CFE3F6; --ink:#33455F; --dim:#7E93B4;
+  --line:#E2EBF5; --green:#2E7D52; --greenbg:#EFF8F2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:#F5F8FC;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 50px}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+
+/* header */
+.top{background:linear-gradient(155deg,#0A1E45,#07142E);color:#EAF2FB;padding:26px 0 22px;margin-bottom:22px}
+.top .brand{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.top .brand b{display:block;font-size:15px;color:#fff;line-height:1.05}
+.top .brand span{display:block;font-size:9px;color:var(--sky);letter-spacing:1.5px}
+.top h1{color:#fff;font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+.top p{color:#AEC1E0;font-size:14px}
+
+/* tabs */
+.tabs{display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{flex:1;min-width:130px;text-align:center;padding:11px 8px;border-radius:10px;font-size:13.5px;font-weight:700;
+  color:var(--dim);cursor:pointer;border:none;background:none;transition:.15s;white-space:nowrap}
+.tab:hover{background:var(--light);color:var(--blue)}
+.tab.active{background:linear-gradient(135deg,#2566B8,#2F86D8);color:#fff;box-shadow:0 6px 16px rgba(37,102,184,.3)}
+
+.panel{display:none}
+.panel.active{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:16px}
+.card h2{font-size:19px;color:var(--navy);font-weight:800;margin-bottom:4px}
+.card .hint{font-size:13.5px;color:var(--dim);margin-bottom:18px}
+
+/* input rows */
+.row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid #F0F4F9}
+.row:last-child{border:none}
+.row label{font-size:14.5px;color:var(--ink);flex:1}
+.row label b{color:var(--navy)}
+.ibox{position:relative;flex:0 0 auto}
+.ibox input{width:132px;font-size:15px;font-weight:700;color:var(--blue);text-align:right;
+  padding:10px 34px 10px 12px;border:2px solid var(--plat);border-radius:10px;background:var(--light);outline:none;transition:.15s;
+  -moz-appearance:textfield}
+.ibox input::-webkit-outer-spin-button,.ibox input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ibox input:focus{border-color:var(--blue2);background:#fff;box-shadow:0 0 0 3px rgba(47,134,216,.15)}
+.ibox .unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--dim);font-weight:700;pointer-events:none}
+
+/* computed row */
+.crow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0F4F9;font-size:14.5px}
+.crow:last-child{border:none}
+.crow .cl{color:var(--ink)}
+.crow .cv{font-weight:700;color:var(--navy)}
+
+/* big result */
+.result{background:var(--navy);border-radius:16px;padding:24px;color:#fff;text-align:center;margin-top:8px}
+.result .rl{font-size:12px;color:var(--sky);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.result .rb{font-size:42px;font-weight:800;letter-spacing:-.03em;margin:4px 0}
+.result .rs{font-size:14px;color:#AEC1E0}
+.result .rs b{color:#9BE8BE}
+.result.mini .rb{font-size:34px}
+
+.linknote{font-size:12.5px;color:var(--dim);font-style:italic;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+
+/* type table */
+.ttable{width:100%;border-collapse:collapse;margin-top:6px}
+.ttable th{background:var(--navy);color:#EAF2FB;font-size:12px;text-align:left;padding:10px 10px;font-weight:700}
+.ttable th:first-child{border-radius:8px 0 0 0}.ttable th:last-child{border-radius:0 8px 0 0}
+.ttable td{padding:8px 10px;border-bottom:1px solid #F0F4F9;font-size:13.5px}
+.ttable td:first-child{font-weight:700;color:var(--navy)}
+.ttable input{width:100%;max-width:110px;font-size:13.5px;font-weight:700;color:var(--blue);text-align:right;
+  padding:7px 10px;border:2px solid var(--plat);border-radius:8px;background:var(--light);outline:none;-moz-appearance:textfield}
+.ttable input::-webkit-outer-spin-button,.ttable input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ttable input:focus{border-color:var(--blue2);background:#fff}
+.ttable .mg{font-weight:800}
+.ttable tr.best td{background:var(--greenbg)}
+.ttable tr.best td:first-child::after{content:" ★";color:var(--green)}
+.bestline{margin-top:14px;background:var(--greenbg);border:1px solid #CDE9D8;border-radius:10px;padding:12px 15px;font-size:14px;color:var(--green)}
+.bestline b{color:#1F5E3C}
+
+.foot{text-align:center;font-size:12px;color:var(--dim);margin-top:24px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
+        <path d="M22 8 L24 14 L30 16 L24 18 L22 24 L20 18 L14 16 L20 14 Z" fill="#fff"/>
+        <rect x="26" y="22" width="5" height="16" rx="1" fill="#8FCDF7"/><rect x="32" y="17" width="6" height="21" rx="1" fill="#8FCDF7"/><rect x="39" y="24" width="5" height="14" rx="1" fill="#8FCDF7"/>
+        <path d="M10 40 C18 36 28 36 32 40 C36 36 46 36 54 40 L54 52 C46 48 36 48 32 52 C28 48 18 48 10 52 Z" fill="#CFE3F6"/>
+        <path d="M49 11 L50 15 L54 16 L50 17 L49 21 L48 17 L44 16 L48 15 Z" fill="#8FCDF7"/></svg>
+      <div><b>Чистолюб</b><span>ШКОЛА КЛИНИНГА</span></div>
+    </div>
+    <h1>Калькулятор себестоимости</h1>
+    <p>Меняй синие цифры — всё считается само. Работает в браузере, Excel не нужен.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" data-tab="0">Себестоимость</button>
+    <button class="tab" data-tab="1">Точка безубыточности</button>
+    <button class="tab" data-tab="2">Маржа по типам</button>
+    <button class="tab" data-tab="3">Сводка за месяц</button>
+  </div>
+
+  <!-- TAB 0: СЕБЕСТОИМОСТЬ -->
+  <div class="panel active" data-panel="0">
+    <div class="card">
+      <h2>Себестоимость и прибыль одного заказа</h2>
+      <p class="hint">Впиши цену заказа и свои расходы — увидишь реальную прибыль, а не выручку.</p>
+      <div class="row"><label><b>Цена заказа</b> (чек клиента)</label><div class="ibox"><input type="number" id="price" value="6000"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Химия и расходники</label><div class="ibox"><input type="number" id="chem" value="400"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Оплата труда (вы / мастер)</label><div class="ibox"><input type="number" id="labor" value="1800"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Дорога / логистика</label><div class="ibox"><input type="number" id="road" value="300"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Износ техники (амортизация)</label><div class="ibox"><input type="number" id="depr" value="150"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Прочие расходы</label><div class="ibox"><input type="number" id="other" value="100"><span class="unit">₽</span></div></div>
+      <div class="row"><label>Налог (% с цены заказа)</label><div class="ibox"><input type="number" id="tax" value="6"><span class="unit">%</span></div></div>
+    </div>
+    <div class="card">
+      <div class="crow"><span class="cl">Итого себестоимость</span><span class="cv" id="c-cost">—</span></div>
+      <div class="crow"><span class="cl">Сумма налога</span><span class="cv" id="c-taxsum">—</span></div>
+      <div class="result"><div class="rl">Чистая прибыль с заказа</div><div class="rb" id="c-profit">—</div><div class="rs">Маржа: <b id="c-margin">—</b></div></div>
+      <p class="linknote">Это твоя прибыль, а не цена для клиента. Расчёт цены заказа — в наборе за 490 ₽.</p>
+    </div>
+  </div>
+
+  <!-- TAB 1: ТОЧКА БЕЗУБЫТОЧНОСТИ -->
+  <div class="panel" data-panel="1">
+    <div class="card">
+      <h2>Точка безубыточности за месяц</h2>
+      <p class="hint">Сколько заказов в месяц нужно, чтобы покрыть постоянные расходы и выйти в плюс.</p>
+      <div class="row"><label><b>Постоянные расходы в месяц</b><br><span style="font-size:12.5px;color:var(--dim)">аренда, реклама, связь, подписки</span></label><div class="ibox"><input type="number" id="fixed" value="30000"><span class="unit">₽</span></div></div>
+      <div class="crow"><span class="cl">Средняя прибыль с заказа <span style="color:var(--green);font-size:12px">(из вкладки 1)</span></span><span class="cv" id="be-profit">—</span></div>
+    </div>
+    <div class="card">
+      <div class="result mini"><div class="rl">Точка безубыточности</div><div class="rb" id="be-count">—</div><div class="rs">заказов в месяц, чтобы выйти в ноль</div></div>
+      <p class="linknote">Каждый заказ сверх этого числа приносит чистую прибыль.</p>
+    </div>
+  </div>
+
+  <!-- TAB 2: МАРЖА ПО ТИПАМ -->
+  <div class="panel" data-panel="2">
+    <div class="card">
+      <h2>Маржа по типам уборки</h2>
+      <p class="hint">Впиши чек и себестоимость по типам — увидишь, какой вид уборки выгоднее.</p>
+      <table class="ttable">
+        <thead><tr><th>Тип уборки</th><th>Чек, ₽</th><th>Себест., ₽</th><th>Маржа</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="bestline" id="best">—</div>
+    </div>
+  </div>
+
+  <!-- TAB 3: СВОДКА ЗА МЕСЯЦ -->
+  <div class="panel" data-panel="3">
+    <div class="card">
+      <h2>Финансовая сводка за месяц</h2>
+      <p class="hint">Сводит всё вместе: сколько ты зарабатываешь чистыми за месяц.</p>
+      <div class="row"><label><b>Заказов в месяц</b></label><div class="ibox"><input type="number" id="orders" value="40"><span class="unit">шт</span></div></div>
+      <div class="crow"><span class="cl">Средняя прибыль с заказа <span style="color:var(--green);font-size:12px">(вкладка 1)</span></span><span class="cv" id="s-profit">—</span></div>
+      <div class="crow"><span class="cl">Постоянные расходы <span style="color:var(--green);font-size:12px">(вкладка 2)</span></span><span class="cv" id="s-fixed">—</span></div>
+      <div class="crow"><span class="cl">Валовая прибыль (заказы × прибыль)</span><span class="cv" id="s-gross">—</span></div>
+    </div>
+    <div class="card">
+      <div class="result"><div class="rl">Чистая прибыль за месяц</div><div class="rb" id="s-net">—</div><div class="rs">Запас над точкой безубыточности: <b id="s-buffer">—</b> заказов</div></div>
+    </div>
+  </div>
+
+  <div class="foot">Чистолюб · Школа клининга · Коробка владельца 990 ₽</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const num=id=>parseFloat($(id).value)||0;
+const rub=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+const pct=n=>(n*100).toFixed(1).replace('.',',')+'%';
+
+// tabs
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.querySelector(`.panel[data-panel="${t.dataset.tab}"]`).classList.add('active');
+});
+
+// type table
+const TYPES=[["Поддерживающая",6000,2750],["Генеральная",12000,5200],["После ремонта",18000,8500],["Окна",4000,1400],["B2B офис (мес)",25000,12000]];
+const tbody=$('tbody');
+TYPES.forEach((r,i)=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${r[0]}</td>
+    <td><input type="number" data-t="chk" data-i="${i}" value="${r[1]}"></td>
+    <td><input type="number" data-t="cost" data-i="${i}" value="${r[2]}"></td>
+    <td class="mg" id="mg-${i}">—</td>`;
+  tbody.appendChild(tr);
+});
+
+function calcProfit(){
+  const price=num('price');
+  const cost=num('chem')+num('labor')+num('road')+num('depr')+num('other');
+  const taxsum=price*num('tax')/100;
+  const profit=price-cost-taxsum;
+  const margin=price>0?profit/price:0;
+  return {price,cost,taxsum,profit,margin};
+}
+
+function recalc(){
+  // tab 1
+  const {cost,taxsum,profit,margin}=calcProfit();
+  $('c-cost').textContent=rub(cost);
+  $('c-taxsum').textContent=rub(taxsum);
+  $('c-profit').textContent=rub(profit);
+  $('c-margin').textContent=pct(margin);
+
+  // tab 2
+  const fixed=num('fixed');
+  $('be-profit').textContent=rub(profit);
+  const be=profit>0?Math.ceil(fixed/profit):0;
+  $('be-count').textContent=be>0?be:'—';
+
+  // tab 3 (маржа по типам)
+  let bestI=-1,bestM=-Infinity;
+  TYPES.forEach((r,i)=>{
+    const chk=parseFloat(document.querySelector(`input[data-t="chk"][data-i="${i}"]`).value)||0;
+    const cst=parseFloat(document.querySelector(`input[data-t="cost"][data-i="${i}"]`).value)||0;
+    const m=chk>0?(chk-cst)/chk:0;
+    $(`mg-${i}`).textContent=pct(m);
+    $(`mg-${i}`).style.color=m>=0?'var(--green)':'#C4576F';
+    document.querySelectorAll('#tbody tr')[i].classList.remove('best');
+    if(m>bestM){bestM=m;bestI=i;}
+  });
+  if(bestI>=0){
+    document.querySelectorAll('#tbody tr')[bestI].classList.add('best');
+    const name=document.querySelectorAll('#tbody tr')[bestI].children[0].textContent.replace(' ★','');
+    $('best').innerHTML=`Самый выгодный тип: <b>${name}</b> — маржа ${pct(bestM)}. Делай на нём акцент в продажах.`;
+  }
+
+  // tab 4 (сводка)
+  const orders=num('orders');
+  $('s-profit').textContent=rub(profit);
+  $('s-fixed').textContent=rub(fixed);
+  const gross=orders*profit;
+  $('s-gross').textContent=rub(gross);
+  $('s-net').textContent=rub(gross-fixed);
+  $('s-buffer').textContent=(orders-be);
+}
+
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',recalc));
+recalc();
+</script>
+</body>
+</html>
