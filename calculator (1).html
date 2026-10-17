@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Калькулятор объекта</title>
+<meta name="description" content="Калькулятор стоимости клинингового объекта: рекомендуемая цена, прибыль, маржа и цена без убытка.">
+<meta name="theme-color" content="#0A1E45">
+<style>
+:root{
+  --navy:#0A1E45;--navy2:#13306a;--blue:#2F86D8;--sky:#8FCDF7;--plat:#E8F1FB;
+  --bg:#F3F7FC;--card:#FFFFFF;--ink:#14213D;--dim:#5B6B85;--line:#D7E3F0;
+  --good:#1E9E6A;--warn:#C98A12;--bad:#D14343;--field:#FFFBEA;--fieldline:#E9D98F;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#07142E;--card:#0F2149;--ink:#EAF2FB;--dim:#9FB3D1;--line:#22396b;--plat:#132a5a;
+  --field:#13285a;--fieldline:#2b4a8a;
+}}
+:root[data-theme="dark"]{--bg:#07142E;--card:#0F2149;--ink:#EAF2FB;--dim:#9FB3D1;--line:#22396b;--plat:#132a5a;--field:#13285a;--fieldline:#2b4a8a}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--navy);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:8;box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+.mbar b{font-size:20px}.mbar span{font-size:12px;color:var(--sky)}
+@media(min-width:900px){.mbar{display:none}}
+@media(max-width:899px){footer{padding-bottom:80px}}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+header{background:linear-gradient(135deg,#07142E 0%,#0A1E45 55%,#1d4f93 100%);color:#fff;padding:28px 16px 34px}
+.wrap{max-width:1080px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:700}
+h1{font-size:clamp(24px,5vw,38px);line-height:1.15;margin:8px 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:#CFE3F6;max-width:620px}
+.hbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.btn{appearance:none;border:1px solid transparent;border-radius:12px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer;background:var(--blue);color:#fff;transition:filter .15s,transform .05s}
+.btn:active{transform:translateY(1px)}.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:10px}
+main{padding:0 16px 40px;margin-top:-18px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}.res{position:sticky;top:12px;align-self:start}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(10,30,69,.06)}
+.sec+.sec{margin-top:14px}
+.sec h2{display:flex;align-items:center;gap:10px;font-size:17px;margin:0 0 4px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--navy);color:#fff;font-size:13px;flex:none}
+.sub{color:var(--dim);font-size:13px;margin:0 0 12px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields .full{grid-column:1/-1}
+@media(max-width:420px){.fields{grid-template-columns:1fr}}
+label{display:block;font-size:13px;color:var(--dim);font-weight:600}
+input[type=text],input[type=number],input[type=tel]{width:100%;margin-top:5px;padding:10px 12px;border-radius:11px;border:1px solid var(--fieldline);background:var(--field);color:var(--ink);font:inherit;font-size:16px}
+input:focus{outline:2px solid var(--blue);outline-offset:1px}
+.hint{font-weight:400;font-size:12px;color:var(--dim);margin-top:3px}
+.seg{display:inline-flex;background:var(--plat);border-radius:12px;padding:3px;gap:3px;flex-wrap:wrap;margin-bottom:10px}
+.seg button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;font-weight:600;padding:7px 11px;border-radius:9px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--card);box-shadow:0 1px 4px rgba(10,30,69,.15);color:var(--blue)}
+.note{background:var(--plat);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--dim);margin-top:10px}
+.res .big{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:16px;padding:16px}
+.res .big small{color:var(--sky);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11px}
+.res .price{font-size:clamp(30px,7vw,40px);font-weight:800;letter-spacing:-.02em;margin:4px 0 2px}
+.res .big .row{display:flex;justify-content:space-between;gap:8px;color:#CFE3F6;font-size:13px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:11px}
+.kpi b{display:block;font-size:19px}
+.kpi span{font-size:12px;color:var(--dim)}
+.status{margin-top:12px;border-radius:12px;padding:11px 12px;font-weight:600;font-size:14px}
+.status.good{background:rgba(30,158,106,.12);color:var(--good)}
+.status.warn{background:rgba(201,138,18,.13);color:var(--warn)}
+.status.bad{background:rgba(209,67,67,.12);color:var(--bad)}
+.status.dim{background:var(--plat);color:var(--dim)}
+.clientp{display:flex;gap:8px;align-items:flex-end;margin-top:12px}
+.clientp label{flex:1}
+table.br{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+table.br td{padding:6px 0;border-bottom:1px dashed var(--line)}
+table.br td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.br tr.tot td{font-weight:700;border-bottom:0}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+details{margin-top:14px;font-size:13px;color:var(--dim)}
+details summary{cursor:pointer;font-weight:700;color:var(--ink)}
+details ol{padding-left:18px}
+.saved{margin-top:14px}
+.saved h3{font-size:14px;margin:0 0 8px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:6px;font-size:13px}
+.item b{display:block}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:.25s;pointer-events:none;font-size:14px;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{text-align:center;color:var(--dim);font-size:12px;padding:10px 16px 30px}
+@media print{.mbar{display:none!important}header .hbtns,.actions,.saved,details,.clientp button,footer .noprint{display:none!important}body{background:#fff}.card{box-shadow:none}main{margin-top:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="kicker">Инструменты для клининга</div>
+  <h1>Калькулятор стоимости объекта</h1>
+  <p>Внесите расходы — увидите рекомендуемую цену, прибыль и цену без убытка. Все данные остаются на вашем устройстве.</p>
+  <div class="hbtns">
+    <button class="btn ghost sm" id="bExample">Пример</button>
+    <button class="btn ghost sm" id="bNew">Новый расчёт</button>
+    <button class="btn ghost sm" id="bTheme" aria-label="Сменить тему">◐ Тема</button>
+  </div>
+</div></header>
+
+<main><div class="wrap grid">
+  <form class="card" id="f" autocomplete="off" onsubmit="return false">
+    <section class="sec">
+      <h2><span class="num">01</span>Объект и команда</h2>
+      <p class="sub">Один расчёт — один объект за выбранный период.</p>
+      <div class="fields">
+        <label class="full">Название объекта<input type="text" id="object" placeholder="Например, офис после ремонта"></label>
+        <label class="full">Площадь, м²<input type="number" inputmode="decimal" min="0" id="area"><div class="hint">Нужна только для цены за м²</div></label>
+      </div>
+      <div style="margin-top:12px"><label>Как посчитать ФОТ?</label></div>
+      <div class="seg" data-seg="fot_mode" style="margin-top:6px">
+        <button type="button" data-v="rate" aria-pressed="true">Ставка за смену</button>
+        <button type="button" data-v="sum" aria-pressed="false">Готовая сумма ФОТ</button>
+      </div>
+      <div class="fields" id="fotRate">
+        <label class="full">Ставка 1 сотрудника за смену, ₽<input type="number" inputmode="decimal" min="0" id="rate"></label>
+        <label>Сотрудников в смену<input type="number" inputmode="numeric" min="1" step="1" id="people"></label>
+        <label>Смен на сотрудника<input type="number" inputmode="numeric" min="1" step="1" id="shifts"></label>
+      </div>
+      <div class="fields" id="fotSum" hidden>
+        <label class="full">Готовая сумма ФОТ, ₽<input type="number" inputmode="decimal" min="0" id="fot_sum"></label>
+      </div>
+      <div class="fields" style="margin-top:10px">
+        <label class="full">Дополнительные начисления, % ФОТ<input type="number" inputmode="decimal" min="0" max="99" id="extra_pct"><div class="hint">Если ставка уже включает все выплаты и начисления — оставьте 0</div></label>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2><span class="num">02</span>Особенности объекта</h2>
+      <p class="sub">Коэффициенты перемножаются и увеличивают только ФОТ. 1,00 — без надбавки.</p>
+      <div class="fields">
+        <label>Сложность, ×<input type="number" inputmode="decimal" min="1" max="5" step="0.05" id="k_hard"></label>
+        <label>Срочность, ×<input type="number" inputmode="decimal" min="1" max="5" step="0.05" id="k_urgent"></label>
+        <label>Послестрой, ×<input type="number" inputmode="decimal" min="1" max="5" step="0.05" id="k_post"></label>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2><span class="num">03</span>Расходы на объект</h2>
+      <p class="sub">Общие суммы за весь расчётный период. Если расхода нет — 0.</p>
+      <div class="fields">
+        <label>Транспорт, ₽<input type="number" inputmode="decimal" min="0" id="transport"></label>
+        <label>Химия, ₽<input type="number" inputmode="decimal" min="0" id="chem"></label>
+        <label>Инвентарь и оборудование, ₽<input type="number" inputmode="decimal" min="0" id="inventory"><div class="hint">Расходники, аренда или доля износа</div></label>
+        <label>Другие и накладные, ₽<input type="number" inputmode="decimal" min="0" id="overhead"><div class="hint">Например, доля расходов на управление</div></label>
+        <label>Окна — затраты, ₽<input type="number" inputmode="decimal" min="0" id="windows"></label>
+        <label>Спецработы — затраты, ₽<input type="number" inputmode="decimal" min="0" id="special"></label>
+      </div>
+      <div class="note">Окна и спецработы вносите только для затрат, которые ещё не учтены в ФОТ, химии и других полях.</div>
+    </section>
+
+    <section class="sec">
+      <h2><span class="num">04</span>Налоги, риски и прибыль</h2>
+      <p class="sub">Прибыль считаем после всех внесённых расходов.</p>
+      <div class="fields">
+        <label>Налог с выручки, % цены<input type="number" inputmode="decimal" min="0" max="99" id="tax_pct"></label>
+        <label>Резерв на риски, % затрат<input type="number" inputmode="decimal" min="0" max="99" id="reserve_pct"><div class="hint">Переделки и непредвиденное</div></label>
+      </div>
+      <div style="margin-top:12px"><label>Сколько хотите заработать?</label></div>
+      <div class="seg" data-seg="goal_mode" style="margin-top:6px">
+        <button type="button" data-v="margin" aria-pressed="true">Маржа, % от цены</button>
+        <button type="button" data-v="profit" aria-pressed="false">Прибыль в рублях</button>
+      </div>
+      <div class="fields">
+        <label class="full" id="lMargin">Желаемая маржа, %<input type="number" inputmode="decimal" min="0" max="99" id="goal_margin"><div class="hint">Доля прибыли в цене, а не наценка на расходы</div></label>
+        <label class="full" id="lProfit" hidden>Желаемая прибыль, ₽<input type="number" inputmode="decimal" min="0" id="goal_profit"></label>
+      </div>
+      <div style="margin-top:12px"><label>Округлять цену вверх</label></div>
+      <div class="seg" data-seg="rounding" style="margin-top:6px">
+        <button type="button" data-v="1" aria-pressed="false">до 1 ₽</button>
+        <button type="button" data-v="100" aria-pressed="true">до 100 ₽</button>
+        <button type="button" data-v="1000" aria-pressed="false">до 1 000 ₽</button>
+      </div>
+    </section>
+  </form>
+
+  <aside class="card res" aria-live="polite">
+    <div class="big">
+      <small>Рекомендуемая цена</small>
+      <div class="price" id="rRec">—</div>
+      <div class="row"><span id="rRecM2"></span><span id="rGoal"></span></div>
+      <div class="row" style="margin-top:6px"><span>Прибыль при этой цене</span><b id="rRecProfit" style="color:#fff">—</b></div>
+    </div>
+
+    <div class="clientp">
+      <label>Ваша цена клиенту, ₽<input type="number" inputmode="decimal" min="0" id="client_price" placeholder="Введите, чтобы проверить"></label>
+      <button class="btn sm" type="button" id="bUseRec">Подставить<br>рекомендуемую</button>
+    </div>
+    <div class="status dim" id="rStatus">Введите цену клиенту, чтобы проверить её</div>
+
+    <div class="kpis">
+      <div class="kpi"><span>Себестоимость с налогом</span><b id="kCost">—</b><span id="kCostSub"></span></div>
+      <div class="kpi"><span>Ваша прибыль</span><b id="kProfit">—</b><span>после налога и резерва</span></div>
+      <div class="kpi"><span>Маржа</span><b id="kMargin">—</b><span>прибыль / цена</span></div>
+      <div class="kpi"><span>Рентабельность</span><b id="kRent">—</b><span>прибыль / себестоимость</span></div>
+      <div class="kpi"><span>Цена без убытка</span><b id="kBreak">—</b><span>без прибыли, с налогом и резервом</span></div>
+      <div class="kpi"><span>Ваша цена за м²</span><b id="kM2">—</b><span id="kTo"></span></div>
+    </div>
+
+    <table class="br" id="br"></table>
+
+    <div class="actions">
+      <button class="btn sm" type="button" id="bSave">💾 Сохранить объект</button>
+      <button class="btn line sm" type="button" id="bCopy">📋 Скопировать расчёт</button>
+      <button class="btn line sm" type="button" id="bPrint">🖨 PDF / печать</button>
+    </div>
+
+    <div class="saved" id="saved"></div>
+
+    <details>
+      <summary>Как считаем</summary>
+      <ol>
+        <li><b>Команда</b> = ставка × сотрудники × смены (или готовая сумма ФОТ) × коэффициенты × (1 + начисления).</li>
+        <li><b>Затраты до налога</b> = команда + транспорт + химия + инвентарь + окна + спецработы + накладные + резерв на риски.</li>
+        <li><b>Цена</b>: при марже — затраты до налога ÷ (1 − налог − маржа); при прибыли в рублях — (затраты до налога + прибыль) ÷ (1 − налог). Округляем вверх.</li>
+        <li><b>Себестоимость</b> = затраты до налога + налог с вашей цены; <b>прибыль</b> = цена − себестоимость; маржа = прибыль ÷ цена; рентабельность = прибыль ÷ себестоимость.</li>
+      </ol>
+      <p>Площадь влияет только на цену за м². Цифры в примере учебные и не являются рекомендацией по налогам. Для НДС и налога с прибыли нужна отдельная модель.</p>
+    </details>
+  </aside>
+</div></main>
+<footer>Прибыль начинается с расчёта · Данные хранятся только на этом устройстве</footer>
+<div class="mbar" id="mbar"><div><span>Рекомендуемая цена</span><br><b id="mRec">—</b></div><button class="btn sm" type="button" id="bToRes">Результат ↓</button></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var NUM=["area","rate","people","shifts","fot_sum","extra_pct","k_hard","k_urgent","k_post","transport","chem","inventory","overhead","windows","special","tax_pct","reserve_pct","goal_margin","goal_profit","client_price"];
+  var DEF={object:"",area:"",fot_mode:"rate",rate:"",people:1,shifts:1,fot_sum:"",extra_pct:0,k_hard:1,k_urgent:1,k_post:1,transport:0,chem:0,inventory:0,overhead:0,windows:0,special:0,tax_pct:6,reserve_pct:10,goal_mode:"margin",goal_margin:25,goal_profit:"",rounding:"100",client_price:""};
+  var EX={object:"Офис после ремонта (пример)",area:200,fot_mode:"rate",rate:3000,people:3,shifts:2,fot_sum:"",extra_pct:0,k_hard:1.2,k_urgent:1,k_post:1.25,transport:2000,chem:1500,inventory:1000,overhead:2000,windows:4000,special:2500,tax_pct:6,reserve_pct:10,goal_mode:"margin",goal_margin:25,goal_profit:16000,rounding:"100",client_price:60000};
+  var st={};
+  var $=function(id){return document.getElementById(id)};
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+  function rub(x){if(x===null||x===undefined||!isFinite(x))return"—";return Math.round(x).toLocaleString("ru-RU").replace(/,/g," ")+" ₽"}
+  function pct(x){return(x===null||!isFinite(x))?"—":(x*100).toFixed(1).replace(".",",")+"%"}
+  function n(v){v=parseFloat(String(v).replace(",","."));return isFinite(v)?v:0}
+  function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},1800)}
+
+  function fill(d){st=Object.assign({},DEF,d);
+    $("object").value=st.object||"";
+    NUM.forEach(function(k){$(k).value=(st[k]===""||st[k]===null||st[k]===undefined)?"":st[k]});
+    ["fot_mode","goal_mode","rounding"].forEach(function(k){setSeg(k,String(st[k]))});
+    calc();}
+  function setSeg(k,v){st[k]=v;document.querySelectorAll('[data-seg="'+k+'"] button').forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===v)});
+    if(k==="fot_mode"){$("fotRate").hidden=v!=="rate";$("fotSum").hidden=v!=="sum"}
+    if(k==="goal_mode"){$("lMargin").hidden=v!=="margin";$("lProfit").hidden=v!=="profit"}}
+  function read(){st.object=$("object").value;NUM.forEach(function(k){st[k]=$(k).value})}
+
+  function compute(d){
+    var fot=d.fot_mode==="sum"?n(d.fot_sum):n(d.rate)*Math.max(1,n(d.people)||1)*Math.max(1,n(d.shifts)||1);
+    var k=(n(d.k_hard)||1)*(n(d.k_urgent)||1)*(n(d.k_post)||1);
+    var team=fot*k*(1+n(d.extra_pct)/100);
+    var other=n(d.transport)+n(d.chem)+n(d.inventory)+n(d.overhead)+n(d.windows)+n(d.special);
+    var costs=team+other,reserve=costs*n(d.reserve_pct)/100,bt=costs+reserve,tax=n(d.tax_pct)/100,step=n(d.rounding)||1;
+    var raw=null,den;
+    if(d.goal_mode==="profit"){den=1-tax;if(den>0)raw=(bt+n(d.goal_profit))/den}
+    else{den=1-tax-n(d.goal_margin)/100;if(den>0)raw=bt/den}
+    var rec=(raw&&bt>0)?Math.ceil(+(raw/step).toFixed(6))*step:null;
+    var r={fot:fot,k:k,team:team,other:other,reserve:reserve,bt:bt,rec:rec,tax:tax,
+      breakeven:(tax<1&&bt>0)?Math.ceil(+(bt/(1-tax)).toFixed(6)):null};
+    if(rec){r.recProfit=rec*(1-tax)-bt;r.recM2=n(d.area)?rec/n(d.area):null}
+    var p=n(d.client_price);
+    if(p>0){var ct=bt+p*tax,pr=p-ct,target=d.goal_mode==="profit"?n(d.goal_profit):p*n(d.goal_margin)/100;
+      r.price=p;r.ct=ct;r.profit=pr;r.margin=pr/p;r.rent=ct?pr/ct:null;r.m2=n(d.area)?p/n(d.area):null;r.toRec=rec?Math.max(0,rec-p):0;
+      r.status=pr<-0.005?["bad","Цена не покрывает расходы"]:(pr+0.005<target?["warn","Цена покрывает затраты, но прибыль ниже цели"]:["good","Цель по прибыли достигнута"])}
+    return r}
+
+  function calc(){
+    var r=compute(st);
+    $("rRec").textContent=r.rec?rub(r.rec):"—";$("mRec").textContent=r.rec?rub(r.rec):"—";
+    $("rRecM2").textContent=r.recM2?rub(r.recM2)+" / м²":"";
+    $("rGoal").textContent=st.goal_mode==="profit"?("цель: "+rub(n(st.goal_profit))):("маржа от "+n(st.goal_margin).toString().replace(".",",")+"%");
+    $("rRecProfit").textContent=r.rec?rub(r.recProfit):"—";
+    $("kBreak").textContent=rub(r.breakeven);
+    var s=$("rStatus");
+    if(r.price){
+      $("kCost").textContent=rub(r.ct);$("kCostSub").textContent=rub(r.bt)+" до налога";
+      $("kProfit").textContent=rub(r.profit);$("kMargin").textContent=pct(r.margin);$("kRent").textContent=pct(r.rent);
+      $("kM2").textContent=r.m2?rub(r.m2):"—";$("kTo").textContent=r.toRec?("до рекомендуемой "+rub(r.toRec)):"";
+      s.className="status "+r.status[0];s.textContent=r.status[1]+(r.toRec&&r.status[0]!=="good"?" · поднимите цену на "+rub(r.toRec):"");
+    }else{
+      ["kCost","kProfit","kMargin","kRent","kM2"].forEach(function(id){$(id).textContent="—"});
+      $("kCostSub").textContent=r.bt?rub(r.bt)+" до налога":"";$("kTo").textContent="";
+      s.className="status dim";s.textContent=r.bt>0?"Введите цену клиенту, чтобы проверить её":"Заполните расходы, чтобы увидеть цену";
+    }
+    if(!r.rec&&r.bt>0){s.className="status bad";s.textContent="Налог + маржа не могут быть 100% и больше"}
+    $("br").innerHTML=r.bt>0?[
+      ["ФОТ базовый × коэффициент "+r.k.toFixed(2).replace(".",","),rub(r.fot*r.k)],
+      ["Команда с начислениями",rub(r.team)],["Остальные затраты",rub(r.other)],
+      ["Резерв на риски",rub(r.reserve)],["Затраты до налога",rub(r.bt),1]
+    ].map(function(x){return'<tr'+(x[2]?' class="tot"':'')+'><td>'+x[0]+'</td><td>'+x[1]+'</td></tr>'}).join(""):"";
+    store("calc_draft",JSON.stringify(st));
+    return r}
+
+  function text(){var r=compute(st);var L=["Расчёт: "+(st.object||"объект")];
+    if(n(st.area))L.push("Площадь: "+n(st.area)+" м²");
+    L.push("Затраты до налога: "+rub(r.bt),"Рекомендуемая цена: "+rub(r.rec)+(r.recM2?" ("+rub(r.recM2)+"/м²)":""),"Прибыль при ней: "+rub(r.recProfit),"Цена без убытка: "+rub(r.breakeven));
+    if(r.price)L.push("","Цена клиенту: "+rub(r.price),"Себестоимость с налогом: "+rub(r.ct),"Прибыль: "+rub(r.profit),"Маржа: "+pct(r.margin),"Рентабельность: "+pct(r.rent),r.status[1]);
+    return L.join("\n")}
+
+  function saved(){var list=[];try{list=JSON.parse(store("calc_saved")||"[]")}catch(e){}return list}
+  function renderSaved(){var list=saved(),box=$("saved");
+    if(!list.length){box.innerHTML="";return}
+    box.innerHTML="<h3>Мои объекты</h3>"+list.map(function(o,i){var r=compute(o);
+      return'<div class="item"><div><b>'+esc(o.object||"Объект")+'</b>'+rub(r.rec)+' · '+(o.saved||"")+'</div><div><button class="btn line sm" data-open="'+i+'">Открыть</button> <button class="btn line sm" data-del="'+i+'" aria-label="Удалить">✕</button></div></div>'}).join("")}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  document.addEventListener("input",function(e){if(e.target.closest("#f")||e.target.id==="client_price"){read();calc()}});
+  document.querySelectorAll("[data-seg]").forEach(function(g){g.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setSeg(g.dataset.seg,b.dataset.v);calc()})});
+  $("bUseRec").onclick=function(){var r=compute(st);if(r.rec){$("client_price").value=r.rec;read();calc()}};
+  $("bExample").onclick=function(){fill(EX);toast("Подставлен пример")};
+  $("bNew").onclick=function(){if(confirmNew()){fill(DEF);toast("Новый расчёт")}};
+  function confirmNew(){return !st.object&&!n(st.rate)?true:window.confirm("Начать новый расчёт? Текущий черновик очистится.")}
+  $("bToRes").onclick=function(){document.querySelector(".res").scrollIntoView({behavior:"smooth"})};
+  $("bPrint").onclick=function(){window.print()};
+  $("bCopy").onclick=function(){var t=text();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast("Скопировано")},function(){fallback(t)})}else fallback(t)};
+  function fallback(t){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");toast("Скопировано")}catch(e){}a.remove()}
+  $("bSave").onclick=function(){var list=saved();var o=Object.assign({},st,{saved:new Date().toLocaleDateString("ru-RU")});
+    var i=list.findIndex(function(x){return x.object&&x.object===o.object});if(i>=0)list[i]=o;else list.unshift(o);
+    store("calc_saved",JSON.stringify(list.slice(0,50)));renderSaved();toast(saved().length?"Объект сохранён":"Сохранение недоступно в этом браузере")};
+  $("saved").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var list=saved();
+    if(b.dataset.open){fill(list[+b.dataset.open]);window.scrollTo({top:0,behavior:"smooth"})}
+    if(b.dataset.del){list.splice(+b.dataset.del,1);store("calc_saved",JSON.stringify(list));renderSaved()}});
+  $("bTheme").onclick=function(){var cur=document.documentElement.getAttribute("data-theme");
+    var dark=cur?cur==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var nx=dark?"light":"dark";document.documentElement.setAttribute("data-theme",nx);store("calc_theme",nx)};
+  var th=store("calc_theme");if(th)document.documentElement.setAttribute("data-theme",th);
+
+  var draft=null;try{draft=JSON.parse(store("calc_draft")||"null")}catch(e){}
+  fill(draft||EX);renderSaved();
+})();
+</script>
+</body>
+</html>
